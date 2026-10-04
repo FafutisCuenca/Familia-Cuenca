@@ -700,18 +700,21 @@ function abrirPerfil(
 
                 <div>
 
-                    <span>
-                        Cumpleaños
-                    </span>
+    <span>
+        Cumpleaños
+    </span>
 
-                    <strong>
-                        ${
-                            persona.fecha ||
-                            "No registrado"
-                        }
-                    </strong>
+    <strong>
+        ${
+            persona.fecha
+                ? formatearCumpleanos(
+                    persona.fecha
+                  )
+                : "No registrado"
+        }
+    </strong>
 
-                </div>
+</div>
 
 
                 <div>
