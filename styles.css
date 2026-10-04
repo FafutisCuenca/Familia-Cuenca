@@ -2698,3 +2698,472 @@ select {
     padding: 6px;
 }
 }
+
+```css
+/* ============================================================
+   MODAL — EN MEMORIA DE NUESTROS FAMILIARES
+============================================================ */
+
+.finados-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 3000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+.finados-modal.active {
+
+    display: flex;
+}
+
+
+/* ------------------------------------------------------------
+   FONDO
+------------------------------------------------------------ */
+
+.finados-modal-backdrop {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(23, 43, 50, .82);
+
+    backdrop-filter:
+        blur(7px);
+}
+
+
+/* ------------------------------------------------------------
+   CONTENEDOR
+------------------------------------------------------------ */
+
+.finados-modal-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 850px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f7f3eb,
+            #ece5d8
+        );
+
+    border-radius: 22px;
+
+    padding: 45px;
+
+    box-shadow:
+        0 35px 90px rgba(0,0,0,.35);
+
+    border:
+        1px solid rgba(182,154,98,.35);
+
+}
+
+
+/* ------------------------------------------------------------
+   BOTÓN CERRAR
+------------------------------------------------------------ */
+
+.finados-modal-close {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 20px;
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(23,43,50,.08);
+
+    color: var(--navy);
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        .25s;
+}
+
+
+.finados-modal-close:hover {
+
+    background: var(--navy);
+
+    color: white;
+
+    transform: rotate(90deg);
+}
+
+
+/* ------------------------------------------------------------
+   ENCABEZADO
+------------------------------------------------------------ */
+
+.finados-modal-header {
+
+    text-align: center;
+
+    max-width: 650px;
+
+    margin:
+        0 auto 35px;
+}
+
+
+.finados-modal-symbol {
+
+    font-size: 38px;
+
+    margin-bottom: 12px;
+
+    opacity: .85;
+}
+
+
+.finados-kicker {
+
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    color: var(--gold);
+
+    margin-bottom: 10px;
+}
+
+
+.finados-modal-header h2 {
+
+    font-family: Georgia, serif;
+
+    font-weight: 400;
+
+    color: var(--navy);
+
+    font-size:
+        clamp(30px, 5vw, 45px);
+
+    line-height: 1.1;
+
+    margin-bottom: 18px;
+}
+
+
+.finados-modal-header h2 span {
+
+    display: block;
+
+    color: var(--gold);
+
+    font-style: italic;
+}
+
+
+.finados-dedicatoria {
+
+    max-width: 600px;
+
+    margin: auto;
+
+    color: var(--text-light);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* ------------------------------------------------------------
+   LISTA DE FAMILIARES
+------------------------------------------------------------ */
+
+.lista-finados {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+
+/* ------------------------------------------------------------
+   TARJETA INDIVIDUAL
+------------------------------------------------------------ */
+
+.finado-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    background:
+        rgba(255,255,255,.68);
+
+    border:
+        1px solid rgba(23,43,50,.09);
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+    transition:
+        transform .25s,
+        box-shadow .25s;
+}
+
+
+.finado-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(23,43,50,.10);
+}
+
+
+/* ------------------------------------------------------------
+   FOTO / AVATAR
+------------------------------------------------------------ */
+
+.finado-avatar {
+
+    width: 65px;
+
+    height: 65px;
+
+    min-width: 65px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+        var(--navy);
+
+    color: white;
+
+    font-family: Georgia, serif;
+
+    font-size: 24px;
+
+    border:
+        2px solid rgba(182,154,98,.55);
+}
+
+
+.finado-avatar img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    filter:
+        grayscale(100%);
+
+}
+
+
+/* ------------------------------------------------------------
+   INFORMACIÓN
+------------------------------------------------------------ */
+
+.finado-info {
+
+    min-width: 0;
+}
+
+
+.finado-info h3 {
+
+    font-family: Georgia, serif;
+
+    font-weight: 400;
+
+    color: var(--navy);
+
+    font-size: 20px;
+
+    line-height: 1.2;
+
+    margin-bottom: 5px;
+}
+
+
+.finado-info p {
+
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+.finado-info .finado-generacion {
+
+    display: inline-block;
+
+    margin-top: 5px;
+
+    color: var(--gold);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+/* ------------------------------------------------------------
+   MENSAJE CUANDO NO HAY REGISTROS
+------------------------------------------------------------ */
+
+.finados-empty {
+
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color: var(--text-light);
+
+    font-size: 14px;
+}
+
+
+/* ------------------------------------------------------------
+   PIE DEL MODAL
+------------------------------------------------------------ */
+
+.finados-modal-footer {
+
+    text-align: center;
+
+    margin-top: 35px;
+
+    color: var(--text-light);
+}
+
+
+.finados-divider {
+
+    width: 80px;
+
+    height: 1px;
+
+    background:
+        var(--gold);
+
+    margin:
+        0 auto 20px;
+
+    opacity: .7;
+}
+
+
+.finados-modal-footer p {
+
+    font-family: Georgia, serif;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    max-width: 550px;
+
+    margin: auto;
+}
+
+
+.finados-modal-footer span {
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   RESPONSIVE — MEMORIA
+============================================================ */
+
+@media (max-width: 700px) {
+
+    .finados-modal {
+
+        padding: 12px;
+
+    }
+
+
+    .finados-modal-conten
+```
+
