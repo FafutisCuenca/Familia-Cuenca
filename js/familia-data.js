@@ -9,6 +9,34 @@ const FamiliaCuenca = (() => {
     let integrantes = [];
 
     // --------------------------------------------------------
+    // UBICACIÓN DEL ARCHIVO MAESTRO
+    // --------------------------------------------------------
+    // Obtiene la URL real del propio archivo
+    // familia-data.js y desde ahí localiza:
+    //
+    // /data/familia.json
+    //
+    // Esto permite utilizar el mismo motor desde
+    // cualquier carpeta del portal.
+    // --------------------------------------------------------
+
+    const scriptFamilia =
+        [...document.scripts].find(
+            script =>
+                script.src.includes(
+                    "/js/familia-data.js"
+                )
+        );
+
+    const rutaDatos =
+        scriptFamilia
+            ? new URL(
+                "../data/familia.json",
+                scriptFamilia.src
+              )
+            : null;
+
+    // --------------------------------------------------------
     // Cargar datos
     // --------------------------------------------------------
 
@@ -16,8 +44,14 @@ async function cargar() {
 
     try {
 
+        if (!rutaDatos) {
+            throw new Error(
+                "No se encontró el archivo familia-data.js"
+            );
+        }
+
         const respuesta =
-            await fetch("../data/familia.json");
+            await fetch(rutaDatos);
 
 
         if (!respuesta.ok) {
