@@ -2,7 +2,6 @@
 // DIRECTORIO FAMILIA CUENCA
 // ============================================================
 
-
 let integrantesFamilia = [];
 
 
@@ -14,7 +13,8 @@ async function iniciarDirectorio() {
 
     try {
 
-        integrantesFamilia = await FamiliaCuenca.cargar();
+        integrantesFamilia =
+            await FamiliaCuenca.cargar();
 
         mostrarTotal();
 
@@ -22,11 +22,22 @@ async function iniciarDirectorio() {
 
     } catch (error) {
 
-        document.getElementById("listaFamilia").innerHTML = `
+        document.getElementById(
+            "listaFamilia"
+        ).innerHTML = `
 
-            <p style="color:red;">
-                No fue posible cargar la información familiar.
-            </p>
+            <div class="tarjeta-familiar">
+
+                <h2>
+                    Error cargando la información
+                </h2>
+
+                <p>
+                    No fue posible cargar
+                    los datos de la Familia Cuenca.
+                </p>
+
+            </div>
 
         `;
 
@@ -45,7 +56,8 @@ function mostrarTotal() {
 
     document.getElementById(
         "totalIntegrantes"
-    ).textContent = integrantesFamilia.length;
+    ).textContent =
+        integrantesFamilia.length;
 
 }
 
@@ -57,7 +69,9 @@ function mostrarTotal() {
 function mostrarFamilia(lista) {
 
     const contenedor =
-        document.getElementById("listaFamilia");
+        document.getElementById(
+            "listaFamilia"
+        );
 
 
     if (lista.length === 0) {
@@ -66,10 +80,13 @@ function mostrarFamilia(lista) {
 
             <div class="tarjeta-familiar">
 
-                <h2>No encontramos familiares</h2>
+                <h2>
+                    No encontramos familiares
+                </h2>
 
                 <p>
-                    Intenta con otro nombre o palabra.
+                    Intenta con otro nombre
+                    o palabra.
                 </p>
 
             </div>
@@ -81,137 +98,159 @@ function mostrarFamilia(lista) {
     }
 
 
-    contenedor.innerHTML = lista
-
-        .sort((a, b) =>
-            a.nombre.localeCompare(
-                b.nombre,
-                "es"
-            )
-        )
-
-        .map(persona => {
-
-            const inicial =
-                persona.nombre
-                    .charAt(0)
-                    .toUpperCase();
+    const listaOrdenada =
+        [...lista].sort(
+            (a, b) =>
+                a.nombre.localeCompare(
+                    b.nombre,
+                    "es"
+                )
+        );
 
 
-            const ubicacion = [
+    contenedor.innerHTML =
+        listaOrdenada.map(
+            persona => {
 
-                persona.ciudad,
-                persona.estado,
-                persona.pais
-
-            ]
-                .filter(Boolean)
-                .join(", ");
+                const inicial =
+                    persona.nombre
+                        .charAt(0)
+                        .toUpperCase();
 
 
-            return `
+                const ubicacion = [
 
-                <article
-                    class="tarjeta-familiar"
-                    onclick="abrirPerfil('${persona.id}')"
-                    style="cursor:pointer;"
-                >
+                    persona.ciudad,
+                    persona.estado,
+                    persona.pais
 
-                    <div class="avatar">
+                ]
+                    .filter(Boolean)
+                    .join(", ");
 
-                        ${
-                            persona.foto
 
-                            ? `<img
+                const iconoGenero =
+                    persona.genero === "F"
+                        ? "👩"
+                        : "👨";
+
+
+                const textoGenero =
+                    persona.genero === "F"
+                        ? "Femenino"
+                        : "Masculino";
+
+
+                const iconoEstatus =
+                    persona.estatus === "Vivo"
+                        ? "🟢"
+                        : "⚪";
+
+
+                const foto =
+                    persona.foto
+                        ? `
+                            <img
                                 src="${persona.foto}"
                                 alt="${persona.nombre}"
-                              >`
-
-                            : inicial
-
-                        }
-
-                    </div>
+                            >
+                          `
+                        : inicial;
 
 
-                    <h2>
-                        ${persona.nombre}
-                    </h2>
+                return `
+
+                    <article
+                        class="tarjeta-familiar"
+                        onclick="abrirPerfil('${persona.id}')"
+                        style="cursor:pointer;"
+                    >
+
+                        <div class="avatar">
+
+                            ${foto}
+
+                        </div>
 
 
-                    <div class="dato">
+                        <h2>
 
-                        🎂
-                        <strong>
-                            Cumpleaños:
-                        </strong>
+                            ${persona.nombre}
 
-                        ${persona.fecha}
-
-                    </div>
+                        </h2>
 
 
-                    <div class="dato">
+                        <div class="dato">
 
-                        ${
-                            persona.genero === "F"
-                                ? "👩"
-                                : "👨"
-                        }
+                            🎂
 
-                        ${
-                            persona.genero === "F"
-                                ? "Femenino"
-                                : "Masculino"
-                        }
+                            <strong>
+                                Cumpleaños:
+                            </strong>
 
-                    </div>
+                            ${persona.fecha}
+
+                        </div>
 
 
-                    <div class="dato">
+                        <div class="dato">
 
-                        🌎
+                            ${iconoGenero}
 
-                        <strong>
-                            Ubicación:
-                        </strong>
+                            <strong>
+                                Género:
+                            </strong>
 
-                        ${
-                            ubicacion ||
-                            "Información pendiente"
-                        }
+                            ${textoGenero}
 
-                    </div>
+                        </div>
 
 
-                    <div class="dato">
+                        <div class="dato">
 
-                        ${
-                            persona.estatus === "Vivo"
-                                ? "🟢"
-                                : "⚪"
-                        }
+                            🌎
 
-                        ${persona.estatus}
+                            <strong>
+                                Ubicación:
+                            </strong>
 
-                    </div>
+                            ${
+                                ubicacion ||
+                                "Información pendiente"
+                            }
+
+                        </div>
 
 
-                    <span class="id-familiar">
+                        <div class="dato">
 
-                        ${persona.id}
+                            ${iconoEstatus}
 
-                    </span>
+                            <strong>
+                                Estatus:
+                            </strong>
 
-                </article>
+                            ${persona.estatus}
 
-            `;
+                        </div>
 
-        })
 
-        .join("");
+                        <span class="id-familiar">
+
+                            ${persona.id}
+
+                        </span>
+
+                    </article>
+
+                `;
+
+            }
+        ).join("");
 
 }
+
+
 // ============================================================
 // ABRIR PERFIL
 // ============================================================
@@ -223,6 +262,7 @@ function abrirPerfil(id) {
 
 }
 
+
 // ============================================================
 // BUSCADOR
 // ============================================================
@@ -233,7 +273,9 @@ document
         "input",
         function () {
 
-            const texto = this.value.trim();
+            const texto =
+                this.value.trim();
+
 
             if (!texto) {
 
@@ -252,7 +294,9 @@ document
                 );
 
 
-            mostrarFamilia(resultados);
+            mostrarFamilia(
+                resultados
+            );
 
         }
     );
