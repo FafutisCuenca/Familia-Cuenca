@@ -674,16 +674,28 @@ function crearTarjetaFamilia(
     const ubicacion =
         [
             persona.ciudad,
+            persona.estado,
             persona.pais
         ]
             .filter(Boolean)
             .join(", ");
 
 
+    const esFinado =
+        persona.estatus &&
+        persona.estatus
+            .toLowerCase()
+            .trim() === "finado";
+
+
     return `
 
         <article
-            class="family-result"
+            class="family-result ${
+                esFinado
+                    ? "family-result-finado"
+                    : ""
+            }"
             data-id="${persona.id}"
         >
 
@@ -694,29 +706,63 @@ function crearTarjetaFamilia(
             </div>
 
 
-            <h3>
+            <div class="family-result-content">
 
-                ${persona.nombre}
+                <div class="family-result-name">
 
-            </h3>
+                    <h3>
+
+                        ${persona.nombre}
+
+                    </h3>
 
 
-            <p>
+                    ${
+                        esFinado
+                            ? `
+                                <span
+                                    class="finado-indicador"
+                                    title="Familiar finado"
+                                    aria-label="Familiar finado"
+                                >
+                                    🕊️
+                                </span>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+
+                <p>
+
+                    ${
+                        ubicacion ||
+                        "Ubicación no registrada"
+                    }
+
+                </p>
+
 
                 ${
-                    ubicacion ||
-                    "Ubicación no registrada"
+                    esFinado
+                        ? `
+                            <div class="family-result-status">
+
+                                🕊️ Familiar finado
+
+                            </div>
+                          `
+                        : ""
                 }
 
-            </p>
+            </div>
 
         </article>
 
     `;
 
 }
-
-
 // ============================================================
 // INICIALES
 // ============================================================
