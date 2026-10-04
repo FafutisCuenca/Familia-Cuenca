@@ -1103,20 +1103,18 @@ function convertirFechaCumple(
     const partes =
         fecha.split("-");
 
-
-    const mes =
+    // El formato maestro de familia.json es DD-MM
+    const dia =
         parseInt(
             partes[0],
             10
-        ) - 1;
+        );
 
-
-    const dia =
+    const mes =
         parseInt(
             partes[1],
             10
-        );
-
+        ) - 1;
 
     return new Date(
         ano,
@@ -1125,7 +1123,6 @@ function convertirFechaCumple(
     );
 
 }
-
 
 // ============================================================
 // DISTANCIA AL PRÓXIMO CUMPLEAÑOS
