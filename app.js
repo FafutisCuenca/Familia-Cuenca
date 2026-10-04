@@ -1298,18 +1298,24 @@ function actualizarTablero() {
 
 
     const partes =
-        siguiente.fecha.split("-");
+    siguiente.fecha.split("-");
 
+const dia =
+    parseInt(
+        partes[0],
+        10
+    );
 
-    fecha.textContent =
-        `${partes[1]} de ${
-            obtenerNombreMes(
-                parseInt(
-                    partes[0],
-                    10
-                )
-            )
-        }`;
+const mes =
+    parseInt(
+        partes[1],
+        10
+    );
+
+fecha.textContent =
+    `${dia} de ${
+        obtenerNombreMes(mes)
+    }`;
 
 }
 
