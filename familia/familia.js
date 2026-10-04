@@ -64,9 +64,15 @@ function mostrarFamilia(lista) {
 
         contenedor.innerHTML = `
 
-            <p>
-                No se encontraron familiares.
-            </p>
+            <div class="tarjeta-familiar">
+
+                <h2>No encontramos familiares</h2>
+
+                <p>
+                    Intenta con otro nombre o palabra.
+                </p>
+
+            </div>
 
         `;
 
@@ -86,124 +92,126 @@ function mostrarFamilia(lista) {
 
         .map(persona => {
 
-    const inicial =
-        persona.nombre
-            .charAt(0)
-            .toUpperCase();
-
-    const ubicacion = [
-
-        persona.ciudad,
-        persona.estado,
-        persona.pais
-
-    ]
-        .filter(Boolean)
-        .join(", ");
+            const inicial =
+                persona.nombre
+                    .charAt(0)
+                    .toUpperCase();
 
 
-    return `
+            const ubicacion = [
 
-        <article
-            class="tarjeta-familiar"
-            onclick="abrirPerfil('${persona.id}')"
-            style="cursor:pointer;"
-        >
+                persona.ciudad,
+                persona.estado,
+                persona.pais
 
-            <div class="avatar">
-
-                ${
-                    persona.foto
-
-                    ? `<img
-                        src="${persona.foto}"
-                        alt="${persona.nombre}"
-                    >`
-
-                    : inicial
-                }
-
-            </div>
+            ]
+                .filter(Boolean)
+                .join(", ");
 
 
-            <h2>
-                ${persona.nombre}
-            </h2>
+            return `
+
+                <article
+                    class="tarjeta-familiar"
+                    onclick="abrirPerfil('${persona.id}')"
+                    style="cursor:pointer;"
+                >
+
+                    <div class="avatar">
+
+                        ${
+                            persona.foto
+
+                            ? `<img
+                                src="${persona.foto}"
+                                alt="${persona.nombre}"
+                              >`
+
+                            : inicial
+
+                        }
+
+                    </div>
 
 
-            <div class="dato">
-
-                🎂
-                <strong>
-                    Cumpleaños:
-                </strong>
-
-                ${persona.fecha}
-
-            </div>
+                    <h2>
+                        ${persona.nombre}
+                    </h2>
 
 
-            <div class="dato">
+                    <div class="dato">
 
-                ${
-                    persona.genero === "F"
-                        ? "👩"
-                        : "👨"
-                }
+                        🎂
+                        <strong>
+                            Cumpleaños:
+                        </strong>
 
-                ${
-                    persona.genero === "F"
-                        ? "Femenino"
-                        : "Masculino"
-                }
+                        ${persona.fecha}
 
-            </div>
+                    </div>
 
 
-            <div class="dato">
+                    <div class="dato">
 
-                🌎
+                        ${
+                            persona.genero === "F"
+                                ? "👩"
+                                : "👨"
+                        }
 
-                <strong>
-                    Ubicación:
-                </strong>
+                        ${
+                            persona.genero === "F"
+                                ? "Femenino"
+                                : "Masculino"
+                        }
 
-                ${
-                    ubicacion ||
-                    "Información pendiente"
-                }
-
-            </div>
-
-
-            <div class="dato">
-
-                ${
-                    persona.estatus === "Vivo"
-                        ? "🟢"
-                        : "⚪"
-                }
-
-                ${persona.estatus}
-
-            </div>
+                    </div>
 
 
-            <span class="id-familiar">
+                    <div class="dato">
 
-                ${persona.id}
+                        🌎
 
-            </span>
+                        <strong>
+                            Ubicación:
+                        </strong>
 
-        </article>
-            <hr>
+                        ${
+                            ubicacion ||
+                            "Información pendiente"
+                        }
 
-        `)
+                    </div>
+
+
+                    <div class="dato">
+
+                        ${
+                            persona.estatus === "Vivo"
+                                ? "🟢"
+                                : "⚪"
+                        }
+
+                        ${persona.estatus}
+
+                    </div>
+
+
+                    <span class="id-familiar">
+
+                        ${persona.id}
+
+                    </span>
+
+                </article>
+
+            `;
+
+        })
 
         .join("");
 
 }
-
 // ============================================================
 // ABRIR PERFIL
 // ============================================================
