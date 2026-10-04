@@ -60,45 +60,49 @@ async function cargarFamilia() {
 
     try {
 
-        const respuesta =
-            await fetch("familia.json");
+        familia =
+            await FamiliaCuenca.cargar();
 
-        if (!respuesta.ok) {
-
-            throw new Error(
-                "No se pudo cargar familia.json"
-            );
-
-        }
-
-        familia = await respuesta.json();
 
         prepararFiltros();
 
+
         actualizarEstadisticas();
+
 
         mostrarResultados(familia);
 
+
         mostrarCumpleanos();
 
+
         actualizarTablero();
+
 
     }
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Error cargando la Familia Cuenca:",
+            error
+        );
+
 
         searchResults.innerHTML = `
+
             <div class="no-results">
-                No fue posible cargar la información familiar.
+
+                No fue posible cargar
+                la información familiar.
+
             </div>
+
         `;
 
     }
 
 }
-
 
 /* ============================================================
    MENÚ
