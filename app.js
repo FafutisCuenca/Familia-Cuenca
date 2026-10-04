@@ -1048,6 +1048,10 @@ function cerrarModal() {
 //
 // ============================================================
 
+// ============================================================
+// POPUP DE FAMILIARES FINADOS
+// ============================================================
+
 function iniciarPopupFinados() {
 
     const boton =
@@ -1074,10 +1078,25 @@ function iniciarPopupFinados() {
         );
 
 
-    if (!boton || !modal) {
+    // --------------------------------------------------------
+    // VALIDACIÓN
+    // --------------------------------------------------------
+
+    if (!boton) {
 
         console.warn(
-            "No se encontró el popup de familiares finados."
+            "No se encontró el botón #mostrarFinados."
+        );
+
+        return;
+
+    }
+
+
+    if (!modal) {
+
+        console.warn(
+            "No se encontró el modal #finadosModal."
         );
 
         return;
@@ -1089,7 +1108,17 @@ function iniciarPopupFinados() {
     // ABRIR POPUP
     // ========================================================
 
-    function abrirFinados() {
+    function abrirFinados(
+        event
+    ) {
+
+        if (event) {
+            event.preventDefault();
+        }
+
+
+        // Cargar siempre la información
+        // más reciente antes de mostrarla.
 
         cargarListaFinados();
 
@@ -1135,7 +1164,7 @@ function iniciarPopupFinados() {
 
 
     // ========================================================
-    // BOTÓN
+    // BOTÓN PRINCIPAL
     // ========================================================
 
     boton.addEventListener(
@@ -1193,8 +1222,6 @@ function iniciarPopupFinados() {
     );
 
 }
-
-
 // ============================================================
 // CARGAR LISTA DE FINADOS
 // ============================================================
