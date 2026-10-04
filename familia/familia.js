@@ -18,7 +18,18 @@ async function iniciarDirectorio() {
 
         mostrarTotal();
 
-        mostrarFamilia(integrantesFamilia);
+        // ----------------------------------------------------
+        // Por defecto solamente mostramos familiares vivos
+        // ----------------------------------------------------
+
+        const familiaresVivos =
+            integrantesFamilia.filter(
+                persona => persona.estatus === "Vivo"
+            );
+
+        mostrarFamilia(
+            familiaresVivos
+        );
 
     } catch (error) {
 
@@ -277,10 +288,20 @@ document
                 this.value.trim();
 
 
+            // ------------------------------------------------
+            // Si no hay texto, regresamos a los familiares vivos
+            // ------------------------------------------------
+
             if (!texto) {
 
+                const familiaresVivos =
+                    integrantesFamilia.filter(
+                        persona =>
+                            persona.estatus === "Vivo"
+                    );
+
                 mostrarFamilia(
-                    integrantesFamilia
+                    familiaresVivos
                 );
 
                 return;
@@ -288,9 +309,25 @@ document
             }
 
 
-            const resultados =
+            // ------------------------------------------------
+            // Buscamos normalmente
+            // ------------------------------------------------
+
+            let resultados =
                 FamiliaCuenca.buscarPorNombre(
                     texto
+                );
+
+
+            // ------------------------------------------------
+            // IMPORTANTE:
+            // El directorio normal nunca muestra finados
+            // ------------------------------------------------
+
+            resultados =
+                resultados.filter(
+                    persona =>
+                        persona.estatus === "Vivo"
                 );
 
 
