@@ -6,17 +6,27 @@ let integrantesFamilia = [];
 
 
 // ============================================================
-// INICIALIZAR
+// INICIALIZAR DIRECTORIO
 // ============================================================
 
 async function iniciarDirectorio() {
 
     try {
 
+        // ----------------------------------------------------
+        // CARGAR DATOS
+        // ----------------------------------------------------
+
         integrantesFamilia =
             await FamiliaCuenca.cargar();
 
+
+        // ----------------------------------------------------
+        // MOSTRAR TOTAL
+        // ----------------------------------------------------
+
         mostrarTotal();
+
 
         // ----------------------------------------------------
         // DIRECTORIO NORMAL
@@ -29,9 +39,17 @@ async function iniciarDirectorio() {
                     persona.estatus === "Vivo"
             );
 
+
         mostrarFamilia(
             familiaresVivos
         );
+
+
+        // ----------------------------------------------------
+        // INICIAR BUSCADOR
+        // ----------------------------------------------------
+
+        iniciarBuscador();
 
 
         // ----------------------------------------------------
@@ -40,28 +58,46 @@ async function iniciarDirectorio() {
 
         iniciarMemoriaFamiliar();
 
+
+        console.log(
+            "Directorio Familia Cuenca iniciado correctamente."
+        );
+
+
     } catch (error) {
 
-        document.getElementById(
-            "listaFamilia"
-        ).innerHTML = `
+        console.error(
+            "Error cargando Familia Cuenca:",
+            error
+        );
 
-            <div class="tarjeta-familiar">
 
-                <h2>
-                    Error cargando la información
-                </h2>
+        const contenedor =
+            document.getElementById(
+                "listaFamilia"
+            );
 
-                <p>
-                    No fue posible cargar
-                    los datos de la Familia Cuenca.
-                </p>
 
-            </div>
+        if (contenedor) {
 
-        `;
+            contenedor.innerHTML = `
 
-        console.error(error);
+                <div class="tarjeta-familiar">
+
+                    <h2>
+                        Error cargando la información
+                    </h2>
+
+                    <p>
+                        No fue posible cargar
+                        los datos de la Familia Cuenca.
+                    </p>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
@@ -74,10 +110,18 @@ async function iniciarDirectorio() {
 
 function mostrarTotal() {
 
+    // --------------------------------------------------------
+    // Intentamos encontrar el contador actual
+    // --------------------------------------------------------
+
     const elemento =
         document.getElementById(
             "totalIntegrantes"
+        ) ||
+        document.getElementById(
+            "totalFamiliares"
         );
+
 
     if (elemento) {
 
@@ -102,9 +146,19 @@ function mostrarFamilia(lista) {
 
 
     if (!contenedor) {
+
+        console.warn(
+            "No se encontró #listaFamilia"
+        );
+
         return;
+
     }
 
+
+    // --------------------------------------------------------
+    // SIN RESULTADOS
+    // --------------------------------------------------------
 
     if (lista.length === 0) {
 
@@ -130,6 +184,10 @@ function mostrarFamilia(lista) {
     }
 
 
+    // --------------------------------------------------------
+    // ORDEN ALFABÉTICO
+    // --------------------------------------------------------
+
     const listaOrdenada =
         [...lista].sort(
             (a, b) =>
@@ -139,6 +197,10 @@ function mostrarFamilia(lista) {
                 )
         );
 
+
+    // --------------------------------------------------------
+    // GENERAR TARJETAS
+    // --------------------------------------------------------
 
     contenedor.innerHTML =
         listaOrdenada.map(
@@ -220,7 +282,7 @@ function mostrarFamilia(lista) {
                                 Cumpleaños:
                             </strong>
 
-                            ${persona.fecha}
+                            ${formatearFecha(persona.fecha)}
 
                         </div>
 
@@ -296,16 +358,34 @@ function abrirPerfil(id) {
 
 
 // ============================================================
-// BUSCADOR
+// INICIAR BUSCADOR
 // ============================================================
 
-const buscador =
-    document.getElementById(
-        "buscador"
-    );
+function iniciarBuscador() {
+
+    // --------------------------------------------------------
+    // Soportar ambos IDs posibles
+    // --------------------------------------------------------
+
+    const buscador =
+        document.getElementById("buscador") ||
+        document.getElementById("familySearch");
 
 
-if (buscador) {
+    if (!buscador) {
+
+        console.warn(
+            "No se encontró el campo de búsqueda."
+        );
+
+        return;
+
+    }
+
+
+    // --------------------------------------------------------
+    // EVENTO INPUT
+    // --------------------------------------------------------
 
     buscador.addEventListener(
         "input",
@@ -317,7 +397,7 @@ if (buscador) {
 
             // ------------------------------------------------
             // SIN TEXTO
-            // Regresar a familiares vivos
+            // Mostrar nuevamente familiares vivos
             // ------------------------------------------------
 
             if (!texto) {
@@ -328,9 +408,11 @@ if (buscador) {
                             persona.estatus === "Vivo"
                     );
 
+
                 mostrarFamilia(
                     familiaresVivos
                 );
+
 
                 return;
 
@@ -358,11 +440,20 @@ if (buscador) {
                 );
 
 
+            // ------------------------------------------------
+            // MOSTRAR RESULTADOS
+            // ------------------------------------------------
+
             mostrarFamilia(
                 resultados
             );
 
         }
+    );
+
+
+    console.log(
+        "Buscador inicializado correctamente."
     );
 
 }
@@ -379,15 +470,18 @@ function iniciarMemoriaFamiliar() {
             "mostrarFinados"
         );
 
+
     const modal =
         document.getElementById(
             "finadosModal"
         );
 
+
     const cerrar =
         document.getElementById(
             "finadosModalClose"
         );
+
 
     const fondo =
         document.querySelector(
@@ -396,13 +490,13 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // Verificar elementos
+    // VERIFICAR BOTÓN
     // --------------------------------------------------------
 
-    if (!boton || !modal) {
+    if (!boton) {
 
         console.warn(
-            "No se encontró el modal de memoria familiar."
+            "No se encontró el botón #mostrarFinados."
         );
 
         return;
@@ -411,21 +505,45 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // ABRIR
+    // VERIFICAR MODAL
+    // --------------------------------------------------------
+
+    if (!modal) {
+
+        console.error(
+            "No se encontró el modal #finadosModal."
+        );
+
+        return;
+
+    }
+
+
+    // --------------------------------------------------------
+    // ABRIR MODAL
     // --------------------------------------------------------
 
     function abrirMemoria() {
 
+        console.log(
+            "Abriendo memoria familiar..."
+        );
+
+
+        // Generar la lista cada vez que se abre
         generarListaFinados();
+
 
         modal.classList.add(
             "active"
         );
 
+
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
+
 
         document.body.style.overflow =
             "hidden";
@@ -434,7 +552,7 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // CERRAR
+    // CERRAR MODAL
     // --------------------------------------------------------
 
     function cerrarMemoria() {
@@ -443,10 +561,12 @@ function iniciarMemoriaFamiliar() {
             "active"
         );
 
+
         modal.setAttribute(
             "aria-hidden",
             "true"
         );
+
 
         document.body.style.overflow =
             "";
@@ -455,7 +575,7 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // EVENTO BOTÓN
+    // BOTÓN PRINCIPAL
     // --------------------------------------------------------
 
     boton.addEventListener(
@@ -465,7 +585,7 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // BOTÓN CERRAR
+    // BOTÓN X
     // --------------------------------------------------------
 
     if (cerrar) {
@@ -479,7 +599,7 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // CERRAR AL HACER CLIC EN EL FONDO
+    // CLIC EN EL FONDO
     // --------------------------------------------------------
 
     if (fondo) {
@@ -493,7 +613,7 @@ function iniciarMemoriaFamiliar() {
 
 
     // --------------------------------------------------------
-    // ESCAPE
+    // TECLA ESC
     // --------------------------------------------------------
 
     document.addEventListener(
@@ -514,6 +634,11 @@ function iniciarMemoriaFamiliar() {
         }
     );
 
+
+    console.log(
+        "Memoria familiar inicializada correctamente."
+    );
+
 }
 
 
@@ -529,8 +654,18 @@ function generarListaFinados() {
         );
 
 
+    // --------------------------------------------------------
+    // VERIFICAR CONTENEDOR
+    // --------------------------------------------------------
+
     if (!contenedor) {
+
+        console.error(
+            "No se encontró #listaFinados."
+        );
+
         return;
+
     }
 
 
@@ -543,6 +678,12 @@ function generarListaFinados() {
             persona =>
                 persona.estatus === "Finado"
         );
+
+
+    console.log(
+        "Familiares finados encontrados:",
+        finados.length
+    );
 
 
     // --------------------------------------------------------
@@ -608,6 +749,10 @@ function generarListaFinados() {
                     .join(", ");
 
 
+                // ------------------------------------------------
+                // FOTO
+                // ------------------------------------------------
+
                 const foto =
                     persona.foto
                         ? `
@@ -618,6 +763,10 @@ function generarListaFinados() {
                           `
                         : inicial;
 
+
+                // ------------------------------------------------
+                // INFORMACIÓN
+                // ------------------------------------------------
 
                 const datosPersona = [
 
@@ -633,6 +782,10 @@ function generarListaFinados() {
                     .filter(Boolean)
                     .join(" · ");
 
+
+                // ------------------------------------------------
+                // TARJETA
+                // ------------------------------------------------
 
                 return `
 
@@ -655,9 +808,11 @@ function generarListaFinados() {
                                 ${persona.nombre}
                             </h3>
 
+
                             <p>
                                 ${datosPersona}
                             </p>
+
 
                             <span class="finado-generacion">
                                 En nuestra memoria
@@ -677,12 +832,15 @@ function generarListaFinados() {
 
 // ============================================================
 // FORMATEAR FECHA
+// Formato original del JSON: DD-MM
 // ============================================================
 
 function formatearFecha(fecha) {
 
     if (!fecha) {
+
         return "";
+
     }
 
 
@@ -691,7 +849,9 @@ function formatearFecha(fecha) {
 
 
     if (partes.length !== 2) {
+
         return fecha;
+
     }
 
 
@@ -745,6 +905,14 @@ function formatearFecha(fecha) {
 
 // ============================================================
 // ARRANCAR
+// Esperamos a que todo el HTML esté cargado
 // ============================================================
 
-iniciarDirectorio();
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        iniciarDirectorio();
+
+    }
+);
