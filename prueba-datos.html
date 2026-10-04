@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prueba Datos Familia Cuenca</title>
+</head>
+
+<body>
+
+    <h1>Prueba de datos — Familia Cuenca</h1>
+
+    <div id="resultado">
+        Cargando información...
+    </div>
+
+
+    <script src="js/familia-data.js"></script>
+
+    <script>
+
+        async function iniciarPrueba() {
+
+            try {
+
+                await FamiliaCuenca.cargar();
+
+                const datos = FamiliaCuenca.estadisticas();
+
+                document.getElementById("resultado").innerHTML = `
+
+                    <h2>Datos cargados correctamente</h2>
+
+                    <p><strong>Total:</strong> ${datos.total}</p>
+
+                    <p><strong>Mujeres:</strong> ${datos.mujeres}</p>
+
+                    <p><strong>Hombres:</strong> ${datos.hombres}</p>
+
+                    <p><strong>Vivos:</strong> ${datos.vivos}</p>
+
+                    <p><strong>Finados:</strong> ${datos.finados}</p>
+
+                    <p><strong>Con país:</strong> ${datos.conPais}</p>
+
+                    <p><strong>Sin país:</strong> ${datos.sinPais}</p>
+
+                    <h3>Países</h3>
+
+                    <p>
+                        ${datos.paises.join(", ")}
+                    </p>
+
+                `;
+
+            } catch (error) {
+
+                document.getElementById("resultado").innerHTML = `
+
+                    <h2 style="color:red;">
+                        Error cargando los datos
+                    </h2>
+
+                    <pre>${error}</pre>
+
+                `;
+
+            }
+
+        }
+
+        iniciarPrueba();
+
+    </script>
+
+</body>
+
+</html>
