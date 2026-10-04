@@ -1485,3 +1485,125 @@ function actualizarAnio() {
         new Date().getFullYear();
 
 }
+// ============================================================
+// POPUP DEL ESCUDO DE LA FAMILIA CUENCA
+// ============================================================
+
+function iniciarPopupEscudo() {
+
+    const trigger =
+        document.getElementById("escudoTrigger");
+
+    const modal =
+        document.getElementById("escudoModal");
+
+    const cerrar =
+        document.getElementById("escudoModalClose");
+
+    const fondo =
+        document.querySelector(".escudo-modal-backdrop");
+
+
+    // Si alguno de los elementos no existe,
+    // no hacemos nada.
+
+    if (!trigger || !modal) {
+        return;
+    }
+
+
+    // ========================================================
+    // ABRIR
+    // ========================================================
+
+    function abrirEscudo() {
+
+        modal.classList.add("active");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow = "hidden";
+    }
+
+
+    // ========================================================
+    // CERRAR
+    // ========================================================
+
+    function cerrarEscudo() {
+
+        modal.classList.remove("active");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow = "";
+    }
+
+
+    // ========================================================
+    // EVENTOS
+    // ========================================================
+
+    trigger.addEventListener(
+        "click",
+        abrirEscudo
+    );
+
+
+    if (cerrar) {
+
+        cerrar.addEventListener(
+            "click",
+            cerrarEscudo
+        );
+
+    }
+
+
+    if (fondo) {
+
+        fondo.addEventListener(
+            "click",
+            cerrarEscudo
+        );
+
+    }
+
+
+    // ========================================================
+    // ESCAPE
+    // ========================================================
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("active")
+            ) {
+
+                cerrarEscudo();
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// INICIAR POPUP DEL ESCUDO
+// ============================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarPopupEscudo
+);
