@@ -4,6 +4,13 @@
    Portal principal
    Fuente de datos: /data/familia.json
    Motor: /js/familia-data.js
+
+   FORMATO DE FECHAS DEL JSON:
+   DD-MM
+   Ejemplo:
+   04-01 = 4 de enero
+   11-10 = 11 de octubre
+   25-12 = 25 de diciembre
 ============================================================ */
 
 let familia = [];
@@ -57,13 +64,6 @@ async function iniciarPortal() {
 async function cargarFamilia() {
 
     try {
-
-        /*
-         * IMPORTANTE:
-         * Ya no cargamos familia.json directamente.
-         *
-         * Utilizamos el motor central FamiliaCuenca.
-         */
 
         familia =
             await FamiliaCuenca.cargar();
@@ -194,12 +194,6 @@ function configurarEventos() {
     }
 
 
-    /*
-     * Por ahora el filtro de generaciones
-     * no se utiliza porque el JSON maestro
-     * todavía no contiene el campo "generacion".
-     */
-
     if (generationFilter) {
 
         generationFilter.addEventListener(
@@ -291,9 +285,9 @@ function prepararFiltros() {
     }
 
 
-    /*
-     * PAÍSES
-     */
+    // --------------------------------------------------------
+    // PAÍSES
+    // --------------------------------------------------------
 
     const paises =
         FamiliaCuenca.paises();
@@ -321,13 +315,12 @@ function prepararFiltros() {
     );
 
 
-    /*
-     * GENERACIONES
-     *
-     * Actualmente no se generan opciones
-     * porque "generacion" no existe todavía
-     * en familia.json.
-     */
+    // --------------------------------------------------------
+    // GENERACIONES
+    // --------------------------------------------------------
+    // Actualmente no existe el campo
+    // "generacion" en familia.json.
+    // --------------------------------------------------------
 
     if (generationFilter) {
 
@@ -367,14 +360,6 @@ function ejecutarBusqueda() {
             ? genderFilter.value
             : "";
 
-
-    /*
-     * GENERACIÓN
-     *
-     * Se conserva la lectura del control,
-     * pero no se aplica porque actualmente
-     * no existe ese dato en el JSON.
-     */
 
     const generacion =
         generationFilter
@@ -418,11 +403,6 @@ function ejecutarBusqueda() {
                     !genero ||
                     persona.genero === genero;
 
-
-                /*
-                 * Solo aplicar generación
-                 * si algún día existe ese campo.
-                 */
 
                 const coincideGeneracion =
                     !generacion ||
@@ -895,12 +875,11 @@ function actualizarEstadisticas() {
     );
 
 
-    /*
-     * Las generaciones todavía no existen
-     * en el archivo maestro.
-     *
-     * Mostramos 0 temporalmente.
-     */
+    // --------------------------------------------------------
+    // GENERACIONES
+    // --------------------------------------------------------
+    // Todavía no existe este campo en el JSON.
+    // --------------------------------------------------------
 
     animarNumero(
         "totalGeneraciones",
@@ -949,7 +928,8 @@ function animarNumero(
 
     if (objetivo === 0) {
 
-        elemento.textContent = "0";
+        elemento.textContent =
+            "0";
 
         return;
 
@@ -1092,7 +1072,26 @@ function ordenarCumpleanos(
 
 
 // ============================================================
-// CONVERTIR FECHA
+// CONVERTIR CUMPLEAÑOS A FECHA
+// ============================================================
+//
+// IMPORTANTE:
+//
+// familia.json utiliza:
+// DD-MM
+//
+// Ejemplos:
+//
+// 04-01 → 4 de enero
+// 19-07 → 19 de julio
+// 04-09 → 4 de septiembre
+// 11-10 → 11 de octubre
+// 25-12 → 25 de diciembre
+//
+// JavaScript utiliza:
+// new Date(año, MES, DÍA)
+//
+// Por eso el mes lleva -1.
 // ============================================================
 
 function convertirFechaCumple(
@@ -1100,21 +1099,45 @@ function convertirFechaCumple(
     ano
 ) {
 
+    if (!fecha) {
+        return null;
+    }
+
+
     const partes =
         fecha.split("-");
 
-    // El formato maestro de familia.json es DD-MM
+
+    if (partes.length !== 2) {
+        return null;
+    }
+
+
+    // DD
     const dia =
         parseInt(
             partes[0],
             10
         );
 
+
+    // MM
     const mes =
         parseInt(
             partes[1],
             10
         ) - 1;
+
+
+    if (
+        isNaN(dia) ||
+        isNaN(mes)
+    ) {
+
+        return null;
+
+    }
+
 
     return new Date(
         ano,
@@ -1124,6 +1147,7 @@ function convertirFechaCumple(
 
 }
 
+
 // ============================================================
 // DISTANCIA AL PRÓXIMO CUMPLEAÑOS
 // ============================================================
@@ -1132,6 +1156,11 @@ function calcularDistanciaCalendario(
     fecha,
     hoy
 ) {
+
+    if (!fecha) {
+        return Infinity;
+    }
+
 
     const inicio =
         new Date(
@@ -1158,29 +1187,58 @@ function calcularDistanciaCalendario(
 // ============================================================
 // TARJETA DE CUMPLEAÑOS
 // ============================================================
+//
+// IMPORTANTE:
+//
+// El JSON es DD-MM.
+//
+// Por lo tanto:
+//
+// partes[0] = DÍA
+// partes[1] = MES
+//
+// ============================================================
 
 function crearTarjetaCumpleanos(
     persona
 ) {
 
+    if (!persona.fecha) {
+        return "";
+    }
+
+
     const partes =
         persona.fecha.split("-");
 
 
-    const mes =
-        obtenerNombreMes(
-            parseInt(
-                partes[0],
-                10
-            )
+    if (partes.length !== 2) {
+        return "";
+    }
+
+
+    // DD
+    const dia =
+        parseInt(
+            partes[0],
+            10
         );
 
 
-    const dia =
+    // MM
+    const mesNumero =
         parseInt(
             partes[1],
             10
         );
+
+
+    const mes =
+        obtenerNombreMes(
+            mesNumero
+        );
+
+
     return `
 
         <article class="birthday-card-item">
@@ -1245,6 +1303,16 @@ function obtenerNombreMes(
     ];
 
 
+    if (
+        numero < 1 ||
+        numero > 12
+    ) {
+
+        return "";
+
+    }
+
+
     return meses[
         numero - 1
     ];
@@ -1297,25 +1365,32 @@ function actualizarTablero() {
         siguiente.nombre;
 
 
+    // --------------------------------------------------------
+    // FORMATO DD-MM
+    // --------------------------------------------------------
+
     const partes =
-    siguiente.fecha.split("-");
+        siguiente.fecha.split("-");
 
-const dia =
-    parseInt(
-        partes[0],
-        10
-    );
 
-const mes =
-    parseInt(
-        partes[1],
-        10
-    );
+    const dia =
+        parseInt(
+            partes[0],
+            10
+        );
 
-fecha.textContent =
-    `${dia} de ${
-        obtenerNombreMes(mes)
-    }`;
+
+    const mes =
+        parseInt(
+            partes[1],
+            10
+        );
+
+
+    fecha.textContent =
+        `${dia} de ${
+            obtenerNombreMes(mes)
+        }`;
 
 }
 
