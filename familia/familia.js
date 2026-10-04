@@ -19,17 +19,26 @@ async function iniciarDirectorio() {
         mostrarTotal();
 
         // ----------------------------------------------------
-        // Por defecto solamente mostramos familiares vivos
+        // DIRECTORIO NORMAL
+        // Solamente familiares vivos
         // ----------------------------------------------------
 
         const familiaresVivos =
             integrantesFamilia.filter(
-                persona => persona.estatus === "Vivo"
+                persona =>
+                    persona.estatus === "Vivo"
             );
 
         mostrarFamilia(
             familiaresVivos
         );
+
+
+        // ----------------------------------------------------
+        // INICIAR MEMORIA FAMILIAR
+        // ----------------------------------------------------
+
+        iniciarMemoriaFamiliar();
 
     } catch (error) {
 
@@ -65,10 +74,17 @@ async function iniciarDirectorio() {
 
 function mostrarTotal() {
 
-    document.getElementById(
-        "totalIntegrantes"
-    ).textContent =
-        integrantesFamilia.length;
+    const elemento =
+        document.getElementById(
+            "totalIntegrantes"
+        );
+
+    if (elemento) {
+
+        elemento.textContent =
+            integrantesFamilia.length;
+
+    }
 
 }
 
@@ -83,6 +99,11 @@ function mostrarFamilia(lista) {
         document.getElementById(
             "listaFamilia"
         );
+
+
+    if (!contenedor) {
+        return;
+    }
 
 
     if (lista.length === 0) {
@@ -278,9 +299,15 @@ function abrirPerfil(id) {
 // BUSCADOR
 // ============================================================
 
-document
-    .getElementById("buscador")
-    .addEventListener(
+const buscador =
+    document.getElementById(
+        "buscador"
+    );
+
+
+if (buscador) {
+
+    buscador.addEventListener(
         "input",
         function () {
 
@@ -289,7 +316,8 @@ document
 
 
             // ------------------------------------------------
-            // Si no hay texto, regresamos a los familiares vivos
+            // SIN TEXTO
+            // Regresar a familiares vivos
             // ------------------------------------------------
 
             if (!texto) {
@@ -310,7 +338,7 @@ document
 
 
             // ------------------------------------------------
-            // Buscamos normalmente
+            // BUSCAR
             // ------------------------------------------------
 
             let resultados =
@@ -320,8 +348,7 @@ document
 
 
             // ------------------------------------------------
-            // IMPORTANTE:
-            // El directorio normal nunca muestra finados
+            // EL DIRECTORIO NORMAL NO MUESTRA FINADOS
             // ------------------------------------------------
 
             resultados =
@@ -337,6 +364,383 @@ document
 
         }
     );
+
+}
+
+
+// ============================================================
+// MEMORIA FAMILIAR
+// ============================================================
+
+function iniciarMemoriaFamiliar() {
+
+    const boton =
+        document.getElementById(
+            "mostrarFinados"
+        );
+
+    const modal =
+        document.getElementById(
+            "finadosModal"
+        );
+
+    const cerrar =
+        document.getElementById(
+            "finadosModalClose"
+        );
+
+    const fondo =
+        document.querySelector(
+            ".finados-modal-backdrop"
+        );
+
+
+    // --------------------------------------------------------
+    // Verificar elementos
+    // --------------------------------------------------------
+
+    if (!boton || !modal) {
+
+        console.warn(
+            "No se encontró el modal de memoria familiar."
+        );
+
+        return;
+
+    }
+
+
+    // --------------------------------------------------------
+    // ABRIR
+    // --------------------------------------------------------
+
+    function abrirMemoria() {
+
+        generarListaFinados();
+
+        modal.classList.add(
+            "active"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    // --------------------------------------------------------
+    // CERRAR
+    // --------------------------------------------------------
+
+    function cerrarMemoria() {
+
+        modal.classList.remove(
+            "active"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    // --------------------------------------------------------
+    // EVENTO BOTÓN
+    // --------------------------------------------------------
+
+    boton.addEventListener(
+        "click",
+        abrirMemoria
+    );
+
+
+    // --------------------------------------------------------
+    // BOTÓN CERRAR
+    // --------------------------------------------------------
+
+    if (cerrar) {
+
+        cerrar.addEventListener(
+            "click",
+            cerrarMemoria
+        );
+
+    }
+
+
+    // --------------------------------------------------------
+    // CERRAR AL HACER CLIC EN EL FONDO
+    // --------------------------------------------------------
+
+    if (fondo) {
+
+        fondo.addEventListener(
+            "click",
+            cerrarMemoria
+        );
+
+    }
+
+
+    // --------------------------------------------------------
+    // ESCAPE
+    // --------------------------------------------------------
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains(
+                    "active"
+                )
+            ) {
+
+                cerrarMemoria();
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// GENERAR LISTA DE FAMILIARES FINADOS
+// ============================================================
+
+function generarListaFinados() {
+
+    const contenedor =
+        document.getElementById(
+            "listaFinados"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // FILTRAR FINADOS
+    // --------------------------------------------------------
+
+    const finados =
+        integrantesFamilia.filter(
+            persona =>
+                persona.estatus === "Finado"
+        );
+
+
+    // --------------------------------------------------------
+    // SI NO EXISTEN
+    // --------------------------------------------------------
+
+    if (finados.length === 0) {
+
+        contenedor.innerHTML = `
+
+            <div class="finados-empty">
+
+                <p>
+                    Aún no hay familiares registrados
+                    en esta sección.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // --------------------------------------------------------
+    // ORDEN ALFABÉTICO
+    // --------------------------------------------------------
+
+    const listaOrdenada =
+        [...finados].sort(
+            (a, b) =>
+                a.nombre.localeCompare(
+                    b.nombre,
+                    "es"
+                )
+        );
+
+
+    // --------------------------------------------------------
+    // GENERAR TARJETAS
+    // --------------------------------------------------------
+
+    contenedor.innerHTML =
+        listaOrdenada.map(
+            persona => {
+
+                const inicial =
+                    persona.nombre
+                        .charAt(0)
+                        .toUpperCase();
+
+
+                const ubicacion = [
+
+                    persona.ciudad,
+                    persona.estado,
+                    persona.pais
+
+                ]
+                    .filter(Boolean)
+                    .join(", ");
+
+
+                const foto =
+                    persona.foto
+                        ? `
+                            <img
+                                src="${persona.foto}"
+                                alt="${persona.nombre}"
+                            >
+                          `
+                        : inicial;
+
+
+                const datosPersona = [
+
+                    persona.fecha
+                        ? `🎂 ${formatearFecha(persona.fecha)}`
+                        : "",
+
+                    ubicacion
+                        ? `🌎 ${ubicacion}`
+                        : ""
+
+                ]
+                    .filter(Boolean)
+                    .join(" · ");
+
+
+                return `
+
+                    <article
+                        class="finado-card"
+                        onclick="abrirPerfil('${persona.id}')"
+                        style="cursor:pointer;"
+                    >
+
+                        <div class="finado-avatar">
+
+                            ${foto}
+
+                        </div>
+
+
+                        <div class="finado-info">
+
+                            <h3>
+                                ${persona.nombre}
+                            </h3>
+
+                            <p>
+                                ${datosPersona}
+                            </p>
+
+                            <span class="finado-generacion">
+                                En nuestra memoria
+                            </span>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+// ============================================================
+// FORMATEAR FECHA
+// ============================================================
+
+function formatearFecha(fecha) {
+
+    if (!fecha) {
+        return "";
+    }
+
+
+    const partes =
+        fecha.split("-");
+
+
+    if (partes.length !== 2) {
+        return fecha;
+    }
+
+
+    const dia =
+        parseInt(
+            partes[0],
+            10
+        );
+
+
+    const mes =
+        parseInt(
+            partes[1],
+            10
+        );
+
+
+    const meses = [
+
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+
+    ];
+
+
+    if (
+        !dia ||
+        !mes ||
+        !meses[mes - 1]
+    ) {
+
+        return fecha;
+
+    }
+
+
+    return `${dia} de ${meses[mes - 1]}`;
+
+}
 
 
 // ============================================================
