@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Familia Cuenca — Directorio</title>
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <h1>Familia Cuenca</h1>
+
+        <p>Directorio familiar</p>
+
+    </header>
+
+
+    <main>
+
+        <!-- =================================================
+             BUSCADOR
+        ================================================== -->
+
+        <section>
+
+            <input
+                type="search"
+                id="buscador"
+                placeholder="Buscar familiar..."
+            >
+
+        </section>
+
+
+        <!-- =================================================
+             RESUMEN
+        ================================================== -->
+
+        <section>
+
+            <p>
+                Integrantes registrados:
+                <strong id="totalIntegrantes">0</strong>
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             LISTADO
+        ================================================== -->
+
+        <section>
+
+            <div id="listaFamilia">
+
+                Cargando información...
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         MOTOR DE DATOS
+    ====================================================== -->
+
+    <script src="../js/familia-data.js"></script>
+
+
+    <!-- =====================================================
+         LÓGICA DEL DIRECTORIO
+    ====================================================== -->
+
+    <script src="familia.js"></script>
+
+
+</body>
+
+</html>
