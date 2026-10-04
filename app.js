@@ -1239,15 +1239,25 @@ function cargarListaFinados() {
     }
 
 
-    const finados =
-        familia.filter(
+const finados =
+    familia
+        .filter(
             persona =>
                 persona.estatus &&
                 persona.estatus
                     .toLowerCase()
                     .trim() === "finado"
+        )
+        .sort(
+            (a, b) =>
+                a.nombre.localeCompare(
+                    b.nombre,
+                    "es",
+                    {
+                        sensitivity: "base"
+                    }
+                )
         );
-
 
     // --------------------------------------------------------
     // SIN REGISTROS
