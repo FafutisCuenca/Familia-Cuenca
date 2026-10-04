@@ -16,7 +16,7 @@ const FamiliaCuenca = (() => {
 
         try {
 
-            const respuesta = await fetch("../data/familia.json");
+            const respuesta = await fetch("data/familia.json");
 
             if (!respuesta.ok) {
                 throw new Error(
