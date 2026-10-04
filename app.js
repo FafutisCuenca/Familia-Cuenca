@@ -1279,6 +1279,72 @@ function crearTarjetaCumpleanos(
 
 }
 
+// ============================================================
+// FORMATEAR CUMPLEAÑOS PARA MOSTRAR AL USUARIO
+// ============================================================
+//
+// Recibe:
+// DD-MM
+//
+// Devuelve:
+// 4 de Enero
+//
+// Ejemplo:
+// "04-01" → "4 de Enero"
+// "11-10" → "11 de Octubre"
+// ============================================================
+
+function formatearCumpleanos(
+    fecha
+) {
+
+    if (!fecha) {
+        return "";
+    }
+
+
+    const partes =
+        fecha.split("-");
+
+
+    if (partes.length !== 2) {
+        return fecha;
+    }
+
+
+    const dia =
+        parseInt(
+            partes[0],
+            10
+        );
+
+
+    const mes =
+        parseInt(
+            partes[1],
+            10
+        );
+
+
+    const nombreMes =
+        obtenerNombreMes(
+            mes
+        );
+
+
+    if (
+        !dia ||
+        !nombreMes
+    ) {
+
+        return fecha;
+
+    }
+
+
+    return `${dia} de ${nombreMes}`;
+
+}
 
 // ============================================================
 // NOMBRE DEL MES
