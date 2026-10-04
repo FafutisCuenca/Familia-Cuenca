@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Familia Cuenca — Perfil</title>
+
+    <link
+        rel="stylesheet"
+        href="familia.css"
+    >
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <h1>Familia Cuenca</h1>
+
+        <p>Perfil familiar</p>
+
+    </header>
+
+
+    <main>
+
+        <div id="perfil">
+
+            Cargando información...
+
+        </div>
+
+    </main>
+
+
+    <script src="../js/familia-data.js"></script>
+
+
+    <script>
+
+        async function cargarPerfil() {
+
+            try {
+
+                await FamiliaCuenca.cargar();
+
+
+                // --------------------------------------------
+                // Obtener ID desde la URL
+                // --------------------------------------------
+
+                const parametros =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+
+                const id =
+                    parametros.get("id");
+
+
+                if (!id) {
+
+                    mostrarError(
+                        "No se especificó un familiar."
+                    );
+
+                    return;
+
+                }
+
+
+                // --------------------------------------------
+                // Buscar familiar
+                // --------------------------------------------
+
+                const persona =
+                    FamiliaCuenca.buscarPorId(id);
+
+
+                if (!persona) {
+
+                    mostrarError(
+                        "No encontramos ese familiar."
+                    );
+
+                    return;
+
+                }
+
+
+                mostrarPerfil(persona);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                mostrarError(
+                    "No fue posible cargar la información."
+                );
+
+            }
+
+        }
+
+
+        // ====================================================
+        // MOSTRAR PERFIL
+        // ====================================================
+
+        function mostrarPerfil(persona) {
+
+            const contenedor =
+                document.getElementById("perfil");
+
+
+            const ubicacion = [
+
+                persona.ciudad,
+                persona.estado,
+                persona.pais
+
+            ]
+                .filter(Boolean)
+                .join(", ");
+
+
+            const inicial =
+                persona.nombre
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            contenedor.innerHTML = `
+
+                <article class="perfil-familiar">
+
+
+                    <div class="avatar avatar-grande">
+
+                        ${
+                            persona.foto
+
+                            ? `<img
+                                src="${persona.foto}"
+                                alt="${persona.nombre}"
+                              >`
+
+                            : inicial
+
+                        }
+
+                    </div>
+
+
+                    <h2>
+                        ${persona.nombre}
+                    </h2>
+
+
+                    <div class="perfil-id">
+
+                        ${persona.id}
+
+                    </div>
+
+
+                    <div class="datos-perfil">
+
+
+                        <div class="dato">
+
+                            🎂
+
+                            <strong>
+                                Cumpleaños
+                            </strong>
+
+                            <br>
+
+                            ${persona.fecha}
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            ${
+                                persona.genero === "F"
+                                    ? "👩"
+                                    : "👨"
+                            }
+
+                            <strong>
+                                Género
+                            </strong>
+
+                            <br>
+
+                            ${
+                                persona.genero === "F"
+                                    ? "Femenino"
+                                    : "Masculino"
+                            }
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            🌎
+
+                            <strong>
+                                País
+                            </strong>
+
+                            <br>
+
+                            ${
+                                persona.pais ||
+                                "Información pendiente"
+                            }
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            📍
+
+                            <strong>
+                                Ubicación
+                            </strong>
+
+                            <br>
+
+                            ${
+                                ubicacion ||
+                                "Información pendiente"
+                            }
+
+                        </div>
+
+
+                        <div class="dato">
+
+                            ${
+                                persona.estatus === "Vivo"
+                                    ? "🟢"
+                                    : "⚪"
+                            }
+
+                            <strong>
+                                Estatus
+                            </strong>
+
+                            <br>
+
+                            ${persona.estatus}
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="acciones">
+
+                        <a
+                            href="index.html"
+                            class="boton"
+                        >
+
+                            ← Regresar al directorio
+
+                        </a>
+
+                    </div>
+
+
+                </article>
+
+            `;
+
+        }
+
+
+        // ====================================================
+        // ERROR
+        // ====================================================
+
+        function mostrarError(mensaje) {
+
+            document.getElementById(
+                "perfil"
+            ).innerHTML = `
+
+                <article class="tarjeta-familiar">
+
+                    <h2>
+                        Información no disponible
+                    </h2>
+
+                    <p>
+                        ${mensaje}
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="boton"
+                    >
+
+                        ← Regresar
+
+                    </a>
+
+                </article>
+
+            `;
+
+        }
+
+
+        cargarPerfil();
+
+    </script>
+
+
+</body>
+
+</html>
