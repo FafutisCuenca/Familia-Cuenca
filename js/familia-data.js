@@ -16,8 +16,13 @@ const FamiliaCuenca = (() => {
 
         try {
 
-            const respuesta = await fetch("data/familia.json");
+            const rutaDatos = new URL(
+                "../data/familia.json",
+                document.currentScript.src
+            );
 
+const respuesta = await fetch(rutaDatos);
+            
             if (!respuesta.ok) {
                 throw new Error(
                     `No se pudo cargar familia.json (${respuesta.status})`
