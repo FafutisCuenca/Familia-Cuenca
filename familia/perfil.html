@@ -17,323 +17,768 @@
         href="familia.css"
     >
 
-</head>
+    <style>
+
+        /* =====================================================
+           FICHA INDIVIDUAL
+           ===================================================== */
+
+        .pagina-perfil {
+
+            max-width: 900px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+
+        }
 
 
-<body>
+        .perfil-familiar {
 
-    <header>
+            background: white;
 
-        <h1>Familia Cuenca</h1>
+            border-radius: 20px;
 
-        <p>Perfil familiar</p>
+            padding: 40px;
 
-    </header>
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.10);
 
+            text-align: center;
 
-    <main>
+            position: relative;
 
-        <div id="perfil">
+            overflow: hidden;
 
-            Cargando información...
-
-        </div>
-
-    </main>
+        }
 
 
-    <script src="../js/familia-data.js"></script>
+        /* Línea superior */
 
+        .perfil-familiar::before {
 
-    <script>
+            content: "";
 
-        async function cargarPerfil() {
+            position: absolute;
 
-            try {
+            top: 0;
 
-                await FamiliaCuenca.cargar();
+            left: 0;
 
+            right: 0;
 
-                // --------------------------------------------
-                // Obtener ID desde la URL
-                // --------------------------------------------
+            height: 7px;
 
-                const parametros =
-                    new URLSearchParams(
-                        window.location.search
-                    );
-
-
-                const id =
-                    parametros.get("id");
-
-
-                if (!id) {
-
-                    mostrarError(
-                        "No se especificó un familiar."
-                    );
-
-                    return;
-
-                }
-
-
-                // --------------------------------------------
-                // Buscar familiar
-                // --------------------------------------------
-
-                const persona =
-                    FamiliaCuenca.buscarPorId(id);
-
-
-                if (!persona) {
-
-                    mostrarError(
-                        "No encontramos ese familiar."
-                    );
-
-                    return;
-
-                }
-
-
-                mostrarPerfil(persona);
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                mostrarError(
-                    "No fue posible cargar la información."
+            background:
+                linear-gradient(
+                    90deg,
+                    #0b3d91,
+                    #2c6bb2,
+                    #0b3d91
                 );
+
+        }
+
+
+        /* Avatar */
+
+        .avatar-perfil {
+
+            width: 150px;
+
+            height: 150px;
+
+            margin: 10px auto 20px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            background: #e9eef5;
+
+            color: #0b3d91;
+
+            font-size: 64px;
+
+            font-weight: bold;
+
+            border: 5px solid white;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.15);
+
+        }
+
+
+        .avatar-perfil img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        /* Nombre */
+
+        .nombre-perfil {
+
+            margin: 10px 0 5px;
+
+            font-size: 30px;
+
+            color: #183b63;
+
+        }
+
+
+        /* ID */
+
+        .id-perfil {
+
+            display: inline-block;
+
+            background: #eef3f8;
+
+            color: #64748b;
+
+            padding: 5px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            margin-bottom: 30px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* Información */
+
+        .datos-perfil {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 15px;
+
+            text-align: left;
+
+            margin-top: 20px;
+
+        }
+
+
+        .dato-perfil {
+
+            background: #f7f9fb;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            border: 1px solid #e5eaf0;
+
+        }
+
+
+        .dato-perfil .icono {
+
+            font-size: 25px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .dato-perfil .etiqueta {
+
+            display: block;
+
+            font-size: 12px;
+
+            color: #718096;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .dato-perfil .valor {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            color: #26384a;
+
+        }
+
+
+        /* Estado */
+
+        .estado-vivo {
+
+            color: #198754 !important;
+
+        }
+
+
+        .estado-finado {
+
+            color: #6c757d !important;
+
+        }
+
+
+        /* Navegación */
+
+        .acciones-perfil {
+
+            margin-top: 35px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .boton-perfil {
+
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            background: #0b3d91;
+
+            color: white;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        .boton-perfil:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 12px rgba(0,0,0,0.15);
+
+        }
+
+
+        .boton-secundario {
+
+            background: #eef3f8;
+
+            color: #183b63;
+
+        }
+
+
+        /* Pie */
+
+        .leyenda-perfil {
+
+            margin-top: 25px;
+
+            color: #8a94a6;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =====================================================
+           MÓVIL
+           ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .pagina-perfil {
+
+                margin: 20px auto;
+
+                padding: 0 12px;
+
+            }
+
+
+            .perfil-familiar {
+
+                padding: 30px 20px;
+
+                border-radius: 15px;
+
+            }
+
+
+            .nombre-perfil {
+
+                font-size: 23px;
+
+            }
+
+
+            .avatar-perfil {
+
+                width: 120px;
+
+                height: 120px;
+
+                font-size: 50px;
+
+            }
+
+
+            .datos-perfil {
+
+                grid-template-columns: 1fr;
 
             }
 
         }
 
+    </style>
 
-        // ====================================================
-        // MOSTRAR PERFIL
-        // ====================================================
-
-        function mostrarPerfil(persona) {
-
-            const contenedor =
-                document.getElementById("perfil");
+</head>
 
 
-            const ubicacion = [
-
-                persona.ciudad,
-                persona.estado,
-                persona.pais
-
-            ]
-                .filter(Boolean)
-                .join(", ");
+<body>
 
 
-            const inicial =
-                persona.nombre
-                    .charAt(0)
-                    .toUpperCase();
+<header>
+
+    <h1>Familia Cuenca</h1>
+
+    <p>Perfil familiar</p>
+
+</header>
 
 
-            contenedor.innerHTML = `
+<main class="pagina-perfil">
 
-                <article class="perfil-familiar">
+    <div id="perfil">
+
+        Cargando información...
+
+    </div>
+
+</main>
 
 
-                    <div class="avatar avatar-grande">
+<!-- =========================================================
+     MOTOR DE DATOS
+     ========================================================= -->
+
+<script src="../js/familia-data.js"></script>
+
+
+<!-- =========================================================
+     PERFIL
+     ========================================================= -->
+
+<script>
+
+async function cargarPerfil() {
+
+    try {
+
+        await FamiliaCuenca.cargar();
+
+
+        const parametros =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const id =
+            parametros.get("id");
+
+
+        if (!id) {
+
+            mostrarError(
+                "No se especificó un familiar."
+            );
+
+            return;
+
+        }
+
+
+        const persona =
+            FamiliaCuenca.buscarPorId(id);
+
+
+        if (!persona) {
+
+            mostrarError(
+                "No encontramos ese familiar."
+            );
+
+            return;
+
+        }
+
+
+        mostrarPerfil(persona);
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando el perfil:",
+            error
+        );
+
+
+        mostrarError(
+            "No fue posible cargar la información."
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// MOSTRAR PERFIL
+// ============================================================
+
+function mostrarPerfil(persona) {
+
+    const contenedor =
+        document.getElementById(
+            "perfil"
+        );
+
+
+    const ubicacion = [
+
+        persona.ciudad,
+        persona.estado,
+        persona.pais
+
+    ]
+        .filter(Boolean)
+        .join(", ");
+
+
+    const inicial =
+        persona.nombre
+            .charAt(0)
+            .toUpperCase();
+
+
+    const generoIcono =
+        persona.genero === "F"
+            ? "👩"
+            : "👨";
+
+
+    const generoTexto =
+        persona.genero === "F"
+            ? "Femenino"
+            : "Masculino";
+
+
+    const estatusIcono =
+        persona.estatus === "Vivo"
+            ? "🟢"
+            : "⚪";
+
+
+    const estatusClase =
+        persona.estatus === "Vivo"
+            ? "estado-vivo"
+            : "estado-finado";
+
+
+    const foto = persona.foto
+
+        ? `
+            <img
+                src="${persona.foto}"
+                alt="${persona.nombre}"
+            >
+          `
+
+        : inicial;
+
+
+    contenedor.innerHTML = `
+
+        <article class="perfil-familiar">
+
+
+            <div class="avatar-perfil">
+
+                ${foto}
+
+            </div>
+
+
+            <h2 class="nombre-perfil">
+
+                ${persona.nombre}
+
+            </h2>
+
+
+            <div class="id-perfil">
+
+                ${persona.id}
+
+            </div>
+
+
+            <section class="datos-perfil">
+
+
+                <div class="dato-perfil">
+
+                    <div class="icono">
+
+                        🎂
+
+                    </div>
+
+                    <span class="etiqueta">
+
+                        Cumpleaños
+
+                    </span>
+
+                    <span class="valor">
+
+                        ${persona.fecha}
+
+                    </span>
+
+                </div>
+
+
+                <div class="dato-perfil">
+
+                    <div class="icono">
+
+                        ${generoIcono}
+
+                    </div>
+
+                    <span class="etiqueta">
+
+                        Género
+
+                    </span>
+
+                    <span class="valor">
+
+                        ${generoTexto}
+
+                    </span>
+
+                </div>
+
+
+                <div class="dato-perfil">
+
+                    <div class="icono">
+
+                        🌎
+
+                    </div>
+
+                    <span class="etiqueta">
+
+                        País
+
+                    </span>
+
+                    <span class="valor">
 
                         ${
-                            persona.foto
-
-                            ? `<img
-                                src="${persona.foto}"
-                                alt="${persona.nombre}"
-                              >`
-
-                            : inicial
-
+                            persona.pais ||
+                            "Información pendiente"
                         }
 
-                    </div>
+                    </span>
+
+                </div>
 
 
-                    <h2>
-                        ${persona.nombre}
-                    </h2>
+                <div class="dato-perfil">
 
+                    <div class="icono">
 
-                    <div class="perfil-id">
-
-                        ${persona.id}
-
-                    </div>
-
-
-                    <div class="datos-perfil">
-
-
-                        <div class="dato">
-
-                            🎂
-
-                            <strong>
-                                Cumpleaños
-                            </strong>
-
-                            <br>
-
-                            ${persona.fecha}
-
-                        </div>
-
-
-                        <div class="dato">
-
-                            ${
-                                persona.genero === "F"
-                                    ? "👩"
-                                    : "👨"
-                            }
-
-                            <strong>
-                                Género
-                            </strong>
-
-                            <br>
-
-                            ${
-                                persona.genero === "F"
-                                    ? "Femenino"
-                                    : "Masculino"
-                            }
-
-                        </div>
-
-
-                        <div class="dato">
-
-                            🌎
-
-                            <strong>
-                                País
-                            </strong>
-
-                            <br>
-
-                            ${
-                                persona.pais ||
-                                "Información pendiente"
-                            }
-
-                        </div>
-
-
-                        <div class="dato">
-
-                            📍
-
-                            <strong>
-                                Ubicación
-                            </strong>
-
-                            <br>
-
-                            ${
-                                ubicacion ||
-                                "Información pendiente"
-                            }
-
-                        </div>
-
-
-                        <div class="dato">
-
-                            ${
-                                persona.estatus === "Vivo"
-                                    ? "🟢"
-                                    : "⚪"
-                            }
-
-                            <strong>
-                                Estatus
-                            </strong>
-
-                            <br>
-
-                            ${persona.estatus}
-
-                        </div>
-
+                        📍
 
                     </div>
 
+                    <span class="etiqueta">
 
-                    <div class="acciones">
+                        Ubicación
 
-                        <a
-                            href="index.html"
-                            class="boton"
-                        >
+                    </span>
 
-                            ← Regresar al directorio
+                    <span class="valor">
 
-                        </a>
+                        ${
+                            ubicacion ||
+                            "Información pendiente"
+                        }
+
+                    </span>
+
+                </div>
+
+
+                <div class="dato-perfil">
+
+                    <div class="icono">
+
+                        ${estatusIcono}
 
                     </div>
 
+                    <span class="etiqueta">
 
-                </article>
+                        Estatus
 
-            `;
+                    </span>
 
-        }
+                    <span class="valor ${estatusClase}">
 
+                        ${persona.estatus}
 
-        // ====================================================
-        // ERROR
-        // ====================================================
+                    </span>
 
-        function mostrarError(mensaje) {
-
-            document.getElementById(
-                "perfil"
-            ).innerHTML = `
-
-                <article class="tarjeta-familiar">
-
-                    <h2>
-                        Información no disponible
-                    </h2>
-
-                    <p>
-                        ${mensaje}
-                    </p>
-
-                    <a
-                        href="index.html"
-                        class="boton"
-                    >
-
-                        ← Regresar
-
-                    </a>
-
-                </article>
-
-            `;
-
-        }
+                </div>
 
 
-        cargarPerfil();
+            </section>
 
-    </script>
+
+            <div class="acciones-perfil">
+
+
+                <a
+                    href="index.html"
+                    class="boton-perfil"
+                >
+
+                    ← Directorio familiar
+
+                </a>
+
+
+                <a
+                    href="../index.html"
+                    class="boton-perfil boton-secundario"
+                >
+
+                    🏠 Portal Familia Cuenca
+
+                </a>
+
+
+            </div>
+
+
+            <div class="leyenda-perfil">
+
+                Registro familiar ${persona.id}
+
+            </div>
+
+
+        </article>
+
+    `;
+
+}
+
+
+// ============================================================
+// ERROR
+// ============================================================
+
+function mostrarError(mensaje) {
+
+    document.getElementById(
+        "perfil"
+    ).innerHTML = `
+
+        <article class="perfil-familiar">
+
+            <h2>
+                Información no disponible
+            </h2>
+
+            <p>
+                ${mensaje}
+            </p>
+
+            <div class="acciones-perfil">
+
+                <a
+                    href="index.html"
+                    class="boton-perfil"
+                >
+
+                    ← Regresar al directorio
+
+                </a>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+// ============================================================
+// ARRANCAR
+// ============================================================
+
+cargarPerfil();
+
+</script>
 
 
 </body>
