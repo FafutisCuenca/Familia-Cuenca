@@ -1,11 +1,9 @@
 /* ============================================================
    FAMILIA CUENCA
    app.js
-============================================================ */
-
-
-/* ============================================================
-   VARIABLES
+   Portal principal
+   Fuente de datos: /data/familia.json
+   Motor: /js/familia-data.js
 ============================================================ */
 
 let familia = [];
@@ -29,9 +27,9 @@ const birthdayList =
     document.getElementById("birthdayList");
 
 
-/* ============================================================
-   INICIO
-============================================================ */
+// ============================================================
+// INICIO DEL PORTAL
+// ============================================================
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -52,13 +50,20 @@ async function iniciarPortal() {
 }
 
 
-/* ============================================================
-   CARGAR FAMILIA
-============================================================ */
+// ============================================================
+// CARGAR FAMILIA
+// ============================================================
 
 async function cargarFamilia() {
 
     try {
+
+        /*
+         * IMPORTANTE:
+         * Ya no cargamos familia.json directamente.
+         *
+         * Utilizamos el motor central FamiliaCuenca.
+         */
 
         familia =
             await FamiliaCuenca.cargar();
@@ -66,22 +71,16 @@ async function cargarFamilia() {
 
         prepararFiltros();
 
-
         actualizarEstadisticas();
-
 
         mostrarResultados(familia);
 
-
         mostrarCumpleanos();
-
 
         actualizarTablero();
 
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Error cargando la Familia Cuenca:",
@@ -89,32 +88,42 @@ async function cargarFamilia() {
         );
 
 
-        searchResults.innerHTML = `
+        if (searchResults) {
 
-            <div class="no-results">
+            searchResults.innerHTML = `
+                <div class="no-results">
+                    No fue posible cargar
+                    la información familiar.
+                </div>
+            `;
 
-                No fue posible cargar
-                la información familiar.
-
-            </div>
-
-        `;
+        }
 
     }
 
 }
 
-/* ============================================================
-   MENÚ
-============================================================ */
+
+// ============================================================
+// MENÚ
+// ============================================================
 
 function configurarMenu() {
 
     const menuToggle =
-        document.getElementById("menuToggle");
+        document.getElementById(
+            "menuToggle"
+        );
 
     const navigation =
-        document.getElementById("navigation");
+        document.getElementById(
+            "navigation"
+        );
+
+
+    if (!menuToggle || !navigation) {
+        return;
+    }
 
 
     menuToggle.addEventListener(
@@ -149,212 +158,320 @@ function configurarMenu() {
 }
 
 
-/* ============================================================
-   EVENTOS
-============================================================ */
+// ============================================================
+// EVENTOS DEL PORTAL
+// ============================================================
 
 function configurarEventos() {
 
-    searchInput.addEventListener(
-        "input",
-        ejecutarBusqueda
-    );
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            ejecutarBusqueda
+        );
+
+    }
 
 
-    countryFilter.addEventListener(
-        "change",
-        ejecutarBusqueda
-    );
+    if (countryFilter) {
+
+        countryFilter.addEventListener(
+            "change",
+            ejecutarBusqueda
+        );
+
+    }
 
 
-    genderFilter.addEventListener(
-        "change",
-        ejecutarBusqueda
-    );
+    if (genderFilter) {
+
+        genderFilter.addEventListener(
+            "change",
+            ejecutarBusqueda
+        );
+
+    }
 
 
-    generationFilter.addEventListener(
-        "change",
-        ejecutarBusqueda
-    );
+    /*
+     * Por ahora el filtro de generaciones
+     * no se utiliza porque el JSON maestro
+     * todavía no contiene el campo "generacion".
+     */
+
+    if (generationFilter) {
+
+        generationFilter.addEventListener(
+            "change",
+            ejecutarBusqueda
+        );
+
+    }
 
 
-    document
-        .getElementById("clearSearch")
-        .addEventListener(
+    const clearSearch =
+        document.getElementById(
+            "clearSearch"
+        );
+
+
+    if (clearSearch) {
+
+        clearSearch.addEventListener(
             "click",
             () => {
 
-                searchInput.value = "";
+                if (searchInput) {
+                    searchInput.value = "";
+                }
 
-                countryFilter.value = "";
+                if (countryFilter) {
+                    countryFilter.value = "";
+                }
 
-                genderFilter.value = "";
+                if (genderFilter) {
+                    genderFilter.value = "";
+                }
 
-                generationFilter.value = "";
+                if (generationFilter) {
+                    generationFilter.value = "";
+                }
 
                 mostrarResultados(familia);
 
             }
         );
 
+    }
 
-    document
-        .getElementById("modalClose")
-        .addEventListener(
+
+    const modalClose =
+        document.getElementById(
+            "modalClose"
+        );
+
+
+    if (modalClose) {
+
+        modalClose.addEventListener(
             "click",
             cerrarModal
         );
 
+    }
 
-    document
-        .querySelector(".modal-backdrop")
-        .addEventListener(
+
+    const modalBackdrop =
+        document.querySelector(
+            ".modal-backdrop"
+        );
+
+
+    if (modalBackdrop) {
+
+        modalBackdrop.addEventListener(
             "click",
             cerrarModal
         );
+
+    }
 
 }
 
 
-/* ============================================================
-   FILTROS
-============================================================ */
+// ============================================================
+// FILTROS
+// ============================================================
 
 function prepararFiltros() {
 
+    if (!countryFilter) {
+        return;
+    }
+
+
+    /*
+     * PAÍSES
+     */
+
     const paises =
-        [...new Set(
-            familia
-                .map(persona => persona.pais)
-                .filter(Boolean)
-        )]
-        .sort();
+        FamiliaCuenca.paises();
 
 
-    paises.forEach(pais => {
+    paises.forEach(
+        pais => {
 
-        const option =
-            document.createElement("option");
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-        option.value = pais;
+            option.value =
+                pais;
 
-        option.textContent = pais;
+            option.textContent =
+                pais;
 
-        countryFilter.appendChild(option);
+            countryFilter.appendChild(
+                option
+            );
 
-    });
-
-
-    const generaciones =
-        [...new Set(
-            familia
-                .map(persona => persona.generacion)
-                .filter(Boolean)
-        )]
-        .sort((a, b) => a - b);
+        }
+    );
 
 
-    generaciones.forEach(generacion => {
+    /*
+     * GENERACIONES
+     *
+     * Actualmente no se generan opciones
+     * porque "generacion" no existe todavía
+     * en familia.json.
+     */
 
-        const option =
-            document.createElement("option");
+    if (generationFilter) {
 
-        option.value = generacion;
+        generationFilter.innerHTML = `
+            <option value="">
+                Todas las generaciones
+            </option>
+        `;
 
-        option.textContent =
-            `Generación ${generacion}`;
-
-        generationFilter.appendChild(option);
-
-    });
+    }
 
 }
 
 
-/* ============================================================
-   BÚSQUEDA
-============================================================ */
+// ============================================================
+// BÚSQUEDA
+// ============================================================
 
 function ejecutarBusqueda() {
 
     const texto =
-        searchInput.value
-            .trim()
-            .toLowerCase();
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
 
 
     const pais =
-        countryFilter.value;
+        countryFilter
+            ? countryFilter.value
+            : "";
 
 
     const genero =
-        genderFilter.value;
+        genderFilter
+            ? genderFilter.value
+            : "";
 
+
+    /*
+     * GENERACIÓN
+     *
+     * Se conserva la lectura del control,
+     * pero no se aplica porque actualmente
+     * no existe ese dato en el JSON.
+     */
 
     const generacion =
-        generationFilter.value;
+        generationFilter
+            ? generationFilter.value
+            : "";
 
 
     const resultados =
-        familia.filter(persona => {
+        familia.filter(
+            persona => {
 
-            const textoCompleto = [
+                const textoCompleto = [
 
-                persona.nombre,
-                persona.pais,
-                persona.estado,
-                persona.ciudad
+                    persona.nombre,
 
-            ]
-            .join(" ")
-            .toLowerCase();
+                    persona.pais,
 
+                    persona.estado,
 
-            const coincideTexto =
-                !texto ||
-                textoCompleto.includes(texto);
+                    persona.ciudad
 
-
-            const coincidePais =
-                !pais ||
-                persona.pais === pais;
+                ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
 
 
-            const coincideGenero =
-                !genero ||
-                persona.genero === genero;
+                const coincideTexto =
+                    !texto ||
+                    textoCompleto.includes(
+                        texto
+                    );
 
 
-            const coincideGeneracion =
-                !generacion ||
-                String(persona.generacion) === generacion;
+                const coincidePais =
+                    !pais ||
+                    persona.pais === pais;
 
 
-            return (
-                coincideTexto &&
-                coincidePais &&
-                coincideGenero &&
-                coincideGeneracion
-            );
-
-        });
+                const coincideGenero =
+                    !genero ||
+                    persona.genero === genero;
 
 
-    mostrarResultados(resultados);
+                /*
+                 * Solo aplicar generación
+                 * si algún día existe ese campo.
+                 */
+
+                const coincideGeneracion =
+                    !generacion ||
+                    !persona.generacion ||
+                    String(
+                        persona.generacion
+                    ) === generacion;
+
+
+                return (
+
+                    coincideTexto &&
+
+                    coincidePais &&
+
+                    coincideGenero &&
+
+                    coincideGeneracion
+
+                );
+
+            }
+        );
+
+
+    mostrarResultados(
+        resultados
+    );
 
 }
 
 
-/* ============================================================
-   MOSTRAR RESULTADOS
-============================================================ */
+// ============================================================
+// MOSTRAR RESULTADOS
+// ============================================================
 
-function mostrarResultados(resultados) {
+function mostrarResultados(
+    resultados
+) {
+
+    if (!searchResults) {
+        return;
+    }
+
 
     if (!resultados.length) {
 
         searchResults.innerHTML = `
+
             <div class="no-results">
 
                 No encontramos familiares
@@ -366,60 +483,83 @@ function mostrarResultados(resultados) {
                 ciudad o país.
 
             </div>
+
         `;
 
         return;
+
     }
 
 
     searchResults.innerHTML =
         resultados
-            .map(persona => crearTarjetaFamilia(persona))
+            .map(
+                persona =>
+                    crearTarjetaFamilia(
+                        persona
+                    )
+            )
             .join("");
 
 
     document
-        .querySelectorAll(".family-result")
-        .forEach(card => {
+        .querySelectorAll(
+            ".family-result"
+        )
+        .forEach(
+            card => {
 
-            card.addEventListener(
-                "click",
-                () => {
+                card.addEventListener(
+                    "click",
+                    () => {
 
-                    const id =
-                        card.dataset.id;
+                        const id =
+                            card.dataset.id;
 
-                    const persona =
-                        familia.find(
-                            p => p.id === id
-                        );
 
-                    if (persona) {
+                        const persona =
+                            familia.find(
+                                p =>
+                                    p.id === id
+                            );
 
-                        abrirPerfil(persona);
+
+                        if (persona) {
+
+                            abrirPerfil(
+                                persona
+                            );
+
+                        }
 
                     }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
 
-/* ============================================================
-   TARJETA FAMILIAR
-============================================================ */
+// ============================================================
+// TARJETA DE FAMILIAR
+// ============================================================
 
-function crearTarjetaFamilia(persona) {
+function crearTarjetaFamilia(
+    persona
+) {
 
     const inicial =
-        obtenerIniciales(persona.nombre);
+        obtenerIniciales(
+            persona.nombre
+        );
 
 
     const ubicacion =
-        [persona.ciudad, persona.pais]
+        [
+            persona.ciudad,
+            persona.pais
+        ]
             .filter(Boolean)
             .join(", ");
 
@@ -432,15 +572,26 @@ function crearTarjetaFamilia(persona) {
         >
 
             <div class="family-avatar">
+
                 ${inicial}
+
             </div>
 
+
             <h3>
+
                 ${persona.nombre}
+
             </h3>
 
+
             <p>
-                ${ubicacion || "Ubicación no registrada"}
+
+                ${
+                    ubicacion ||
+                    "Ubicación no registrada"
+                }
+
             </p>
 
         </article>
@@ -450,11 +601,13 @@ function crearTarjetaFamilia(persona) {
 }
 
 
-/* ============================================================
-   INICIALES
-============================================================ */
+// ============================================================
+// INICIALES
+// ============================================================
 
-function obtenerIniciales(nombre) {
+function obtenerIniciales(
+    nombre
+) {
 
     const palabras =
         nombre
@@ -463,7 +616,18 @@ function obtenerIniciales(nombre) {
             .filter(Boolean);
 
 
-    if (palabras.length === 1) {
+    if (
+        palabras.length === 0
+    ) {
+
+        return "?";
+
+    }
+
+
+    if (
+        palabras.length === 1
+    ) {
 
         return palabras[0]
             .substring(0, 2)
@@ -473,21 +637,29 @@ function obtenerIniciales(nombre) {
 
 
     return (
+
         palabras[0][0] +
+
         palabras[1][0]
+
     ).toUpperCase();
 
 }
 
 
-/* ============================================================
-   PERFIL
-============================================================ */
+// ============================================================
+// PERFIL EN POP-UP
+// ============================================================
 
-function abrirPerfil(persona) {
+function abrirPerfil(
+    persona
+) {
 
     const modal =
-        document.getElementById("familyModal");
+        document.getElementById(
+            "familyModal"
+        );
+
 
     const contenido =
         document.getElementById(
@@ -495,8 +667,15 @@ function abrirPerfil(persona) {
         );
 
 
+    if (!modal || !contenido) {
+        return;
+    }
+
+
     const inicial =
-        obtenerIniciales(persona.nombre);
+        obtenerIniciales(
+            persona.nombre
+        );
 
 
     const ubicacion =
@@ -505,8 +684,8 @@ function abrirPerfil(persona) {
             persona.estado,
             persona.pais
         ]
-        .filter(Boolean)
-        .join(", ");
+            .filter(Boolean)
+            .join(", ");
 
 
     contenido.innerHTML = `
@@ -514,15 +693,26 @@ function abrirPerfil(persona) {
         <div class="modal-profile">
 
             <div class="modal-avatar">
+
                 ${inicial}
+
             </div>
 
+
             <h2>
+
                 ${persona.nombre}
+
             </h2>
 
+
             <p class="profile-location">
-                ${ubicacion || "Ubicación no registrada"}
+
+                ${
+                    ubicacion ||
+                    "Ubicación no registrada"
+                }
+
             </p>
 
 
@@ -536,25 +726,8 @@ function abrirPerfil(persona) {
 
                     <strong>
                         ${
-                            persona.fecha
-                            || "No registrado"
-                        }
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>
-                        Generación
-                    </span>
-
-                    <strong>
-                        ${
-                            persona.generacion
-                            ? `Generación ${persona.generacion}`
-                            : "No registrada"
+                            persona.fecha ||
+                            "No registrado"
                         }
                     </strong>
 
@@ -569,8 +742,24 @@ function abrirPerfil(persona) {
 
                     <strong>
                         ${
-                            persona.pais
-                            || "No registrado"
+                            persona.pais ||
+                            "No registrado"
+                        }
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Estado
+                    </span>
+
+                    <strong>
+                        ${
+                            persona.estado ||
+                            "No registrado"
                         }
                     </strong>
 
@@ -585,8 +774,27 @@ function abrirPerfil(persona) {
 
                     <strong>
                         ${
-                            persona.ciudad
-                            || "No registrada"
+                            persona.ciudad ||
+                            "No registrada"
+                        }
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Género
+                    </span>
+
+                    <strong>
+                        ${
+                            persona.genero === "F"
+                                ? "Femenino"
+                                : persona.genero === "M"
+                                    ? "Masculino"
+                                    : "No registrado"
                         }
                     </strong>
 
@@ -601,28 +809,13 @@ function abrirPerfil(persona) {
 
                     <strong>
                         ${
-                            persona.estatus
-                            || "No registrado"
+                            persona.estatus ||
+                            "No registrado"
                         }
                     </strong>
 
                 </div>
 
-
-                <div>
-
-                    <span>
-                        Último evento
-                    </span>
-
-                    <strong>
-                        ${
-                            persona.ultimoEvento
-                            || "No registrado"
-                        }
-                    </strong>
-
-                </div>
 
             </div>
 
@@ -631,7 +824,10 @@ function abrirPerfil(persona) {
     `;
 
 
-    modal.classList.add("active");
+    modal.classList.add(
+        "active"
+    );
+
 
     modal.setAttribute(
         "aria-hidden",
@@ -641,16 +837,27 @@ function abrirPerfil(persona) {
 }
 
 
-/* ============================================================
-   CERRAR MODAL
-============================================================ */
+// ============================================================
+// CERRAR POP-UP
+// ============================================================
 
 function cerrarModal() {
 
     const modal =
-        document.getElementById("familyModal");
+        document.getElementById(
+            "familyModal"
+        );
 
-    modal.classList.remove("active");
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.remove(
+        "active"
+    );
+
 
     modal.setAttribute(
         "aria-hidden",
@@ -660,61 +867,44 @@ function cerrarModal() {
 }
 
 
-/* ============================================================
-   ESTADÍSTICAS
-============================================================ */
+// ============================================================
+// ESTADÍSTICAS DEL PORTAL
+// ============================================================
 
 function actualizarEstadisticas() {
 
-    const total =
-        familia.length;
-
-
-    const paises =
-        new Set(
-            familia
-                .map(p => p.pais)
-                .filter(Boolean)
-        );
-
-
-    const ciudades =
-        new Set(
-            familia
-                .map(p => p.ciudad)
-                .filter(Boolean)
-        );
-
-
-    const generaciones =
-        new Set(
-            familia
-                .map(p => p.generacion)
-                .filter(Boolean)
-        );
+    const estadisticas =
+        FamiliaCuenca.estadisticas();
 
 
     animarNumero(
         "totalFamiliares",
-        total
+        estadisticas.total
     );
 
 
     animarNumero(
         "totalPaises",
-        paises.size
+        estadisticas.paises.length
     );
 
 
     animarNumero(
         "totalCiudades",
-        ciudades.size
+        estadisticas.ciudades.length
     );
 
 
+    /*
+     * Las generaciones todavía no existen
+     * en el archivo maestro.
+     *
+     * Mostramos 0 temporalmente.
+     */
+
     animarNumero(
         "totalGeneraciones",
-        generaciones.size
+        0
     );
 
 
@@ -724,68 +914,103 @@ function actualizarEstadisticas() {
         );
 
 
-    countriesBoard.textContent =
-        `${paises.size} países registrados`;
+    if (countriesBoard) {
+
+        countriesBoard.textContent =
+            `${estadisticas.paises.length} países registrados`;
+
+    }
 
 }
 
 
-/* ============================================================
-   ANIMACIÓN NÚMEROS
-============================================================ */
+// ============================================================
+// ANIMACIÓN DE NÚMEROS
+// ============================================================
 
-function animarNumero(id, objetivo) {
+function animarNumero(
+    id,
+    objetivo
+) {
 
     const elemento =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
-    if (!elemento) return;
+
+    if (!elemento) {
+        return;
+    }
 
 
     let actual = 0;
 
+
+    if (objetivo === 0) {
+
+        elemento.textContent = "0";
+
+        return;
+
+    }
+
+
     const incremento =
         Math.max(
             1,
-            Math.ceil(objetivo / 20)
+            Math.ceil(
+                objetivo / 20
+            )
         );
 
 
     const intervalo =
-        setInterval(() => {
+        setInterval(
+            () => {
 
-            actual += incremento;
-
-
-            if (actual >= objetivo) {
-
-                actual = objetivo;
-
-                clearInterval(intervalo);
-
-            }
+                actual += incremento;
 
 
-            elemento.textContent =
-                actual;
+                if (
+                    actual >= objetivo
+                ) {
 
-        }, 35);
+                    actual =
+                        objetivo;
+
+                    clearInterval(
+                        intervalo
+                    );
+
+                }
+
+
+                elemento.textContent =
+                    actual;
+
+            },
+            35
+        );
 
 }
 
 
-/* ============================================================
-   CUMPLEAÑOS
-============================================================ */
+// ============================================================
+// CUMPLEAÑOS
+// ============================================================
 
 function mostrarCumpleanos() {
 
-    if (!birthdayList) return;
+    if (!birthdayList) {
+        return;
+    }
 
 
     const personasConCumple =
         familia.filter(
-            persona => persona.fecha
+            persona =>
+                persona.fecha
         );
 
 
@@ -796,25 +1021,32 @@ function mostrarCumpleanos() {
 
 
     const proximos =
-        ordenados.slice(0, 4);
+        ordenados.slice(
+            0,
+            4
+        );
 
 
     birthdayList.innerHTML =
         proximos
-            .map(persona =>
-                crearTarjetaCumpleanos(persona)
+            .map(
+                persona =>
+                    crearTarjetaCumpleanos(
+                        persona
+                    )
             )
             .join("");
-
 
 }
 
 
-/* ============================================================
-   ORDENAR CUMPLEAÑOS
-============================================================ */
+// ============================================================
+// ORDENAR CUMPLEAÑOS
+// ============================================================
 
-function ordenarCumpleanos(lista) {
+function ordenarCumpleanos(
+    lista
+) {
 
     const hoy =
         new Date();
@@ -841,7 +1073,7 @@ function ordenarCumpleanos(lista) {
                 );
 
 
-            return
+            return (
                 calcularDistanciaCalendario(
                     fechaA,
                     hoy
@@ -850,7 +1082,8 @@ function ordenarCumpleanos(lista) {
                 calcularDistanciaCalendario(
                     fechaB,
                     hoy
-                );
+                )
+            );
 
         }
     );
@@ -858,9 +1091,9 @@ function ordenarCumpleanos(lista) {
 }
 
 
-/* ============================================================
-   CONVERTIR FECHA
-============================================================ */
+// ============================================================
+// CONVERTIR FECHA
+// ============================================================
 
 function convertirFechaCumple(
     fecha,
@@ -872,11 +1105,17 @@ function convertirFechaCumple(
 
 
     const mes =
-        parseInt(partes[0], 10) - 1;
+        parseInt(
+            partes[0],
+            10
+        ) - 1;
 
 
     const dia =
-        parseInt(partes[1], 10);
+        parseInt(
+            partes[1],
+            10
+        );
 
 
     return new Date(
@@ -888,9 +1127,9 @@ function convertirFechaCumple(
 }
 
 
-/* ============================================================
-   DISTANCIA CALENDARIO
-============================================================ */
+// ============================================================
+// DISTANCIA AL PRÓXIMO CUMPLEAÑOS
+// ============================================================
 
 function calcularDistanciaCalendario(
     fecha,
@@ -919,11 +1158,13 @@ function calcularDistanciaCalendario(
 }
 
 
-/* ============================================================
-   TARJETA CUMPLEAÑOS
-============================================================ */
+// ============================================================
+// TARJETA DE CUMPLEAÑOS
+// ============================================================
 
-function crearTarjetaCumpleanos(persona) {
+function crearTarjetaCumpleanos(
+    persona
+) {
 
     const partes =
         persona.fecha.split("-");
@@ -931,12 +1172,18 @@ function crearTarjetaCumpleanos(persona) {
 
     const mes =
         obtenerNombreMes(
-            parseInt(partes[0], 10)
+            parseInt(
+                partes[0],
+                10
+            )
         );
 
 
     const dia =
-        parseInt(partes[1], 10);
+        parseInt(
+            partes[1],
+            10
+        );
 
 
     return `
@@ -944,19 +1191,30 @@ function crearTarjetaCumpleanos(persona) {
         <article class="birthday-card-item">
 
             <div class="birthday-day">
+
                 ${dia}
+
             </div>
+
 
             <div class="birthday-month">
+
                 ${mes}
+
             </div>
+
 
             <div class="birthday-name">
+
                 ${persona.nombre}
+
             </div>
 
+
             <div class="birthday-location">
+
                 ${persona.pais || ""}
+
             </div>
 
         </article>
@@ -966,11 +1224,13 @@ function crearTarjetaCumpleanos(persona) {
 }
 
 
-/* ============================================================
-   NOMBRE MES
-============================================================ */
+// ============================================================
+// NOMBRE DEL MES
+// ============================================================
 
-function obtenerNombreMes(numero) {
+function obtenerNombreMes(
+    numero
+) {
 
     const meses = [
 
@@ -990,21 +1250,24 @@ function obtenerNombreMes(numero) {
     ];
 
 
-    return meses[numero - 1];
+    return meses[
+        numero - 1
+    ];
 
 }
 
 
-/* ============================================================
-   TABLERO
-============================================================ */
+// ============================================================
+// PRÓXIMO CUMPLEAÑOS DEL TABLERO
+// ============================================================
 
 function actualizarTablero() {
 
     const ordenados =
         ordenarCumpleanos(
             familia.filter(
-                p => p.fecha
+                persona =>
+                    persona.fecha
             )
         );
 
@@ -1013,7 +1276,9 @@ function actualizarTablero() {
         ordenados[0];
 
 
-    if (!siguiente) return;
+    if (!siguiente) {
+        return;
+    }
 
 
     const nombre =
@@ -1028,6 +1293,11 @@ function actualizarTablero() {
         );
 
 
+    if (!nombre || !fecha) {
+        return;
+    }
+
+
     nombre.textContent =
         siguiente.nombre;
 
@@ -1039,16 +1309,19 @@ function actualizarTablero() {
     fecha.textContent =
         `${partes[1]} de ${
             obtenerNombreMes(
-                parseInt(partes[0], 10)
+                parseInt(
+                    partes[0],
+                    10
+                )
             )
         }`;
 
 }
 
 
-/* ============================================================
-   AÑO FOOTER
-============================================================ */
+// ============================================================
+// AÑO ACTUAL
+// ============================================================
 
 function actualizarAnio() {
 
@@ -1056,6 +1329,11 @@ function actualizarAnio() {
         document.getElementById(
             "currentYear"
         );
+
+
+    if (!elemento) {
+        return;
+    }
 
 
     elemento.textContent =
