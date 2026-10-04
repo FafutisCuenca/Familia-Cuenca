@@ -545,36 +545,27 @@ select {
         10px auto 0;
 }
 
-
 /* ============================================================
    ESCUDO EN LA PORTADA / HERO
 ============================================================ */
 
 .hero-emblem.hero-emblem-escudo {
-
     width: 145px;
     height: 145px;
-
     margin: 0 auto 30px;
-
     padding: 8px;
 
-    border:
-        1px solid rgba(213, 192, 139, .75);
-
+    border: 1px solid rgba(213, 192, 139, .75);
     border-radius: 14px;
 
-    background:
-        rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .06);
 
     box-shadow:
         0 12px 35px rgba(0, 0, 0, .18),
         0 0 0 1px rgba(213, 192, 139, .08);
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     transition:
@@ -583,36 +574,37 @@ select {
 }
 
 
+/* Eliminamos los elementos decorativos
+   de la antigua C */
+
 .hero-emblem.hero-emblem-escudo::before,
 .hero-emblem.hero-emblem-escudo::after {
-
     display: none;
 }
 
 
-.hero-escudo-trigger {
+/* Botón transparente que contiene el escudo */
 
+.hero-escudo-trigger {
     width: 100%;
     height: 100%;
 
     padding: 0;
-
     border: none;
 
     background: transparent;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
 }
 
 
-.hero-escudo-imagen {
+/* Imagen del escudo */
 
+.hero-escudo-imagen {
     width: 100%;
     height: 100%;
 
@@ -628,10 +620,10 @@ select {
 }
 
 
-.hero-emblem.hero-emblem-escudo:hover {
+/* Efecto al pasar el mouse */
 
-    transform:
-        translateY(-4px);
+.hero-emblem.hero-emblem-escudo:hover {
+    transform: translateY(-4px);
 
     box-shadow:
         0 18px 45px rgba(0, 0, 0, .25),
@@ -641,12 +633,8 @@ select {
 
 .hero-emblem.hero-emblem-escudo:hover
 .hero-escudo-imagen {
-
-    transform:
-        scale(1.035);
+    transform: scale(1.035);
 }
-
-
 /* ============================================================
    STATS
 ============================================================ */
@@ -686,7 +674,6 @@ select {
 
 
 .stat:last-child {
-
     border-right: none;
 }
 
@@ -727,13 +714,11 @@ select {
 
 .escudo-section {
 
-    padding:
-        55px 20px 50px;
+    padding: 55px 20px 50px;
 
     text-align: center;
 
-    background:
-        var(--cream);
+    background: var(--cream);
 }
 
 
@@ -774,8 +759,7 @@ select {
 
 .escudo-trigger:hover {
 
-    transform:
-        translateY(-4px);
+    transform: translateY(-4px);
 }
 
 
@@ -803,8 +787,7 @@ select {
 
 .escudo-trigger:hover .escudo-imagen {
 
-    transform:
-        scale(1.04);
+    transform: scale(1.04);
 
     box-shadow:
         0 18px 40px rgba(23,43,50,.18);
@@ -821,9 +804,7 @@ select {
 
     margin: 0;
 
-    font-family:
-        Georgia,
-        serif;
+    font-family: Georgia, serif;
 
     font-size: 30px;
 
@@ -893,15 +874,13 @@ select {
 
     z-index: 1;
 
-    width:
-        min(760px, 92vw);
+    width: min(760px, 92vw);
 
     max-height: 88vh;
 
     overflow-y: auto;
 
-    background:
-        var(--cream);
+    background: var(--cream);
 
     border-radius: 18px;
 
@@ -948,8 +927,7 @@ select {
 
     opacity: 1;
 
-    transform:
-        scale(1.08);
+    transform: scale(1.08);
 }
 
 
@@ -1004,9 +982,7 @@ select {
 
     margin: 0;
 
-    font-family:
-        Georgia,
-        serif;
+    font-family: Georgia, serif;
 
     font-size:
         clamp(30px,5vw,43px);
@@ -1054,8 +1030,7 @@ select {
 
 .section {
 
-    max-width:
-        var(--max-width);
+    max-width: var(--max-width);
 
     margin: auto;
 
@@ -1125,11 +1100,9 @@ select {
 
 .introduction {
 
-    padding-top:
-        120px;
+    padding-top: 120px;
 
-    padding-bottom:
-        80px;
+    padding-bottom: 80px;
 }
 
 
@@ -1154,8 +1127,7 @@ select {
 
     padding: 38px;
 
-    border-radius:
-        var(--radius);
+    border-radius: var(--radius);
 
     position: relative;
 
@@ -1169,11 +1141,9 @@ select {
 
 .module-card:hover {
 
-    transform:
-        translateY(-7px);
+    transform: translateY(-7px);
 
-    box-shadow:
-        var(--shadow);
+    box-shadow: var(--shadow);
 }
 
 
@@ -1237,11 +1207,9 @@ select {
 
     right: 30px;
 
-    color:
-        rgba(23,43,50,.35);
+    color: rgba(23,43,50,.35);
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 15px;
 }
@@ -1249,8 +1217,7 @@ select {
 
 .module-content h3 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 31px;
 
@@ -1266,8 +1233,7 @@ select {
 
     max-width: 430px;
 
-    color:
-        rgba(23,43,50,.72);
+    color: rgba(23,43,50,.72);
 
     font-size: 14px;
 }
@@ -1297,8 +1263,7 @@ select {
 
 .directory-section {
 
-    background:
-        var(--navy);
+    background: var(--navy);
 
     color: white;
 
@@ -1325,8 +1290,7 @@ select {
 
 .directory-heading h2 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size:
         clamp(40px,6vw,65px);
@@ -1340,8 +1304,7 @@ select {
 
 .directory-heading p {
 
-    color:
-        rgba(255,255,255,.65);
+    color: rgba(255,255,255,.65);
 }
 
 
@@ -1448,10 +1411,6 @@ select {
 }
 
 
-/* ============================================================
-   RESULTADOS DEL DIRECTORIO
-============================================================ */
-
 .family-results {
 
     display: grid;
@@ -1477,8 +1436,7 @@ select {
 
     cursor: pointer;
 
-    transition:
-        .25s;
+    transition: .25s;
 }
 
 
@@ -1487,8 +1445,7 @@ select {
     background:
         rgba(255,255,255,.12);
 
-    transform:
-        translateY(-3px);
+    transform: translateY(-3px);
 }
 
 
@@ -1499,18 +1456,15 @@ select {
 
     border-radius: 50%;
 
-    background:
-        var(--gold);
+    background: var(--gold);
 
-    color:
-        var(--navy);
+    color: var(--navy);
 
     display: grid;
 
     place-items: center;
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 20px;
 
@@ -1520,8 +1474,7 @@ select {
 
 .family-result h3 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 21px;
 
@@ -1533,8 +1486,7 @@ select {
 
     font-size: 12px;
 
-    color:
-        rgba(255,255,255,.6);
+    color: rgba(255,255,255,.6);
 
     margin-top: 5px;
 }
@@ -1542,132 +1494,13 @@ select {
 
 .no-results {
 
-    grid-column:
-        1 / -1;
+    grid-column: 1 / -1;
 
     padding: 40px;
 
     text-align: center;
 
-    color:
-        rgba(255,255,255,.55);
-}
-
-
-/* ============================================================
-   RESULTADO DE FAMILIAR FINADO
-============================================================ */
-
-/*
-   Estas clases corresponden a la modificación realizada
-   en app.js para mostrar un indicador 🕊️ cuando el registro
-   tiene estatus = "Finado".
-*/
-
-.family-result-content {
-
-    min-width: 0;
-}
-
-
-.family-result-name {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 10px;
-}
-
-
-.family-result-name h3 {
-
-    flex: 1;
-
-    min-width: 0;
-}
-
-
-.finado-indicador {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    width: 30px;
-
-    height: 30px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(213,192,139,.14);
-
-    border:
-        1px solid rgba(213,192,139,.30);
-
-    font-size: 16px;
-
-    line-height: 1;
-
-    cursor: default;
-
-    transition:
-        transform .2s ease,
-        background .2s ease;
-}
-
-
-.family-result:hover
-.finado-indicador {
-
-    transform:
-        scale(1.08);
-
-    background:
-        rgba(213,192,139,.22);
-}
-
-
-.family-result-status {
-
-    margin-top: 10px;
-
-    padding-top: 9px;
-
-    border-top:
-        1px solid rgba(255,255,255,.08);
-
-    color:
-        rgba(213,192,139,.85);
-
-    font-size: 10px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-
-    font-weight: 600;
-}
-
-
-.family-result-finado {
-
-    border-color:
-        rgba(213,192,139,.20);
-}
-
-
-.family-result-finado:hover {
-
-    border-color:
-        rgba(213,192,139,.35);
+    color: rgba(255,255,255,.55);
 }
 
 /* ============================================================
@@ -1675,49 +1508,30 @@ select {
 ============================================================ */
 
 .memoria-familiar-access {
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
 
     margin-top: 35px;
-
-    padding:
-        0 20px 10px;
+    padding: 0 20px 10px;
 }
 
-
 .memoria-familiar-button {
-
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 10px;
 
-    padding:
-        12px 24px;
+    padding: 12px 24px;
 
-    border:
-        1px solid rgba(255,255,255,.25);
-
+    border: 1px solid var(--border);
     border-radius: 30px;
 
-    background:
-        rgba(255,255,255,.04);
+   background: var(--cream);
+   color: var(--navy);
 
-    color:
-        white;
-
-    font-family:
-        inherit;
-
+    font-family: inherit;
     font-size: 13px;
-
     font-weight: 600;
 
     cursor: pointer;
@@ -1729,31 +1543,18 @@ select {
         transform .25s ease;
 }
 
-
 .memoria-familiar-button:hover {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
 
-    background:
-        rgba(213,192,139,.18);
-
-    color:
-        white;
-
-    border-color:
-        rgba(213,192,139,.55);
-
-    transform:
-        translateY(-2px);
+    transform: translateY(-2px);
 }
-
 
 .memoria-familiar-icon {
-
     font-size: 18px;
-
     line-height: 1;
 }
-
-
 /* ============================================================
    BIRTHDAYS
 ============================================================ */
@@ -1771,17 +1572,14 @@ select {
 
 .birthday-card-item {
 
-    background:
-        white;
+    background: white;
 
     border:
         1px solid var(--border);
 
-    border-radius:
-        12px;
+    border-radius: 12px;
 
-    padding:
-        22px;
+    padding: 22px;
 
     box-shadow:
         0 10px 35px rgba(23,43,50,.05);
@@ -1790,13 +1588,11 @@ select {
 
 .birthday-day {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 35px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
     line-height: 1;
 }
@@ -1810,8 +1606,7 @@ select {
 
     letter-spacing: 2px;
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 }
 
 
@@ -1819,13 +1614,11 @@ select {
 
     margin-top: 15px;
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 18px;
 
-    color:
-        var(--navy);
+    color: var(--navy);
 }
 
 
@@ -1833,8 +1626,7 @@ select {
 
     font-size: 11px;
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 
     margin-top: 3px;
 }
@@ -1894,8 +1686,7 @@ select {
 
     z-index: 2;
 
-    max-width:
-        var(--max-width);
+    max-width: var(--max-width);
 
     width: 100%;
 
@@ -1908,8 +1699,7 @@ select {
 
 .events-feature-content h2 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size:
         clamp(55px,8vw,95px);
@@ -1925,8 +1715,7 @@ select {
 
 .events-feature-content > p {
 
-    color:
-        rgba(255,255,255,.75);
+    color: rgba(255,255,255,.75);
 
     font-size: 17px;
 }
@@ -1960,37 +1749,30 @@ select {
 
 .board-card {
 
-    background:
-        white;
+    background: white;
 
     border:
         1px solid var(--border);
 
-    padding:
-        25px;
+    padding: 25px;
 
-    border-radius:
-        14px;
+    border-radius: 14px;
 
     display: flex;
 
     gap: 20px;
 
-    align-items:
-        flex-start;
+    align-items: flex-start;
 
-    transition:
-        .25s;
+    transition: .25s;
 }
 
 
 .board-card:hover {
 
-    transform:
-        translateY(-4px);
+    transform: translateY(-4px);
 
-    box-shadow:
-        var(--shadow);
+    box-shadow: var(--shadow);
 }
 
 
@@ -2006,8 +1788,7 @@ select {
 
     letter-spacing: 2px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
     font-weight: 700;
 }
@@ -2015,8 +1796,7 @@ select {
 
 .board-card h3 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-weight: 400;
 
@@ -2029,11 +1809,11 @@ select {
 
 .board-card p {
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 
     font-size: 12px;
 }
+
 
 /* ============================================================
    HISTORY
@@ -2041,8 +1821,7 @@ select {
 
 .history-section {
 
-    background:
-        var(--cream-dark);
+    background: var(--cream-dark);
 
     padding:
         120px 25px;
@@ -2061,8 +1840,7 @@ select {
 
 .history-content h2 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size:
         clamp(45px,7vw,75px);
@@ -2078,8 +1856,7 @@ select {
 
 .history-content h2 span {
 
-    color:
-        var(--gold);
+    color: var(--gold);
 
     font-style: italic;
 }
@@ -2091,8 +1868,7 @@ select {
 
     margin: auto;
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 }
 
 
@@ -2140,8 +1916,7 @@ select {
 
     height: 1px;
 
-    background:
-        var(--gold);
+    background: var(--gold);
 
     opacity: .5;
 }
@@ -2155,11 +1930,9 @@ select {
 
     text-align: center;
 
-    background:
-        var(--cream-dark);
+    background: var(--cream-dark);
 
-    padding:
-        0 10px;
+    padding: 0 10px;
 }
 
 
@@ -2176,8 +1949,7 @@ select {
 
     margin: auto;
 
-    background:
-        var(--navy);
+    background: var(--navy);
 
     color: white;
 
@@ -2193,11 +1965,9 @@ select {
 
     font-size: 10px;
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 
     letter-spacing: 1px;
 }
@@ -2205,11 +1975,9 @@ select {
 
 .generation.active span {
 
-    background:
-        var(--gold);
+    background: var(--gold);
 
-    color:
-        var(--navy);
+    color: var(--navy);
 }
 
 
@@ -2224,8 +1992,7 @@ select {
     border:
         1px dashed rgba(23,43,50,.25);
 
-    border-radius:
-        20px;
+    border-radius: 20px;
 
     display: flex;
 
@@ -2252,8 +2019,7 @@ select {
 
 .memory-placeholder h3 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 27px;
 
@@ -2263,8 +2029,7 @@ select {
 
 .memory-placeholder p {
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 
     max-width: 500px;
 
@@ -2277,13 +2042,11 @@ select {
 
     font-size: 10px;
 
-    text-transform:
-        uppercase;
+    text-transform: uppercase;
 
     letter-spacing: 2px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 }
 
 
@@ -2293,8 +2056,7 @@ select {
 
 .footer {
 
-    background:
-        var(--navy);
+    background: var(--navy);
 
     color: white;
 
@@ -2305,8 +2067,7 @@ select {
 
 .footer-logo {
 
-    max-width:
-        var(--max-width);
+    max-width: var(--max-width);
 
     margin: auto;
 
@@ -2332,8 +2093,7 @@ select {
 
     display: block;
 
-    color:
-        rgba(255,255,255,.5);
+    color: rgba(255,255,255,.5);
 
     font-size: 11px;
 
@@ -2343,8 +2103,7 @@ select {
 
 .footer-links {
 
-    max-width:
-        var(--max-width);
+    max-width: var(--max-width);
 
     margin:
         35px auto;
@@ -2361,15 +2120,13 @@ select {
 
     font-size: 11px;
 
-    color:
-        rgba(255,255,255,.65);
+    color: rgba(255,255,255,.65);
 }
 
 
 .footer-bottom {
 
-    max-width:
-        var(--max-width);
+    max-width: var(--max-width);
 
     margin: auto;
 
@@ -2382,15 +2139,14 @@ select {
 
     justify-content: space-between;
 
-    color:
-        rgba(255,255,255,.4);
+    color: rgba(255,255,255,.4);
 
     font-size: 10px;
 }
 
 
 /* ============================================================
-   MODAL GENERAL
+   MODAL
 ============================================================ */
 
 .modal {
@@ -2441,8 +2197,7 @@ select {
 
     width: 100%;
 
-    background:
-        var(--cream);
+    background: var(--cream);
 
     border-radius: 18px;
 
@@ -2468,8 +2223,7 @@ select {
 
     cursor: pointer;
 
-    color:
-        var(--navy);
+    color: var(--navy);
 }
 
 
@@ -2486,8 +2240,7 @@ select {
 
     border-radius: 50%;
 
-    background:
-        var(--gold);
+    background: var(--gold);
 
     display: grid;
 
@@ -2496,34 +2249,29 @@ select {
     margin:
         0 auto 18px;
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 32px;
 
-    color:
-        var(--navy);
+    color: var(--navy);
 }
 
 
 .modal-profile h2 {
 
-    font-family:
-        Georgia, serif;
+    font-family: Georgia, serif;
 
     font-size: 32px;
 
     font-weight: 400;
 
-    color:
-        var(--navy);
+    color: var(--navy);
 }
 
 
 .modal-profile .profile-location {
 
-    color:
-        var(--text-light);
+    color: var(--text-light);
 
     margin-top: 3px;
 }
@@ -2562,8 +2310,7 @@ select {
 
     letter-spacing: 1px;
 
-    color:
-        var(--gold);
+    color: var(--gold);
 }
 
 
@@ -2573,690 +2320,381 @@ select {
 
     font-size: 13px;
 
-    color:
-        var(--navy);
+    color: var(--navy);
 
     margin-top: 3px;
 }
 
 
 /* ============================================================
-   FIN DE LA PARTE 1
-============================================================ */
-
-/* ============================================================
-   MODAL — EN MEMORIA DE NUESTROS FAMILIARES
-============================================================ */
-
-.finados-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 3000;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-}
-
-.finados-modal.active {
-    display: flex;
-}
-
-
-/* Fondo oscuro */
-
-.finados-modal-backdrop {
-    position: absolute;
-    inset: 0;
-
-    background: rgba(0, 0, 0, 0.72);
-
-    backdrop-filter: blur(6px);
-}
-
-
-/* Contenedor principal */
-
-.finados-modal-content {
-    position: relative;
-    z-index: 1;
-
-    width: min(820px, 94vw);
-    max-height: 88vh;
-
-    overflow-y: auto;
-
-    background: var(--cream);
-
-    border-radius: 20px;
-
-    padding: 42px;
-
-    box-shadow:
-        0 30px 90px rgba(0, 0, 0, 0.40);
-}
-
-
-/* Botón cerrar */
-
-.finados-modal-close {
-    position: absolute;
-
-    top: 16px;
-    right: 18px;
-
-    width: 40px;
-    height: 40px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: rgba(0, 0, 0, 0.06);
-
-    color: var(--navy);
-
-    font-size: 28px;
-    line-height: 1;
-
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-.finados-modal-close:hover {
-    background: rgba(0, 0, 0, 0.12);
-    transform: rotate(90deg);
-}
-
-
-/* Encabezado */
-
-.finados-modal-header {
-    text-align: center;
-
-    max-width: 650px;
-
-    margin: 0 auto 32px;
-}
-
-
-/* Símbolo */
-
-.finados-modal-symbol {
-    width: 58px;
-    height: 58px;
-
-    margin: 0 auto 15px;
-
-    border-radius: 50%;
-
-    background: rgba(184, 145, 74, 0.12);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 29px;
-}
-
-
-/* Kicker */
-
-.finados-kicker {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: var(--gold);
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.18em;
-
-    text-transform: uppercase;
-}
-
-
-/* Título */
-
-.finados-modal-header h2 {
-    margin: 0;
-
-    color: var(--navy);
-
-    font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 38px;
-
-    line-height: 1.15;
-
-    font-weight: 500;
-}
-
-.finados-modal-header h2 span {
-    display: inline-block;
-
-    color: var(--gold);
-
-    font-style: italic;
-}
-
-
-/* Dedicatoria */
-
-.finados-dedicatoria {
-    margin: 18px auto 0;
-
-    max-width: 620px;
-
-    color: var(--muted);
-
-    font-size: 15px;
-
-    line-height: 1.75;
-}
-
-
-/* ============================================================
-   LISTA DE FAMILIARES FINADOS
-============================================================ */
-
-.lista-finados {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap: 14px;
-}
-
-
-/* Tarjeta */
-
-.finado-card {
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 18px;
-
-    background: #ffffff;
-
-    border: 1px solid var(--border);
-
-    border-radius: 14px;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.finado-card:hover {
-    transform: translateY(-2px);
-
-    border-color:
-        rgba(184, 145, 74, 0.45);
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-
-/* Avatar */
-
-.finado-avatar {
-    flex: 0 0 auto;
-
-    width: 54px;
-    height: 54px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--gold),
-            #d4b16a
-        );
-
-    color: #ffffff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 17px;
-
-    font-weight: 700;
-
-    box-shadow:
-        0 5px 12px rgba(0, 0, 0, 0.10);
-}
-
-
-/* Información */
-
-.finado-info {
-    min-width: 0;
-    flex: 1;
-}
-
-.finado-info h3 {
-    margin: 0 0 6px;
-
-    color: var(--navy);
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 18px;
-
-    line-height: 1.3;
-
-    font-weight: 600;
-}
-
-
-/* Ubicación */
-
-.finado-generacion {
-    color: var(--muted);
-
-    font-size: 12px;
-
-    line-height: 1.45;
-}
-
-
-/* Cumpleaños */
-
-.finado-fecha {
-    margin-top: 7px;
-
-    color: var(--gold);
-
-    font-size: 12px;
-
-    font-weight: 600;
-}
-
-
-/* ============================================================
-   ESTADO VACÍO
-============================================================ */
-
-.finados-empty {
-    padding: 45px 20px;
-
-    text-align: center;
-
-    border: 1px dashed var(--border);
-
-    border-radius: 14px;
-
-    background: rgba(255, 255, 255, 0.45);
-}
-
-.finados-empty-icon {
-    margin-bottom: 12px;
-
-    font-size: 34px;
-}
-
-.finados-empty p {
-    margin: 0;
-
-    color: var(--muted);
-
-    font-size: 14px;
-
-    line-height: 1.6;
-}
-
-
-/* ============================================================
-   PIE DEL MODAL
-============================================================ */
-
-.finados-modal-footer {
-    margin-top: 30px;
-
-    text-align: center;
-}
-
-.finados-divider {
-    width: 80px;
-    height: 1px;
-
-    margin: 0 auto 18px;
-
-    background: var(--gold);
-}
-
-.finados-modal-footer p {
-    margin: 0 0 8px;
-
-    color: var(--muted);
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 14px;
-
-    line-height: 1.6;
-}
-
-.finados-modal-footer span {
-    color: var(--gold);
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.12em;
-
-    text-transform: uppercase;
-}
-
-
-/* ============================================================
-   RESPONSIVE — TABLET
+   RESPONSIVE
 ============================================================ */
 
 @media (max-width: 900px) {
 
     .navigation {
+
         gap: 16px;
     }
 
     .family-results {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
     .birthday-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
 }
 
 
-/* ============================================================
-   RESPONSIVE — TABLET PEQUEÑA / MÓVIL
-============================================================ */
-
 @media (max-width: 700px) {
 
-    .navigation {
-        display: none;
+    .menu-toggle {
+
+        display: block;
     }
 
-    .menu-toggle {
+
+    .navigation {
+
+        position: absolute;
+
+        top: 78px;
+        left: 0;
+        right: 0;
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 0;
+
+        background: var(--cream);
+
+        border-bottom:
+            1px solid var(--border);
+    }
+
+
+    .navigation.active {
+
         display: flex;
     }
 
 
-    /* Estadísticas */
+    .navigation a {
+
+        padding:
+            15px 25px;
+
+        border-bottom:
+            1px solid var(--border);
+    }
+
 
     .family-stats {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        margin:
+            -30px 15px 0;
     }
 
 
-    /* Módulos */
+    .stat:nth-child(2) {
+
+        border-right: none;
+    }
+
+
+    .stat:nth-child(-n+2) {
+
+        border-bottom:
+            1px solid var(--border);
+    }
+
 
     .module-grid {
+
         grid-template-columns: 1fr;
     }
 
-
-    /* Filtros */
 
     .search-filters {
+
         grid-template-columns: 1fr;
     }
 
-
-    /* Resultados */
 
     .family-results {
+
         grid-template-columns: 1fr;
     }
 
-
-    /* Tablero */
 
     .board-grid {
+
         grid-template-columns: 1fr;
     }
 
 
-    /* Línea de generaciones */
-
     .generation-line {
-        flex-direction: column;
 
-        gap: 12px;
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        gap: 35px;
+
+        padding-bottom: 15px;
     }
 
 
-    /* Footer */
+    .generation {
+
+        flex: 0 0 100px;
+    }
+
 
     .footer-bottom {
+
         flex-direction: column;
 
-        gap: 10px;
-
-        text-align: center;
+        gap: 8px;
     }
 
 
-    /* Escudo */
+    /* --------------------------------------------------------
+       ESCUDO — TABLET / MÓVIL
+    -------------------------------------------------------- */
 
-    .hero-emblem.hero-emblem-escudo {
-        width: 125px;
-        height: 125px;
+    .escudo-section {
+
+        padding:
+            45px 20px;
     }
 
 
-    /* ========================================================
-       MODAL DE MEMORIA
-    ======================================================== */
+    .escudo-imagen {
 
-    .finados-modal {
-        padding: 12px;
+        width: 150px;
     }
 
-    .finados-modal-content {
+
+    .escudo-titulo h2 {
+
+        font-size: 26px;
+    }
+
+
+    .escudo-modal-content {
+
         width: 94vw;
 
         max-height: 90vh;
 
-        padding: 30px 22px;
+        padding:
+            30px 22px;
     }
 
-    .finados-modal-header {
-        margin-bottom: 25px;
+
+    .escudo-modal-header {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 18px;
+
+        padding-right: 0;
     }
 
-    .finados-modal-header h2 {
-        font-size: 34px;
+
+    .escudo-modal-imagen {
+
+        width: 115px;
     }
 
-    .lista-finados {
-        grid-template-columns: 1fr;
+
+    .escudo-modal-text {
+
+        padding-top: 22px;
     }
 
-    .finado-card {
-        padding: 16px;
-    }
 
+    .escudo-modal-text p {
+
+        font-size: 14px;
+    }
+.hero-emblem.hero-emblem-escudo {
+    width: 125px;
+    height: 125px;
+    margin-bottom: 25px;
+}
 }
 
-
-/* ============================================================
-   RESPONSIVE — MÓVIL
-============================================================ */
 
 @media (max-width: 480px) {
 
     .hero {
-        min-height: 600px;
+
+        min-height: 700px;
     }
+
 
     .hero-content {
-        padding: 40px 20px;
+
+        padding-top: 120px;
     }
+
 
     .hero h1 {
-        font-size: 38px;
+
+        font-size: 50px;
     }
+
 
     .hero-description {
-        font-size: 14px;
-    }
-
-
-    /* Secciones */
-
-    .section {
-        padding: 55px 20px;
-    }
-
-
-    /* Cumpleaños */
-
-    .birthday-grid {
-        grid-template-columns: 1fr;
-    }
-
-
-    /* Datos de perfil */
-
-    .profile-data {
-        grid-template-columns: 1fr;
-    }
-
-
-    /* Tarjetas */
-
-    .module-card {
-        padding: 25px 20px;
-    }
-
-
-    /* Escudo */
-
-    .hero-emblem.hero-emblem-escudo {
-        width: 110px;
-        height: 110px;
-    }
-
-
-    /* ========================================================
-       MODAL DE MEMORIA
-    ======================================================== */
-
-    .finados-modal {
-        padding: 8px;
-    }
-
-    .finados-modal-content {
-        width: 96vw;
-
-        max-height: 92vh;
-
-        padding: 28px 18px 22px;
-
-        border-radius: 15px;
-    }
-
-    .finados-modal-close {
-        top: 10px;
-        right: 10px;
-
-        width: 36px;
-        height: 36px;
-
-        font-size: 25px;
-    }
-
-    .finados-modal-header {
-        margin-bottom: 22px;
-    }
-
-    .finados-modal-symbol {
-        width: 50px;
-        height: 50px;
-
-        font-size: 25px;
-    }
-
-    .finados-kicker {
-        font-size: 9px;
-    }
-
-    .finados-modal-header h2 {
-        font-size: 29px;
-    }
-
-    .finados-dedicatoria {
-        font-size: 13px;
-
-        line-height: 1.6;
-    }
-
-    .finado-card {
-        gap: 12px;
-
-        padding: 14px;
-    }
-
-    .finado-avatar {
-        width: 48px;
-        height: 48px;
 
         font-size: 15px;
     }
 
-    .finado-info h3 {
-        font-size: 18px;
+
+    .section {
+
+        padding:
+            75px 20px;
     }
 
-    .finado-generacion,
-    .finado-fecha {
-        font-size: 11px;
+
+    .birthday-grid {
+
+        grid-template-columns: 1fr;
     }
 
-    .finados-modal-footer {
-        margin-top: 24px;
+
+    .profile-data {
+
+        grid-template-columns: 1fr;
     }
 
+
+    .module-card {
+
+        padding: 28px;
+    }
+
+
+    /* --------------------------------------------------------
+       ESCUDO — TELÉFONO
+    -------------------------------------------------------- */
+
+    .escudo-section {
+
+        padding:
+            40px 15px;
+    }
+
+
+    .escudo-imagen {
+
+        width: 135px;
+    }
+
+
+    .escudo-titulo {
+
+        margin-top: 16px;
+    }
+
+
+    .escudo-titulo h2 {
+
+        font-size: 24px;
+    }
+
+
+    .escudo-titulo p {
+
+        font-size: 12px;
+    }
+
+
+    .escudo-modal {
+
+        padding: 12px;
+    }
+
+
+    .escudo-modal-content {
+
+        width: 96vw;
+
+        max-height: 92vh;
+
+        padding:
+            28px 18px 22px;
+
+        border-radius: 15px;
+    }
+
+
+    .escudo-modal-close {
+
+        top: 8px;
+
+        right: 10px;
+
+        font-size: 29px;
+    }
+
+
+    .escudo-modal-imagen {
+
+        width: 105px;
+    }
+
+
+    .escudo-modal-header h2 {
+
+        font-size: 29px;
+    }
+
+
+    .escudo-kicker {
+
+        font-size: 9px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .escudo-modal-text {
+
+        font-size: 14px;
+
+        line-height: 1.65;
+    }
+
+
+    .escudo-modal-text p {
+
+        font-size: 14px;
+
+        margin-bottom: 15px;
+    }
+.hero-emblem.hero-emblem-escudo {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 22px;
+    padding: 6px;
 }
-
-
-/* ============================================================
-   FIN DEL ARCHIVO
-============================================================ */
+}
