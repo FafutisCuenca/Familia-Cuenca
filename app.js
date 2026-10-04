@@ -1330,7 +1330,10 @@ function crearTarjetaFinado(
 
     return `
 
-        <article class="finado-card">
+        <article
+            class="finado-card"
+            data-id="${persona.id}"
+        >
 
             <div class="finado-avatar">
 
@@ -1341,11 +1344,23 @@ function crearTarjetaFinado(
 
             <div class="finado-info">
 
-                <h3>
+                <div class="finado-name-row">
 
-                    ${persona.nombre}
+                    <h3>
 
-                </h3>
+                        ${persona.nombre}
+
+                    </h3>
+
+
+                    <span
+                        class="finado-card-icon"
+                        title="En memoria"
+                    >
+                        🕊️
+                    </span>
+
+                </div>
 
 
                 <div class="finado-generacion">
@@ -1380,8 +1395,6 @@ function crearTarjetaFinado(
     `;
 
 }
-
-
 // ============================================================
 // ESTADÍSTICAS DEL PORTAL
 // ============================================================
