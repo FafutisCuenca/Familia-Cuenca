@@ -51,6 +51,8 @@ async function iniciarPortal() {
 
     configurarEventos();
 
+    iniciarPopupFinados();
+
     actualizarAnio();
 
     await cargarFamilia();
@@ -281,7 +283,7 @@ function configurarEventos() {
 
                 /*
                 Antes:
-                
+
                 mostrarResultados(familia);
 
                 Ahora regresamos al estado inicial
@@ -955,7 +957,7 @@ function abrirPerfil(
 
 
 // ============================================================
-// CERRAR POP-UP
+// CERRAR POP-UP DE PERFIL
 // ============================================================
 
 function cerrarModal() {
@@ -980,6 +982,319 @@ function cerrarModal() {
         "aria-hidden",
         "true"
     );
+
+}
+
+
+// ============================================================
+// POPUP DE FAMILIARES FINADOS
+// ============================================================
+//
+// Este popup utiliza los registros del mismo
+// familia.json.
+//
+// No se mantiene una lista independiente.
+//
+// Cualquier familiar cuyo estatus sea:
+// "Finado"
+//
+// aparecerá automáticamente aquí.
+//
+// ============================================================
+
+function iniciarPopupFinados() {
+
+    const boton =
+        document.getElementById(
+            "mostrarFinados"
+        );
+
+
+    const modal =
+        document.getElementById(
+            "finadosModal"
+        );
+
+
+    const cerrar =
+        document.getElementById(
+            "finadosModalClose"
+        );
+
+
+    const fondo =
+        document.querySelector(
+            ".finados-modal-backdrop"
+        );
+
+
+    if (!boton || !modal) {
+
+        console.warn(
+            "No se encontró el popup de familiares finados."
+        );
+
+        return;
+
+    }
+
+
+    // ========================================================
+    // ABRIR POPUP
+    // ========================================================
+
+    function abrirFinados() {
+
+        cargarListaFinados();
+
+
+        modal.classList.add(
+            "active"
+        );
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    // ========================================================
+    // CERRAR POPUP
+    // ========================================================
+
+    function cerrarFinados() {
+
+        modal.classList.remove(
+            "active"
+        );
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    // ========================================================
+    // BOTÓN
+    // ========================================================
+
+    boton.addEventListener(
+        "click",
+        abrirFinados
+    );
+
+
+    // ========================================================
+    // BOTÓN X
+    // ========================================================
+
+    if (cerrar) {
+
+        cerrar.addEventListener(
+            "click",
+            cerrarFinados
+        );
+
+    }
+
+
+    // ========================================================
+    // FONDO
+    // ========================================================
+
+    if (fondo) {
+
+        fondo.addEventListener(
+            "click",
+            cerrarFinados
+        );
+
+    }
+
+
+    // ========================================================
+    // TECLA ESCAPE
+    // ========================================================
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("active")
+            ) {
+
+                cerrarFinados();
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// CARGAR LISTA DE FINADOS
+// ============================================================
+
+function cargarListaFinados() {
+
+    const contenedor =
+        document.getElementById(
+            "listaFinados"
+        );
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    const finados =
+        familia.filter(
+            persona =>
+                persona.estatus &&
+                persona.estatus
+                    .toLowerCase()
+                    .trim() === "finado"
+        );
+
+
+    // --------------------------------------------------------
+    // SIN REGISTROS
+    // --------------------------------------------------------
+
+    if (!finados.length) {
+
+        contenedor.innerHTML = `
+
+            <div class="finados-empty">
+
+                <div class="finados-empty-icon">
+                    🕊️
+                </div>
+
+                <p>
+                    Actualmente no hay familiares
+                    registrados en memoria.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // --------------------------------------------------------
+    // TARJETAS DE FINADOS
+    // --------------------------------------------------------
+
+    contenedor.innerHTML =
+        finados
+            .map(
+                persona =>
+                    crearTarjetaFinado(
+                        persona
+                    )
+            )
+            .join("");
+
+}
+
+
+// ============================================================
+// TARJETA DE FINADO
+// ============================================================
+
+function crearTarjetaFinado(
+    persona
+) {
+
+    const inicial =
+        obtenerIniciales(
+            persona.nombre
+        );
+
+
+    const ubicacion =
+        [
+            persona.ciudad,
+            persona.estado,
+            persona.pais
+        ]
+            .filter(Boolean)
+            .join(", ");
+
+
+    return `
+
+        <article class="finado-card">
+
+            <div class="finado-avatar">
+
+                ${inicial}
+
+            </div>
+
+
+            <div class="finado-info">
+
+                <h3>
+
+                    ${persona.nombre}
+
+                </h3>
+
+
+                <div class="finado-generacion">
+
+                    ${
+                        ubicacion ||
+                        "Información familiar"
+                    }
+
+                </div>
+
+
+                ${
+                    persona.fecha
+                        ? `
+                            <div class="finado-fecha">
+
+                                Cumpleaños:
+                                ${formatearCumpleanos(
+                                    persona.fecha
+                                )}
+
+                            </div>
+                          `
+                        : ""
+                }
+
+            </div>
+
+        </article>
+
+    `;
 
 }
 
