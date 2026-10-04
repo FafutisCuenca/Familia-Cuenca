@@ -7,6 +7,7 @@
 
    FORMATO DE FECHAS DEL JSON:
    DD-MM
+
    Ejemplo:
    04-01 = 4 de enero
    11-10 = 11 de octubre
@@ -73,7 +74,32 @@ async function cargarFamilia() {
 
         actualizarEstadisticas();
 
+
+        /*
+        ========================================================
+        OPCIÓN ANTERIOR — MOSTRAR TODA LA FAMILIA
+        ========================================================
+
+        Esta opción se conserva comentada.
+
+        Si en algún momento queremos volver a mostrar
+        automáticamente todas las tarjetas al entrar al portal,
+        basta con quitar los comentarios de la siguiente línea:
+
         mostrarResultados(familia);
+
+        ========================================================
+        NUEVA OPCIÓN
+        ========================================================
+
+        La página inicia sin mostrar todas las tarjetas.
+
+        El usuario deberá buscar un familiar o utilizar
+        alguno de los filtros para obtener resultados.
+        */
+
+        mostrarMensajeInicial();
+
 
         mostrarCumpleanos();
 
@@ -164,6 +190,10 @@ function configurarMenu() {
 
 function configurarEventos() {
 
+    // --------------------------------------------------------
+    // BÚSQUEDA
+    // --------------------------------------------------------
+
     if (searchInput) {
 
         searchInput.addEventListener(
@@ -173,6 +203,10 @@ function configurarEventos() {
 
     }
 
+
+    // --------------------------------------------------------
+    // FILTRO PAÍS
+    // --------------------------------------------------------
 
     if (countryFilter) {
 
@@ -184,6 +218,10 @@ function configurarEventos() {
     }
 
 
+    // --------------------------------------------------------
+    // FILTRO GÉNERO
+    // --------------------------------------------------------
+
     if (genderFilter) {
 
         genderFilter.addEventListener(
@@ -194,6 +232,10 @@ function configurarEventos() {
     }
 
 
+    // --------------------------------------------------------
+    // FILTRO GENERACIÓN
+    // --------------------------------------------------------
+
     if (generationFilter) {
 
         generationFilter.addEventListener(
@@ -203,6 +245,10 @@ function configurarEventos() {
 
     }
 
+
+    // --------------------------------------------------------
+    // LIMPIAR BÚSQUEDA
+    // --------------------------------------------------------
 
     const clearSearch =
         document.getElementById(
@@ -232,13 +278,27 @@ function configurarEventos() {
                     generationFilter.value = "";
                 }
 
+
+                /*
+                Antes:
+                
                 mostrarResultados(familia);
+
+                Ahora regresamos al estado inicial
+                sin mostrar todas las tarjetas.
+                */
+
+                mostrarMensajeInicial();
 
             }
         );
 
     }
 
+
+    // --------------------------------------------------------
+    // CERRAR PERFIL
+    // --------------------------------------------------------
 
     const modalClose =
         document.getElementById(
@@ -255,6 +315,10 @@ function configurarEventos() {
 
     }
 
+
+    // --------------------------------------------------------
+    // CERRAR PERFIL AL HACER CLICK EN EL FONDO
+    // --------------------------------------------------------
 
     const modalBackdrop =
         document.querySelector(
@@ -318,8 +382,11 @@ function prepararFiltros() {
     // --------------------------------------------------------
     // GENERACIONES
     // --------------------------------------------------------
+    //
     // Actualmente no existe el campo
     // "generacion" en familia.json.
+    //
+    // Se conserva preparado para una futura versión.
     // --------------------------------------------------------
 
     if (generationFilter) {
@@ -365,6 +432,30 @@ function ejecutarBusqueda() {
         generationFilter
             ? generationFilter.value
             : "";
+
+
+    /*
+    ============================================================
+    SI NO HAY NINGÚN CRITERIO
+    ============================================================
+
+    No mostramos todas las tarjetas.
+
+    Regresamos al mensaje inicial.
+    */
+
+    if (
+        !texto &&
+        !pais &&
+        !genero &&
+        !generacion
+    ) {
+
+        mostrarMensajeInicial();
+
+        return;
+
+    }
 
 
     const resultados =
@@ -431,6 +522,49 @@ function ejecutarBusqueda() {
     mostrarResultados(
         resultados
     );
+
+}
+
+
+// ============================================================
+// MENSAJE INICIAL DEL DIRECTORIO
+// ============================================================
+//
+// La página principal NO muestra todas las tarjetas
+// al cargar.
+//
+// Las tarjetas aparecen solamente cuando el usuario
+// realiza una búsqueda o utiliza un filtro.
+//
+// ============================================================
+
+function mostrarMensajeInicial() {
+
+    if (!searchResults) {
+        return;
+    }
+
+
+    searchResults.innerHTML = `
+
+        <div class="directorio-mensaje-inicial">
+
+            <div class="directorio-mensaje-icono">
+                🔎
+            </div>
+
+            <h2>
+                Busca un familiar
+            </h2>
+
+            <p>
+                Escribe un nombre, apellido,
+                ciudad o país para comenzar.
+            </p>
+
+        </div>
+
+    `;
 
 }
 
@@ -700,21 +834,21 @@ function abrirPerfil(
 
                 <div>
 
-    <span>
-        Cumpleaños
-    </span>
+                    <span>
+                        Cumpleaños
+                    </span>
 
-    <strong>
-        ${
-            persona.fecha
-                ? formatearCumpleanos(
-                    persona.fecha
-                  )
-                : "No registrado"
-        }
-    </strong>
+                    <strong>
+                        ${
+                            persona.fecha
+                                ? formatearCumpleanos(
+                                    persona.fecha
+                                  )
+                                : "No registrado"
+                        }
+                    </strong>
 
-</div>
+                </div>
 
 
                 <div>
@@ -881,6 +1015,7 @@ function actualizarEstadisticas() {
     // --------------------------------------------------------
     // GENERACIONES
     // --------------------------------------------------------
+    //
     // Todavía no existe este campo en el JSON.
     // --------------------------------------------------------
 
@@ -1279,17 +1414,21 @@ function crearTarjetaCumpleanos(
 
 }
 
+
 // ============================================================
 // FORMATEAR CUMPLEAÑOS PARA MOSTRAR AL USUARIO
 // ============================================================
 //
 // Recibe:
+//
 // DD-MM
 //
 // Devuelve:
+//
 // 4 de Enero
 //
 // Ejemplo:
+//
 // "04-01" → "4 de Enero"
 // "11-10" → "11 de Octubre"
 // ============================================================
@@ -1345,6 +1484,7 @@ function formatearCumpleanos(
     return `${dia} de ${nombreMes}`;
 
 }
+
 
 // ============================================================
 // NOMBRE DEL MES
@@ -1485,6 +1625,8 @@ function actualizarAnio() {
         new Date().getFullYear();
 
 }
+
+
 // ============================================================
 // POPUP DEL ESCUDO DE LA FAMILIA CUENCA
 // ============================================================
@@ -1492,20 +1634,32 @@ function actualizarAnio() {
 function iniciarPopupEscudo() {
 
     const trigger =
-        document.getElementById("escudoTrigger");
+        document.getElementById(
+            "escudoTrigger"
+        );
+
 
     const modal =
-        document.getElementById("escudoModal");
+        document.getElementById(
+            "escudoModal"
+        );
+
 
     const cerrar =
-        document.getElementById("escudoModalClose");
+        document.getElementById(
+            "escudoModalClose"
+        );
+
 
     const fondo =
-        document.querySelector(".escudo-modal-backdrop");
+        document.querySelector(
+            ".escudo-modal-backdrop"
+        );
 
 
-    // Si alguno de los elementos no existe,
-    // no hacemos nada.
+    // --------------------------------------------------------
+    // VALIDACIÓN
+    // --------------------------------------------------------
 
     if (!trigger || !modal) {
         return;
@@ -1518,14 +1672,20 @@ function iniciarPopupEscudo() {
 
     function abrirEscudo() {
 
-        modal.classList.add("active");
+        modal.classList.add(
+            "active"
+        );
+
 
         modal.setAttribute(
             "aria-hidden",
             "false"
         );
 
-        document.body.style.overflow = "hidden";
+
+        document.body.style.overflow =
+            "hidden";
+
     }
 
 
@@ -1535,14 +1695,20 @@ function iniciarPopupEscudo() {
 
     function cerrarEscudo() {
 
-        modal.classList.remove("active");
+        modal.classList.remove(
+            "active"
+        );
+
 
         modal.setAttribute(
             "aria-hidden",
             "true"
         );
 
-        document.body.style.overflow = "";
+
+        document.body.style.overflow =
+            "";
+
     }
 
 
