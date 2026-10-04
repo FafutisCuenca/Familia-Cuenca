@@ -12,42 +12,47 @@ const FamiliaCuenca = (() => {
     // Cargar datos
     // --------------------------------------------------------
 
-    async function cargar() {
+async function cargar() {
 
-        try {
+    try {
 
-            const rutaDatos = new URL(
-                "../data/familia.json",
-                document.currentScript.src
+        const respuesta =
+            await fetch("../data/familia.json");
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                `No se pudo cargar familia.json (${respuesta.status})`
             );
 
-const respuesta = await fetch(rutaDatos);
-            
-            if (!respuesta.ok) {
-                throw new Error(
-                    `No se pudo cargar familia.json (${respuesta.status})`
-                );
-            }
-
-            integrantes = await respuesta.json();
-
-            console.log(
-                `Familia Cuenca: ${integrantes.length} registros cargados.`
-            );
-
-            return integrantes;
-
-        } catch (error) {
-
-            console.error(
-                "Error cargando los datos de la Familia Cuenca:",
-                error
-            );
-
-            throw error;
         }
+
+
+        integrantes =
+            await respuesta.json();
+
+
+        console.log(
+            `Familia Cuenca: ${integrantes.length} registros cargados.`
+        );
+
+
+        return integrantes;
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando los datos de la Familia Cuenca:",
+            error
+        );
+
+        throw error;
+
     }
 
+}
 
     // --------------------------------------------------------
     // Obtener todos los integrantes
