@@ -28,9 +28,23 @@ async function iniciarDirectorio() {
         mostrarTotal();
 
 
-        // ----------------------------------------------------
+        // ====================================================
         // DIRECTORIO NORMAL
-        // Solamente familiares vivos
+        // ====================================================
+        //
+        // ANTES:
+        // Al entrar se mostraban todas las tarjetas
+        // de familiares vivos.
+        //
+        // Se conserva esa opción comentada para poder
+        // habilitarla nuevamente en el futuro.
+        // ====================================================
+
+
+        /*
+        // ----------------------------------------------------
+        // OPCIÓN ANTERIOR
+        // MOSTRAR TODAS LAS TARJETAS DE FAMILIARES VIVOS
         // ----------------------------------------------------
 
         const familiaresVivos =
@@ -39,10 +53,21 @@ async function iniciarDirectorio() {
                     persona.estatus === "Vivo"
             );
 
-
         mostrarFamilia(
             familiaresVivos
         );
+
+        */
+
+
+        // ====================================================
+        // NUEVA OPCIÓN
+        // NO MOSTRAR TARJETAS AL ENTRAR
+        //
+        // El usuario debe realizar una búsqueda.
+        // ====================================================
+
+        mostrarMensajeInicial();
 
 
         // ----------------------------------------------------
@@ -100,6 +125,59 @@ async function iniciarDirectorio() {
         }
 
     }
+
+}
+
+
+// ============================================================
+// MOSTRAR MENSAJE INICIAL
+// ============================================================
+//
+// No se generan tarjetas al entrar.
+// Se muestra únicamente una invitación a utilizar
+// el buscador.
+//
+// ============================================================
+
+function mostrarMensajeInicial() {
+
+    const contenedor =
+        document.getElementById(
+            "listaFamilia"
+        );
+
+
+    if (!contenedor) {
+
+        console.warn(
+            "No se encontró #listaFamilia"
+        );
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML = `
+
+        <div class="directorio-mensaje-inicial">
+
+            <div class="directorio-mensaje-icono">
+                🔎
+            </div>
+
+            <h2>
+                Busca un familiar
+            </h2>
+
+            <p>
+                Escribe un nombre, apellido,
+                ciudad o país para comenzar.
+            </p>
+
+        </div>
+
+    `;
 
 }
 
@@ -397,22 +475,14 @@ function iniciarBuscador() {
 
             // ------------------------------------------------
             // SIN TEXTO
-            // Mostrar nuevamente familiares vivos
+            // Regresar al mensaje inicial.
+            //
+            // Ya NO mostramos todas las tarjetas.
             // ------------------------------------------------
 
             if (!texto) {
 
-                const familiaresVivos =
-                    integrantesFamilia.filter(
-                        persona =>
-                            persona.estatus === "Vivo"
-                    );
-
-
-                mostrarFamilia(
-                    familiaresVivos
-                );
-
+                mostrarMensajeInicial();
 
                 return;
 
