@@ -2483,7 +2483,11 @@ select {
 
         font-size: 14px;
     }
-
+.hero-emblem.hero-emblem-escudo {
+    width: 125px;
+    height: 125px;
+    margin-bottom: 25px;
+}
 }
 
 
@@ -2636,5 +2640,10 @@ select {
 
         margin-bottom: 15px;
     }
-
+.hero-emblem.hero-emblem-escudo {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 22px;
+    padding: 6px;
+}
 }
