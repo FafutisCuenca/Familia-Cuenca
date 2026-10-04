@@ -211,7 +211,150 @@ main {
     color: #60727e;
 }
 
+/* =========================================================
+   PERFIL FAMILIAR
+========================================================= */
 
+.perfil-familiar {
+
+    max-width: 700px;
+
+    margin: 30px auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+
+.avatar-grande {
+
+    width: 130px;
+    height: 130px;
+
+    margin: 0 auto 20px;
+
+    font-size: 55px;
+
+}
+
+
+.avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+}
+
+
+.perfil-familiar h2 {
+
+    margin: 10px 0;
+
+    font-size: 30px;
+
+    color: #173b57;
+
+}
+
+
+.perfil-id {
+
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    margin-bottom: 30px;
+
+    border-radius: 10px;
+
+    background: #eef2f5;
+
+    color: #60727e;
+
+    font-size: 13px;
+
+}
+
+
+.datos-perfil {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(200px, 1fr)
+        );
+
+    gap: 15px;
+
+    text-align: left;
+
+}
+
+
+.datos-perfil .dato {
+
+    background: #f6f8fa;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    margin: 0;
+
+}
+
+
+.datos-perfil strong {
+
+    color: #173b57;
+
+}
+
+
+.acciones {
+
+    margin-top: 30px;
+
+}
+
+
+.boton {
+
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    background: #173b57;
+
+    color: white;
+
+    text-decoration: none;
+
+}
+
+
+.boton:hover {
+
+    opacity: 0.85;
+
+}
 /* =========================================================
    MÓVIL
 ========================================================= */
