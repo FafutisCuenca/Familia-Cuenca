@@ -1181,8 +1181,6 @@ function crearTarjetaCumpleanos(
             partes[1],
             10
         );
-
-
     return `
 
         <article class="birthday-card-item">
