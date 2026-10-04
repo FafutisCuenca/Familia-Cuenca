@@ -204,6 +204,16 @@ function mostrarFamilia(lista) {
 
 }
 
+// ============================================================
+// ABRIR PERFIL
+// ============================================================
+
+function abrirPerfil(id) {
+
+    window.location.href =
+        `perfil.html?id=${encodeURIComponent(id)}`;
+
+}
 
 // ============================================================
 // BUSCADOR
