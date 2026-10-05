@@ -1524,11 +1524,11 @@ select {
 
     padding: 12px 24px;
 
-    border: 1px solid var(--border);
+    border: 1px solid rgba(255,255,255,.28);
     border-radius: 30px;
 
-   background: var(--cream);
-   color: var(--navy);
+    background: rgba(255,255,255,.06);
+    color: white;
 
     font-family: inherit;
     font-size: 13px;
@@ -1544,9 +1544,9 @@ select {
 }
 
 .memoria-familiar-button:hover {
-    background: var(--navy);
-    color: white;
-    border-color: var(--navy);
+    background: white;
+    color: var(--navy);
+    border-color: white;
 
     transform: translateY(-2px);
 }
