@@ -1504,6 +1504,64 @@ select {
 }
 
 /* ============================================================
+   RESULTADOS — ESTADO DE MEMORIA
+============================================================ */
+
+.family-result-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.family-result-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.family-result-name h3 {
+    margin: 0;
+}
+
+.finado-indicador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    font-size: 19px;
+    line-height: 1;
+
+    opacity: .9;
+}
+
+.family-result:hover .finado-indicador {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+.family-result-finado {
+    border-color: rgba(213,192,139,.28);
+}
+
+.family-result-finado:hover {
+    border-color: rgba(213,192,139,.55);
+}
+
+.family-result-status {
+    margin-top: 10px;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    color: var(--gold-light);
+}
+
+/* ============================================================
    ACCESO A MEMORIA FAMILIAR
 ============================================================ */
 
