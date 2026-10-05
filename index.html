@@ -1,963 +1,915 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Familia Cuenca | Portal Familiar
-    </title>
+    <title>Familia Cuenca | Nuestra historia continúa</title>
 
     <meta
         name="description"
-        content="Portal de la Familia Cuenca. Historia, recuerdos, cumpleaños, estadísticas y directorio familiar."
+        content="Portal de la Familia Cuenca. Nuestra historia, nuestra familia y nuestros momentos."
     >
 
-    <link
-        rel="stylesheet"
-        href="styles.css"
-    >
-
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 
 <body>
 
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
-<!-- ============================================================
-     HEADER
-============================================================ -->
+    <header class="header">
 
-<header class="site-header">
+        <div class="nav-container">
 
-    <div class="header-container">
+            <a href="#inicio" class="brand">
 
-        <a
-            href="index.html"
-            class="brand"
+                <div class="brand-mark">
+                    C
+                </div>
+
+                <div class="brand-text">
+                    <span class="brand-title">CUENCA</span>
+                    <span class="brand-subtitle">Familia</span>
+                </div>
+
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Abrir menú"
+            >
+                ☰
+            </button>
+
+            <nav class="navigation" id="navigation">
+
+                <a href="#inicio">Inicio</a>
+                <a href="#familia">Familia</a>
+                <a href="#eventos">Eventos</a>
+                <a href="#cumpleanos">Cumpleaños</a>
+                <a href="#noticias">Noticias</a>
+                <a href="#recuerdos">Recuerdos</a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+
+<div class="hero-emblem hero-emblem-escudo">
+
+    <button
+        type="button"
+        class="hero-escudo-trigger"
+        id="escudoTrigger"
+        aria-label="Conocer el significado del Escudo de la Familia Cuenca"
+    >
+
+        <img
+            src="assets/logo/Escudo Familia CUENCA.jpg"
+            alt="Escudo de la Familia Cuenca"
+            class="hero-escudo-imagen"
         >
 
-            <div class="brand-emblem">
-                CU
+    </button>
+
+</div>
+
+                <p class="eyebrow">
+                    FAMILIA CUENCA
+                </p>
+
+                <h1>
+                    Nuestra historia
+                    <span>continúa.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Un espacio para encontrarnos, recordar de dónde venimos,
+                    celebrar quiénes somos y seguir construyendo nuestra historia.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#familia" class="btn btn-primary">
+                        Conoce a la familia
+                    </a>
+
+                    <a href="#eventos" class="btn btn-outline">
+                        Ver eventos
+                    </a>
+
+                </div>
+
             </div>
 
-            <div class="brand-text">
+            <div class="hero-scroll">
+                <span>Descubre nuestra historia</span>
+                <div class="scroll-line"></div>
+            </div>
 
-                <span class="brand-title">
-                    Familia Cuenca
-                </span>
+        </section>
 
-                <span class="brand-subtitle">
-                    Portal Familiar
+
+        <!-- =====================================================
+             ESTADÍSTICAS
+        ====================================================== -->
+
+        <section class="family-stats">
+
+            <div class="stat">
+
+                <strong id="totalFamiliares">
+                    0
+                </strong>
+
+                <span>
+                    Familiares registrados
                 </span>
 
             </div>
 
-        </a>
+            <div class="stat">
+
+                <strong id="totalPaises">
+                    0
+                </strong>
+
+                <span>
+                    Países
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong id="totalCiudades">
+                    0
+                </strong>
+
+                <span>
+                    Ciudades
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong id="totalGeneraciones">
+                    0
+                </strong>
+
+                <span>
+                    Generaciones
+                </span>
+
+            </div>
+
+        </section>
 
 
-        <button
-            class="menu-toggle"
-            id="menuToggle"
-            type="button"
-            aria-label="Abrir menú"
+        
+        <!-- =====================================================
+             BIENVENIDA
+        ====================================================== -->
+
+        <section class="section introduction">
+
+            <div class="section-heading">
+
+                <span class="section-kicker">
+                    BIENVENIDOS A CASA
+                </span>
+
+                <h2>
+                    Más que un apellido,
+                    <span>una historia.</span>
+                </h2>
+
+                <p>
+                    La familia se construye con nombres, lugares, recuerdos,
+                    encuentros y generaciones. Este portal nace para reunir
+                    todo aquello que nos conecta.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ACCESOS PRINCIPALES
+        ====================================================== -->
+
+        <section class="section modules">
+
+            <div class="section-heading left">
+
+                <span class="section-kicker">
+                    EXPLORA
+                </span>
+
+                <h2>
+                    Todo lo que nos une
+                </h2>
+
+            </div>
+
+
+            <div class="module-grid">
+
+
+                <!-- FAMILIA -->
+
+                <article class="module-card family-card" id="familia">
+
+                    <div class="module-icon">
+                        👨‍👩‍👧‍👦
+                    </div>
+
+                    <div class="module-content">
+
+                        <span class="module-number">
+                            01
+                        </span>
+
+                        <h3>
+                            Nuestra Familia
+                        </h3>
+
+                        <p>
+                            Busca a un familiar y descubre dónde vive,
+                            su cumpleaños, generación y otros datos
+                            que iremos incorporando.
+                        </p>
+
+                        <a href="#directorio" class="module-link">
+                            Explorar familia →
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- EVENTOS -->
+
+                <article class="module-card events-card" id="eventos">
+
+                    <div class="module-icon">
+                        🎉
+                    </div>
+
+                    <div class="module-content">
+
+                        <span class="module-number">
+                            02
+                        </span>
+
+                        <h3>
+                            Eventos
+                        </h3>
+
+                        <p>
+                            Cuencada 2026, futuras reuniones y todos
+                            aquellos momentos en los que volvemos
+                            a encontrarnos.
+                        </p>
+
+                        <a href="#eventos-lista" class="module-link">
+                            Ver eventos →
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- CUMPLEAÑOS -->
+
+                <article class="module-card birthday-card" id="cumpleanos">
+
+                    <div class="module-icon">
+                        🎂
+                    </div>
+
+                    <div class="module-content">
+
+                        <span class="module-number">
+                            03
+                        </span>
+
+                        <h3>
+                            Cumpleaños
+                        </h3>
+
+                        <p>
+                            Consulta el calendario familiar, busca
+                            nombres y descubre quién celebra próximamente.
+                        </p>
+
+                        <a href="#cumpleanos-lista" class="module-link">
+                            Ver cumpleaños →
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- RECUERDOS -->
+
+                <article class="module-card memories-card" id="recuerdos">
+
+                    <div class="module-icon">
+                        📸
+                    </div>
+
+                    <div class="module-content">
+
+                        <span class="module-number">
+                            04
+                        </span>
+
+                        <h3>
+                            Recuerdos
+                        </h3>
+
+                        <p>
+                            Fotografías, historias y momentos que
+                            queremos conservar para las siguientes
+                            generaciones.
+                        </p>
+
+                        <a href="#recuerdos-contenido" class="module-link">
+                            Ver recuerdos →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             BUSCADOR FAMILIAR
+        ====================================================== -->
+
+        <section class="directory-section" id="directorio">
+
+            <div class="directory-container">
+
+                <div class="directory-heading">
+
+                    <span class="section-kicker">
+                        DIRECTORIO FAMILIAR
+                    </span>
+
+                    <h2>
+                        ¿Quién es?
+                    </h2>
+
+                    <p>
+                        Busca un nombre, apellido, ciudad o país
+                        para encontrar a un familiar.
+                    </p>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <div class="search-input-wrapper">
+
+                        <span class="search-icon">
+                            🔎
+                        </span>
+
+                        <input
+                            type="search"
+                            id="familySearch"
+                            placeholder="Ej. Alexandra, Cuenca, Lima..."
+                            autocomplete="off"
+                        >
+
+                        <button
+                            id="clearSearch"
+                            class="clear-search"
+                            type="button"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="search-filters">
+
+                    <select id="countryFilter">
+
+                        <option value="">
+                            Todos los países
+                        </option>
+
+                    </select>
+
+
+                    <select id="genderFilter">
+
+                        <option value="">
+                            Todos los géneros
+                        </option>
+
+                        <option value="F">
+                            Mujeres
+                        </option>
+
+                        <option value="M">
+                            Hombres
+                        </option>
+
+                    </select>
+
+
+                    <select id="generationFilter">
+
+                        <option value="">
+                            Todas las generaciones
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div
+                    id="searchResults"
+                    class="family-results"
+                ></div>
+
+                <div class="memoria-familiar-access">
+
+    <button
+        type="button"
+        id="mostrarFinados"
+        class="memoria-familiar-button"
+    >
+
+        <span class="memoria-familiar-icon">
+            🕊️
+        </span>
+
+        <span>
+            Familiares que ya no están con nosotros
+        </span>
+
+    </button>
+
+</div>
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PRÓXIMOS CUMPLEAÑOS
+        ====================================================== -->
+
+        <section
+            class="section birthdays-section"
+            id="cumpleanos-lista"
         >
-            ☰
-        </button>
+
+            <div class="section-heading left">
+
+                <span class="section-kicker">
+                    CALENDARIO FAMILIAR
+                </span>
+
+                <h2>
+                    Próximos cumpleaños
+                </h2>
+
+            </div>
 
 
-        <nav
-            class="main-nav"
-            id="mainNav"
+            <div
+                id="birthdayList"
+                class="birthday-grid"
+            ></div>
+
+
+            <div class="center-button">
+
+                <a href="#cumpleanos" class="btn btn-dark">
+                    Ver calendario completo
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             EVENTOS
+        ====================================================== -->
+
+        <section class="events-feature" id="eventos-lista">
+
+            <div class="events-feature-overlay"></div>
+
+            <div class="events-feature-content">
+
+                <span class="section-kicker">
+                    NUESTROS MOMENTOS
+                </span>
+
+                <h2>
+                    Cuencada 2026
+                </h2>
+
+                <p>
+                    Mérida, Yucatán · Septiembre 2026
+                </p>
+
+                <p class="event-description">
+                    Cinco días de familia, viajes, comida, aventuras,
+                    fotografías y recuerdos que ya forman parte
+                    de nuestra historia.
+                </p>
+
+                <a
+                    href="#"
+                    id="cuencadaLink"
+                    class="btn btn-light"
+                >
+                    Entrar a Cuencada 2026 →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TABLERO FAMILIAR
+        ====================================================== -->
+
+        <section class="section family-board" id="noticias">
+
+            <div class="section-heading left">
+
+                <span class="section-kicker">
+                    HOY EN LA FAMILIA
+                </span>
+
+                <h2>
+                    Tablero familiar
+                </h2>
+
+            </div>
+
+
+            <div class="board-grid">
+
+
+                <article class="board-card">
+
+                    <div class="board-icon">
+                        🎂
+                    </div>
+
+                    <div>
+
+                        <span>
+                            PRÓXIMAMENTE
+                        </span>
+
+                        <h3 id="nextBirthdayName">
+                            Cargando...
+                        </h3>
+
+                        <p id="nextBirthdayDate">
+                            Cargando...
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="board-card">
+
+                    <div class="board-icon">
+                        🎉
+                    </div>
+
+                    <div>
+
+                        <span>
+                            PRÓXIMO EVENTO
+                        </span>
+
+                        <h3>
+                            Cuencada 2026
+                        </h3>
+
+                        <p>
+                            Mérida · Septiembre 2026
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="board-card">
+
+                    <div class="board-icon">
+                        🌎
+                    </div>
+
+                    <div>
+
+                        <span>
+                            FAMILIA EN EL MUNDO
+                        </span>
+
+                        <h3 id="countriesBoard">
+                            Cargando...
+                        </h3>
+
+                        <p>
+                            Nuestra familia sigue creciendo.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="board-card">
+
+                    <div class="board-icon">
+                        📸
+                    </div>
+
+                    <div>
+
+                        <span>
+                            ÚLTIMO RECUERDO
+                        </span>
+
+                        <h3>
+                            Cuencada 2026
+                        </h3>
+
+                        <p>
+                            Mérida, Yucatán
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HISTORIA
+        ====================================================== -->
+
+        <section class="history-section">
+
+            <div class="history-content">
+
+                <span class="section-kicker">
+                    NUESTRA HISTORIA
+                </span>
+
+                <h2>
+                    Lo que comenzó
+                    <span>continúa.</span>
+                </h2>
+
+                <p>
+                    Cada generación agrega una nueva página a nuestra
+                    historia. Este espacio irá creciendo con nosotros:
+                    nombres, fotografías, historias, lugares y recuerdos.
+                </p>
+
+                <a href="#inicio" class="text-link">
+                    Conocer nuestra historia →
+                </a>
+
+            </div>
+
+
+            <div class="generation-line">
+
+                <div class="generation">
+                    <span>01</span>
+                    <small>Origen</small>
+                </div>
+
+                <div class="generation">
+                    <span>02</span>
+                    <small>Familia</small>
+                </div>
+
+                <div class="generation">
+                    <span>03</span>
+                    <small>Generaciones</small>
+                </div>
+
+                <div class="generation active">
+                    <span>04</span>
+                    <small>Hoy</small>
+                </div>
+
+                <div class="generation">
+                    <span>05</span>
+                    <small>Futuro</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RECUERDOS
+        ====================================================== -->
+
+        <section
+            class="section memories"
+            id="recuerdos-contenido"
         >
+
+            <div class="section-heading">
+
+                <span class="section-kicker">
+                    MEMORIA FAMILIAR
+                </span>
+
+                <h2>
+                    Algunos momentos
+                    <span>que queremos conservar.</span>
+                </h2>
+
+            </div>
+
+
+            <div class="memory-placeholder">
+
+                <div class="memory-placeholder-icon">
+                    📷
+                </div>
+
+                <h3>
+                    Nuestra galería familiar
+                </h3>
+
+                <p>
+                    Aquí incorporaremos las fotografías y recuerdos
+                    de nuestras reuniones familiares.
+                </p>
+
+                <span>
+                    Próximamente
+                </span>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-logo">
+
+            <div class="brand-mark">
+                C
+            </div>
+
+            <div>
+
+                <strong>
+                    FAMILIA CUENCA
+                </strong>
+
+                <span>
+                    Nuestra historia continúa.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-links">
 
             <a href="#inicio">
                 Inicio
             </a>
 
-            <a href="#directorio">
-                Directorio
-            </a>
-
-            <a href="#cumpleanos-lista">
-                Cumpleaños
+            <a href="#familia">
+                Familia
             </a>
 
             <a href="#eventos">
                 Eventos
             </a>
 
-            <a href="#estadistica">
-                Estadística
-            </a>
-
-            <a href="#historia">
-                Historia
+            <a href="#cumpleanos">
+                Cumpleaños
             </a>
 
             <a href="#recuerdos">
                 Recuerdos
             </a>
 
-        </nav>
-
-    </div>
-
-</header>
-
-
-
-<!-- ============================================================
-     HERO
-============================================================ -->
-
-<main>
-
-<section
-    class="hero-section"
-    id="inicio"
->
-
-    <div class="hero-container">
-
-
-        <div class="hero-content">
-
-            <span class="hero-kicker">
-                PORTAL DE LA FAMILIA CUENCA
-            </span>
-
-            <h1>
-                Nuestra historia
-                <span>
-                    continúa juntos
-                </span>
-            </h1>
-
-            <p class="hero-description">
-
-                Un espacio para conservar nuestra historia,
-                recordar a quienes nos precedieron,
-                celebrar a quienes formamos parte de la familia
-                y mantener vivos nuestros vínculos.
-
-            </p>
-
-
-            <div class="hero-actions">
-
-                <a
-                    href="#directorio"
-                    class="btn btn-primary"
-                >
-                    Buscar familiar
-                </a>
-
-                <a
-                    href="#cumpleanos-lista"
-                    class="btn btn-secondary"
-                >
-                    Ver cumpleaños
-                </a>
-
-            </div>
-
         </div>
 
 
-        <div class="hero-emblem hero-emblem-escudo">
+        <div class="footer-bottom">
+
+            <p>
+                © <span id="currentYear"></span> Familia Cuenca
+            </p>
+
+            <p>
+                Un espacio creado para nuestra familia.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================================
+         MODAL PERFIL FAMILIAR
+    ========================================================== -->
+
+    <div
+        id="familyModal"
+        class="modal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-backdrop"></div>
+
+        <div class="modal-content">
 
             <button
-                type="button"
-                class="hero-escudo-trigger"
-                id="escudoTrigger"
-                aria-label="Conocer el significado del Escudo de la Familia Cuenca"
+                class="modal-close"
+                id="modalClose"
+                aria-label="Cerrar"
             >
-
-                <img
-                    src="assets/logo/Escudo Familia CUENCA.jpg"
-                    alt="Escudo de la Familia Cuenca"
-                    class="hero-escudo-imagen"
-                >
-
+                ×
             </button>
 
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     ESTADÍSTICAS PRINCIPALES
-============================================================ -->
-
-<section class="stats-section">
-
-    <div class="stats-container">
-
-
-        <div class="stat-card">
-
-            <span
-                class="stat-number"
-                id="totalFamilia"
-            >
-                —
-            </span>
-
-            <span class="stat-label">
-                Integrantes registrados
-            </span>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <span
-                class="stat-number"
-                id="totalPaises"
-            >
-                —
-            </span>
-
-            <span class="stat-label">
-                Países
-            </span>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <span
-                class="stat-number"
-                id="totalMujeres"
-            >
-                —
-            </span>
-
-            <span class="stat-label">
-                Mujeres
-            </span>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <span
-                class="stat-number"
-                id="totalHombres"
-            >
-                —
-            </span>
-
-            <span class="stat-label">
-                Hombres
-            </span>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     BIENVENIDA
-============================================================ -->
-
-<section class="section welcome-section">
-
-    <div class="section-container">
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                NUESTRA FAMILIA
-            </span>
-
-            <h2>
-                Un espacio para encontrarnos
-            </h2>
-
-            <p>
-
-                Este portal nace con la intención de conservar
-                nuestra información familiar y facilitar que las
-                nuevas generaciones conozcan nuestras raíces.
-
-            </p>
+            <div id="familyModalContent"></div>
 
         </div>
 
     </div>
 
-</section>
-
-
-
-<!-- ============================================================
-     MÓDULOS
-============================================================ -->
-
-<section class="section modules-section">
-
-    <div class="section-container">
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                EXPLORA
-            </span>
-
-            <h2>
-                Conoce nuestro portal
-            </h2>
-
-        </div>
-
-
-        <div class="modules-grid">
-
-
-            <a
-                href="#directorio"
-                class="module-card"
-            >
-
-                <div class="module-icon">
-                    👨‍👩‍👧‍👦
-                </div>
-
-                <h3>
-                    Directorio familiar
-                </h3>
-
-                <p>
-                    Busca integrantes de la familia
-                    por nombre, apellido, ciudad o país.
-                </p>
-
-            </a>
-
-
-            <a
-                href="#cumpleanos-lista"
-                class="module-card"
-            >
-
-                <div class="module-icon">
-                    🎂
-                </div>
-
-                <h3>
-                    Cumpleaños
-                </h3>
-
-                <p>
-                    Consulta los cumpleaños
-                    de nuestra familia durante todo el año.
-                </p>
-
-            </a>
-
-
-            <a
-                href="#eventos"
-                class="module-card"
-            >
-
-                <div class="module-icon">
-                    🎉
-                </div>
-
-                <h3>
-                    Eventos
-                </h3>
-
-                <p>
-                    Conoce reuniones,
-                    celebraciones y encuentros familiares.
-                </p>
-
-            </a>
-
-
-            <a
-                href="#estadistica"
-                class="module-card"
-            >
-
-                <div class="module-icon">
-                    📊
-                </div>
-
-                <h3>
-                    Estadística Cuenca
-                </h3>
-
-                <p>
-                    Conoce nuestra familia
-                    mediante estadísticas y gráficas.
-                </p>
-
-            </a>
-
-
-            <a
-                href="#historia"
-                class="module-card"
-            >
-
-                <div class="module-icon">
-                    📜
-                </div>
-
-                <h3>
-                    Nuestra historia
-                </h3>
-
-                <p>
-                    Conservamos acontecimientos,
-                    personajes y momentos importantes.
-                </p>
-
-            </a>
-
-
-            <a
-                href="#recuerdos"
-                class="module-card"
-            >
-
-                <div class="module-icon">
-                    📷
-                </div>
-
-                <h3>
-                    Recuerdos
-                </h3>
-
-                <p>
-                    Fotografías, videos y recuerdos
-                    de nuestras reuniones familiares.
-                </p>
-
-            </a>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     DIRECTORIO FAMILIAR
-============================================================ -->
-
-<section
-    class="directory-section"
-    id="directorio"
->
-
-    <div class="directory-container">
-
-
-        <div class="directory-heading">
-
-            <span class="section-kicker">
-                DIRECTORIO FAMILIAR
-            </span>
-
-            <h2>
-                ¿Quién es?
-            </h2>
-
-            <p>
-
-                Busca un nombre, apellido, ciudad o país
-                para encontrar a un familiar.
-
-            </p>
-
-        </div>
-
-
-        <!-- BUSCADOR -->
-
-        <div class="search-box">
-
-            <div class="search-input-wrapper">
-
-                <span class="search-icon">
-                    🔎
-                </span>
-
-                <input
-                    type="search"
-                    id="familySearch"
-                    placeholder="Ej. Alexandra, Cuenca, Lima..."
-                    autocomplete="off"
-                >
-
-                <button
-                    id="clearSearch"
-                    class="clear-search"
-                    type="button"
-                    aria-label="Limpiar búsqueda"
-                >
-                    ×
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- FILTROS -->
-
-        <div class="search-filters">
-
-            <select id="countryFilter">
-
-                <option value="">
-                    Todos los países
-                </option>
-
-            </select>
-
-
-            <select id="genderFilter">
-
-                <option value="">
-                    Todos los géneros
-                </option>
-
-                <option value="F">
-                    Mujeres
-                </option>
-
-                <option value="M">
-                    Hombres
-                </option>
-
-            </select>
-
-
-            <select id="generationFilter">
-
-                <option value="">
-                    Todas las generaciones
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- RESULTADOS -->
-
-        <div
-            id="searchResults"
-            class="family-results"
-        ></div>
-
-
-        <!-- ====================================================
-             MEMORIA FAMILIAR
-        ==================================================== -->
-
-        <div class="memoria-familiar-access">
-
-            <button
-                type="button"
-                id="mostrarFinados"
-                class="memoria-familiar-button"
-            >
-
-                <span class="memoria-familiar-icon">
-                    🕊️
-                </span>
-
-                <span>
-                    Familiares que ya no están con nosotros
-                </span>
-
-            </button>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     CUMPLEAÑOS
-============================================================ -->
-
-<section
-    class="section birthdays-section"
-    id="cumpleanos-lista"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                CALENDARIO FAMILIAR
-            </span>
-
-            <h2>
-                Próximos cumpleaños
-            </h2>
-
-            <p>
-                Celebremos juntos a quienes cumplen años.
-            </p>
-
-        </div>
-
-
-        <div
-            id="birthdayList"
-            class="birthday-grid"
-        ></div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     EVENTOS
-============================================================ -->
-
-<section
-    class="section events-section"
-    id="eventos"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                ENCUENTROS
-            </span>
-
-            <h2>
-                Eventos familiares
-            </h2>
-
-            <p>
-                Reuniones y acontecimientos que forman parte
-                de nuestra historia.
-            </p>
-
-        </div>
-
-
-        <div class="events-grid">
-
-
-            <a
-                href="cuencada-2026/index.html"
-                class="event-card"
-            >
-
-                <div class="event-icon">
-                    🌴
-                </div>
-
-                <h3>
-                    Cuencada 2026
-                </h3>
-
-                <p>
-                    Nuestra reunión familiar
-                    en Mérida, Yucatán.
-                </p>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="event-card"
-            >
-
-                <div class="event-icon">
-                    📅
-                </div>
-
-                <h3>
-                    Próximamente
-                </h3>
-
-                <p>
-                    Aquí podremos incorporar
-                    futuros eventos familiares.
-                </p>
-
-            </a>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     ESTADÍSTICA
-============================================================ -->
-
-<section
-    class="section statistics-section"
-    id="estadistica"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                ESTADÍSTICA CUENCA
-            </span>
-
-            <h2>
-                Conociendo nuestra familia
-            </h2>
-
-            <p>
-
-                Consulta estadísticas familiares
-                inspiradas en una presentación tipo INEGI.
-
-            </p>
-
-        </div>
-
-
-        <div class="statistics-access">
-
-            <a
-                href="estadistica/index.html"
-                class="btn btn-primary"
-            >
-                Ver Estadística Cuenca
-            </a>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     TABLERO FAMILIAR
-============================================================ -->
-
-<section class="section board-section">
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                TABLERO
-            </span>
-
-            <h2>
-                Información familiar
-            </h2>
-
-        </div>
-
-
-        <div
-            id="familyBoard"
-            class="family-board"
-        ></div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     HISTORIA
-============================================================ -->
-
-<section
-    class="section history-section"
-    id="historia"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                NUESTRAS RAÍCES
-            </span>
-
-            <h2>
-                Historia de la familia
-            </h2>
-
-            <p>
-
-                Este espacio estará destinado a conservar
-                acontecimientos, documentos y relatos
-                importantes de nuestra historia familiar.
-
-            </p>
-
-        </div>
-
-
-        <div class="history-placeholder">
-
-            <div class="history-icon">
-                📜
-            </div>
-
-            <h3>
-                Próximamente
-            </h3>
-
-            <p>
-                Estamos construyendo esta sección.
-            </p>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     RECUERDOS
-============================================================ -->
-
-<section
-    class="section memories-section"
-    id="recuerdos"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-kicker">
-                MEMORIA FAMILIAR
-            </span>
-
-            <h2>
-                Recuerdos
-            </h2>
-
-            <p>
-                Fotografías y momentos que queremos conservar
-                para las siguientes generaciones.
-            </p>
-
-        </div>
-
-
-        <div class="memories-access">
-
-            <a
-                href="recuerdos/index.html"
-                class="btn btn-primary"
-            >
-                Ver recuerdos
-            </a>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- ============================================================
-     MODAL — PERFIL FAMILIAR
-============================================================ -->
-
-<div
-    id="familyModal"
-    class="modal"
-    aria-hidden="true"
->
-
-    <div class="modal-backdrop"></div>
-
-    <div class="modal-content">
-
-        <button
-            class="modal-close"
-            id="modalClose"
-            type="button"
-            aria-label="Cerrar"
-        >
-            ×
-        </button>
-
-        <div
-            id="familyModalContent"
-        ></div>
-
-    </div>
-
-</div>
-
-
-
-<!-- ============================================================
-     MODAL — EN MEMORIA DE QUIENES NOS PRECEDIERON
-============================================================ -->
+```html
+<!-- =========================================================
+     MODAL — EN MEMORIA DE NUESTROS FAMILIARES
+========================================================= -->
 
 <div
     id="finadosModal"
@@ -965,15 +917,9 @@
     aria-hidden="true"
 >
 
-    <div
-        class="finados-modal-backdrop"
-    ></div>
+    <div class="finados-modal-backdrop"></div>
 
-
-    <div
-        class="finados-modal-content"
-    >
-
+    <div class="finados-modal-content">
 
         <button
             type="button"
@@ -985,47 +931,32 @@
         </button>
 
 
-        <div
-            class="finados-modal-header"
-        >
+        <div class="finados-modal-header">
 
-            <div
-                class="finados-modal-symbol"
-            >
+            <div class="finados-modal-symbol">
                 🕊️
             </div>
 
-
-            <span
-                class="finados-kicker"
-            >
+            <span class="finados-kicker">
                 MEMORIA FAMILIAR
             </span>
 
-
             <h2>
-
                 En memoria de quienes
-
-                <span>
-                    nos precedieron
-                </span>
-
+                <span>nos precedieron</span>
             </h2>
 
-
-            <p
-                class="finados-dedicatoria"
-            >
-
+            <p class="finados-dedicatoria">
                 Hay personas que dejan de estar físicamente,
                 pero permanecen para siempre en nuestra historia,
                 en nuestros recuerdos y en el corazón de nuestra familia.
-
             </p>
 
         </div>
 
+
+        <!-- Aquí JavaScript colocará automáticamente
+             la lista de familiares fallecidos -->
 
         <div
             id="listaFinados"
@@ -1033,26 +964,16 @@
         ></div>
 
 
-        <div
-            class="finados-modal-footer"
-        >
+        <div class="finados-modal-footer">
 
-            <div
-                class="finados-divider"
-            ></div>
-
+            <div class="finados-divider"></div>
 
             <p>
-
                 <em>
-
                     “Mientras alguien recuerde nuestro nombre,
                     nuestra historia continúa.”
-
                 </em>
-
             </p>
-
 
             <span>
                 Familia Cuenca
@@ -1060,166 +981,102 @@
 
         </div>
 
-
     </div>
 
 </div>
+```
 
-
-
-<!-- ============================================================
-     MODAL — ESCUDO DE LA FAMILIA
-============================================================ -->
-
-<div
-    id="escudoModal"
-    class="escudo-modal"
-    aria-hidden="true"
->
-
+    
+    <!-- =========================================================
+         MODAL ESCUDO DE LA FAMILIA CUENCA
+    ========================================================== -->
 
     <div
-        class="escudo-modal-backdrop"
-    ></div>
-
-
-    <div
-        class="escudo-modal-content"
+        id="escudoModal"
+        class="escudo-modal"
+        aria-hidden="true"
     >
 
+        <div class="escudo-modal-backdrop"></div>
 
-        <button
-            type="button"
-            class="escudo-modal-close"
-            id="escudoModalClose"
-            aria-label="Cerrar"
-        >
-            ×
-        </button>
+        <div class="escudo-modal-content">
 
-
-        <div
-            class="escudo-modal-header"
-        >
-
-            <span
-                class="escudo-kicker"
+            <button
+                type="button"
+                class="escudo-modal-close"
+                id="escudoModalClose"
+                aria-label="Cerrar"
             >
-                HISTORIA FAMILIAR
-            </span>
-
-            <h2>
-                Escudo de la Familia Cuenca
-            </h2>
-
-        </div>
+                ×
+            </button>
 
 
-        <div
-            class="escudo-modal-body"
-        >
+            <div class="escudo-modal-header">
 
-            <img
-                src="assets/logo/Escudo Familia CUENCA.jpg"
-                alt="Escudo de la Familia Cuenca"
-                class="escudo-modal-imagen"
-            >
+                <img
+                    src="assets/logo/Escudo Familia CUENCA.jpg"
+                    alt="Escudo de la Familia Cuenca"
+                    class="escudo-modal-imagen"
+                >
+
+                <div>
+
+                    <span class="escudo-kicker">
+                        HERÁLDICA FAMILIAR
+                    </span>
+
+                    <h2>
+                        El Escudo de la Familia Cuenca
+                    </h2>
+
+                </div>
+
+            </div>
 
 
-            <div
-                class="escudo-modal-text"
-            >
+            <div class="escudo-modal-text">
 
                 <p>
-
-                    El escudo representa uno de los elementos
-                    simbólicos que forman parte de la identidad
-                    y memoria de nuestra familia.
-
+                    El escudo de la familia Cuenca se describe como sigue:
                 </p>
 
                 <p>
+                    En un campo de gules (rojo), se encuentra un cáliz
+                    de plata y una estrella de ocho puntas de plata,
+                    simbolizando la reconquista de la ciudad por
+                    Alfonso VIII en 1177.
+                </p>
 
-                    Esta sección podrá ampliarse posteriormente
-                    con la historia, significado y documentación
-                    relacionada con el escudo familiar.
+                <p>
+                    La corona real antigua, abierta, representa
+                    la nobleza y la toma de la ciudad.
+                </p>
 
+                <p>
+                    El escudo también incluye elementos que simbolizan
+                    la pureza, integridad y firmeza, como los esmaltes
+                    de plata.
+                </p>
+
+                <p>
+                    Este escudo es un símbolo heráldico que representa
+                    no solo a la familia Cuenca, sino también a la
+                    ciudad de Cuenca en general.
                 </p>
 
             </div>
 
         </div>
 
-
     </div>
 
-</div>
 
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
 
-
-<!-- ============================================================
-     FOOTER
-============================================================ -->
-
-<footer class="site-footer">
-
-    <div class="footer-container">
-
-
-        <div class="footer-brand">
-
-            <strong>
-                Familia Cuenca
-            </strong>
-
-            <span>
-                Portal Familiar
-            </span>
-
-        </div>
-
-
-        <div class="footer-text">
-
-            <p>
-
-                Un espacio construido para conservar
-                nuestra historia y mantenernos unidos.
-
-            </p>
-
-            <p>
-
-                ©
-                <span id="currentYear">
-                    2026
-                </span>
-                Familia Cuenca
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-</footer>
-
-
-
-<!-- ============================================================
-     JAVASCRIPT
-============================================================ -->
-
-<script
-    src="js/familia-data.js"
-></script>
-
-<script
-    src="app.js"
-></script>
-
+    <script src="js/familia-data.js"></script>
+    <script src="app.js"></script>
 
 </body>
-
 </html>
