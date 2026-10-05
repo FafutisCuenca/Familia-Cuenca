@@ -50,7 +50,13 @@
                 <a href="#inicio">Inicio</a>
                 <a href="#familia">Familia</a>
                 <a href="#eventos">Eventos</a>
-                <a href="#cumpleanos">Cumpleaños</a>
+
+                <a
+                    href="https://fafutiscuenca.github.io/cumpleanos-familia-Cuenca/"
+                >
+                    Cumpleaños
+                </a>
+
                 <a href="#noticias">Noticias</a>
                 <a href="#recuerdos">Recuerdos</a>
 
@@ -73,24 +79,24 @@
 
             <div class="hero-content">
 
-<div class="hero-emblem hero-emblem-escudo">
+                <div class="hero-emblem hero-emblem-escudo">
 
-    <button
-        type="button"
-        class="hero-escudo-trigger"
-        id="escudoTrigger"
-        aria-label="Conocer el significado del Escudo de la Familia Cuenca"
-    >
+                    <button
+                        type="button"
+                        class="hero-escudo-trigger"
+                        id="escudoTrigger"
+                        aria-label="Conocer el significado del Escudo de la Familia Cuenca"
+                    >
 
-        <img
-            src="assets/logo/Escudo Familia CUENCA.jpg"
-            alt="Escudo de la Familia Cuenca"
-            class="hero-escudo-imagen"
-        >
+                        <img
+                            src="assets/logo/Escudo Familia CUENCA.jpg"
+                            alt="Escudo de la Familia Cuenca"
+                            class="hero-escudo-imagen"
+                        >
 
-    </button>
+                    </button>
 
-</div>
+                </div>
 
                 <p class="eyebrow">
                     FAMILIA CUENCA
@@ -185,7 +191,6 @@
         </section>
 
 
-        
         <!-- =====================================================
              BIENVENIDA
         ====================================================== -->
@@ -325,7 +330,10 @@
                             nombres y descubre quién celebra próximamente.
                         </p>
 
-                        <a href="#cumpleanos-lista" class="module-link">
+                        <a
+                            href="https://fafutiscuenca.github.io/cumpleanos-familia-Cuenca/"
+                            class="module-link"
+                        >
                             Ver cumpleaños →
                         </a>
 
@@ -469,25 +477,27 @@
                     class="family-results"
                 ></div>
 
+
                 <div class="memoria-familiar-access">
 
-    <button
-        type="button"
-        id="mostrarFinados"
-        class="memoria-familiar-button"
-    >
+                    <button
+                        type="button"
+                        id="mostrarFinados"
+                        class="memoria-familiar-button"
+                    >
 
-        <span class="memoria-familiar-icon">
-            🕊️
-        </span>
+                        <span class="memoria-familiar-icon">
+                            🕊️
+                        </span>
 
-        <span>
-            Familiares que ya no están con nosotros
-        </span>
+                        <span>
+                            Familiares que ya no están con nosotros
+                        </span>
 
-    </button>
+                    </button>
 
-</div>
+                </div>
+
             </div>
 
         </section>
@@ -523,7 +533,10 @@
 
             <div class="center-button">
 
-                <a href="#cumpleanos" class="btn btn-dark">
+                <a
+                    href="https://fafutiscuenca.github.io/cumpleanos-familia-Cuenca/"
+                    class="btn btn-dark"
+                >
                     Ver calendario completo
                 </a>
 
@@ -852,7 +865,9 @@
                 Eventos
             </a>
 
-            <a href="#cumpleanos">
+            <a
+                href="https://fafutiscuenca.github.io/cumpleanos-familia-Cuenca/"
+            >
                 Cumpleaños
             </a>
 
@@ -906,83 +921,85 @@
 
     </div>
 
-<!-- =========================================================
-     MODAL — EN MEMORIA DE NUESTROS FAMILIARES
-========================================================= -->
 
-<div
-    id="finadosModal"
-    class="finados-modal"
-    aria-hidden="true"
->
+    <!-- =========================================================
+         MODAL — EN MEMORIA DE NUESTROS FAMILIARES
+    ========================================================== -->
 
-    <div class="finados-modal-backdrop"></div>
+    <div
+        id="finadosModal"
+        class="finados-modal"
+        aria-hidden="true"
+    >
 
-    <div class="finados-modal-content">
+        <div class="finados-modal-backdrop"></div>
 
-        <button
-            type="button"
-            class="finados-modal-close"
-            id="finadosModalClose"
-            aria-label="Cerrar"
-        >
-            ×
-        </button>
+        <div class="finados-modal-content">
+
+            <button
+                type="button"
+                class="finados-modal-close"
+                id="finadosModalClose"
+                aria-label="Cerrar"
+            >
+                ×
+            </button>
 
 
-        <div class="finados-modal-header">
+            <div class="finados-modal-header">
 
-            <div class="finados-modal-symbol">
-                🕊️
+                <div class="finados-modal-symbol">
+                    🕊️
+                </div>
+
+                <span class="finados-kicker">
+                    MEMORIA FAMILIAR
+                </span>
+
+                <h2>
+                    En memoria de quienes
+                    <span>nos precedieron</span>
+                </h2>
+
+                <p class="finados-dedicatoria">
+                    Hay personas que dejan de estar físicamente,
+                    pero permanecen para siempre en nuestra historia,
+                    en nuestros recuerdos y en el corazón de nuestra familia.
+                </p>
+
             </div>
 
-            <span class="finados-kicker">
-                MEMORIA FAMILIAR
-            </span>
 
-            <h2>
-                En memoria de quienes
-                <span>nos precedieron</span>
-            </h2>
+            <!-- Aquí JavaScript colocará automáticamente
+                 la lista de familiares fallecidos -->
 
-            <p class="finados-dedicatoria">
-                Hay personas que dejan de estar físicamente,
-                pero permanecen para siempre en nuestra historia,
-                en nuestros recuerdos y en el corazón de nuestra familia.
-            </p>
-
-        </div>
+            <div
+                id="listaFinados"
+                class="lista-finados"
+            ></div>
 
 
-        <!-- Aquí JavaScript colocará automáticamente
-             la lista de familiares fallecidos -->
+            <div class="finados-modal-footer">
 
-        <div
-            id="listaFinados"
-            class="lista-finados"
-        ></div>
+                <div class="finados-divider"></div>
 
+                <p>
+                    <em>
+                        “Mientras alguien recuerde nuestro nombre,
+                        nuestra historia continúa.”
+                    </em>
+                </p>
 
-        <div class="finados-modal-footer">
+                <span>
+                    Familia Cuenca
+                </span>
 
-            <div class="finados-divider"></div>
-
-            <p>
-                <em>
-                    “Mientras alguien recuerde nuestro nombre,
-                    nuestra historia continúa.”
-                </em>
-            </p>
-
-            <span>
-                Familia Cuenca
-            </span>
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
     <!-- =========================================================
          MODAL ESCUDO DE LA FAMILIA CUENCA
