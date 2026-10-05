@@ -3144,4 +3144,66 @@ select {
     margin-bottom: 22px;
     padding: 6px;
 }
+/* --------------------------------------------------------
+   MEMORIA FAMILIAR — TELÉFONO
+-------------------------------------------------------- */
+
+.finados-modal {
+    padding: 12px;
+}
+
+.finados-modal-content {
+    width: 96vw;
+
+    max-height: 92vh;
+
+    padding: 28px 18px 22px;
+
+    border-radius: 15px;
+}
+
+.finados-modal-close {
+    top: 8px;
+
+    right: 10px;
+
+    font-size: 29px;
+}
+
+.finados-modal-symbol {
+    width: 50px;
+
+    height: 50px;
+
+    font-size: 24px;
+}
+
+.finados-kicker {
+    font-size: 9px;
+
+    letter-spacing: 2px;
+}
+
+.finados-modal-header h2 {
+    font-size: 29px;
+}
+
+.finados-dedicatoria {
+    font-size: 13px;
+}
+
+.finado-avatar {
+    width: 48px;
+
+    height: 48px;
+
+    flex-basis: 48px;
+
+    font-size: 18px;
+}
+
+.finado-info h3 {
+    font-size: 18px;
+}
+
 }
