@@ -3223,4 +3223,24 @@ select {
     color: #163c61;
 }
 
+   <CodeBlock language="css" editable>
+.profile-back-button {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border: 1px solid #245b8f;
+    border-radius: 6px;
+    background: transparent;
+    color: #245b8f;
+    font: inherit;
+    cursor: pointer;
+}
+
+
+.profile-back-button:hover {
+background: #245b8f;
+color: white;
+}
+</CodeBlock>
+   
 }
