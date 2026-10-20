@@ -850,6 +850,31 @@ function abrirPerfil(
             .join(", ");
 
 
+    // --------------------------------------------------------
+    // PADRE Y MADRE
+    // Buscar los registros mediante padre_id y madre_id
+    // --------------------------------------------------------
+
+    const padre = persona.padre_id
+        ? familia.find(
+            familiar => familiar.id === persona.padre_id
+        )
+        : null;
+
+    const madre = persona.madre_id
+        ? familia.find(
+            familiar => familiar.id === persona.madre_id
+        )
+        : null;
+
+    const nombrePadre = padre
+        ? padre.nombre
+        : "No registrado";
+
+    const nombreMadre = madre
+        ? madre.nombre
+        : "No registrada";
+
     contenido.innerHTML = `
 
         <div class="modal-profile">
@@ -880,8 +905,17 @@ function abrirPerfil(
 
             <div class="profile-data">
 
-                <div>
+    <div>
+        <span>Padre</span>
+        <strong>${nombrePadre}</strong>
+    </div>
 
+    <div>
+        <span>Madre</span>
+        <strong>${nombreMadre}</strong>
+    </div>
+
+                <div>
                     <span>
                         Cumpleaños
                     </span>
