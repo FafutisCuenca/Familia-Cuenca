@@ -25,7 +25,9 @@
     "pais": "",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-003",
@@ -68,7 +70,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Satélite",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-006",
@@ -81,7 +85,9 @@
     "pais": "México",
     "estado": "Quintana Roo",
     "ciudad": "Playa del Carmen",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-007",
@@ -94,7 +100,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-008",
@@ -107,7 +115,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-009",
@@ -135,7 +145,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-011",
@@ -163,7 +175,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-013",
@@ -176,7 +190,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-014",
@@ -204,7 +220,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-016",
@@ -217,7 +235,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-017",
@@ -230,7 +250,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-018",
@@ -243,7 +265,9 @@
     "pais": "USA",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-019",
@@ -256,7 +280,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-020",
@@ -269,7 +295,9 @@
     "pais": "México",
     "estado": "Sinaloa",
     "ciudad": "Los Mochis",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-021",
@@ -282,7 +310,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-022",
@@ -295,7 +325,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-023",
@@ -308,7 +340,9 @@
     "pais": "USA",
     "estado": "California",
     "ciudad": "Oakland",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-024",
@@ -321,7 +355,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-025",
@@ -334,7 +370,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-026",
@@ -347,7 +385,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-027",
@@ -360,7 +400,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-028",
@@ -373,7 +415,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-029",
@@ -386,7 +430,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-030",
@@ -399,7 +445,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-031",
@@ -412,7 +460,9 @@
     "pais": "Nicaragua",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-032",
@@ -425,7 +475,9 @@
     "pais": "Nicaragua",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-033",
@@ -438,7 +490,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-034",
@@ -451,7 +505,9 @@
     "pais": "",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-035",
@@ -464,7 +520,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-036",
@@ -477,7 +535,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-037",
@@ -490,7 +550,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-040",
+    "madre_id": "CUEN-022"
   },
   {
     "id": "CUEN-038",
@@ -533,7 +595,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-041",
@@ -546,7 +610,9 @@
     "pais": "México",
     "estado": "Quintana Roo",
     "ciudad": "Cancún",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-042",
@@ -559,7 +625,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-043",
@@ -572,7 +640,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-044",
@@ -585,7 +655,9 @@
     "pais": "USA",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-045",
@@ -598,7 +670,9 @@
     "pais": "",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-046",
@@ -611,7 +685,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-047",
@@ -639,7 +715,9 @@
     "pais": "USA",
     "estado": "Texas",
     "ciudad": "El Paso",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-049",
@@ -652,7 +730,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-050",
@@ -665,7 +745,9 @@
     "pais": "USA",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-051",
@@ -678,7 +760,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-052",
@@ -691,7 +775,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-053",
@@ -704,7 +790,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-054",
@@ -717,7 +805,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-055",
@@ -730,7 +820,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-056",
@@ -743,7 +835,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-057",
@@ -756,7 +850,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-058",
@@ -769,7 +865,9 @@
     "pais": "USA",
     "estado": "Texas",
     "ciudad": "El Paso",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-059",
@@ -782,7 +880,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-060",
@@ -825,7 +925,9 @@
     "pais": "USA",
     "estado": "California",
     "ciudad": "Los Angeles",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-063",
@@ -838,7 +940,9 @@
     "pais": "Perú",
     "estado": "Lima",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-064",
@@ -851,7 +955,9 @@
     "pais": "México",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-065",
@@ -864,7 +970,9 @@
     "pais": "México",
     "estado": "Nuevo León",
     "ciudad": "Monterrey",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-066",
@@ -877,7 +985,9 @@
     "pais": "México",
     "estado": "Nuevo León",
     "ciudad": "Monterrey",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-067",
@@ -890,7 +1000,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-068",
@@ -903,7 +1015,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "Cuajimalpa",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-069",
@@ -916,7 +1030,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "Cuajimalpa",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-070",
@@ -929,7 +1045,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-071",
@@ -942,7 +1060,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-072",
@@ -955,7 +1075,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-073",
@@ -968,7 +1090,9 @@
     "pais": "México",
     "estado": "Yucatán",
     "ciudad": "Mérida",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": null
   },
   {
     "id": "CUEN-074",
