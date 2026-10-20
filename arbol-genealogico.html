@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Árbol genealógico interactivo de la Familia Cuenca, construido únicamente con parentescos registrados.">
+  <title>Árbol Genealógico | Familia Cuenca</title>
+  <style>
+    :root {
+      --azul: #173b57;
+      --azul-2: #245875;
+      --dorado: #c49a50;
+      --fondo: #f4f7f9;
+      --tarjeta: #ffffff;
+      --texto: #243746;
+      --suave: #637684;
+      --borde: #dbe4e9;
+      --sombra: 0 8px 24px rgba(23, 59, 87, .08);
+      --radio: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+    .barra-superior {
+      background: var(--azul);
+      padding: 13px 20px;
+    }
+    .barra-superior a {
+      color: #fff;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .barra-superior a:hover { text-decoration: underline; }
+    .contenedor { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 34px 0 22px; text-align: center; }
+    .sello {
+      display: inline-block;
+      color: var(--azul-2);
+      background: #e6eef3;
+      border: 1px solid #d5e1e8;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    h1 { color: var(--azul); margin: 12px 0 7px; font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.15; }
+    .intro { max-width: 700px; margin: 0 auto; color: var(--suave); }
+    .panel-busqueda {
+      background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+      padding: 20px; box-shadow: var(--sombra); margin: 8px 0 22px;
+    }
+    .panel-busqueda label { display: block; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
+    .fila-busqueda { display: flex; gap: 10px; }
+    input, select, button { font: inherit; }
+    input, select {
+      width: 100%; min-width: 0; border: 1px solid #c8d5dd; border-radius: 10px;
+      padding: 12px 13px; background: white; color: var(--texto);
+    }
+    input:focus, select:focus, button:focus-visible, a:focus-visible { outline: 3px solid #e3c98e; outline-offset: 2px; }
+    .estado { margin: 11px 0 0; color: var(--suave); font-size: .92rem; }
+    .estado.error { color: #9a2f2f; }
+    .seccion-titulo { color: var(--azul); margin: 0 0 12px; font-size: 1.12rem; }
+    .panel-persona {
+      background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+      padding: 22px; box-shadow: var(--sombra); margin-bottom: 22px;
+    }
+    .persona-principal { display: flex; align-items: center; gap: 16px; }
+    .avatar {
+      flex: 0 0 64px; width: 64px; height: 64px; display: grid; place-items: center;
+      border-radius: 50%; background: #e6eef3; color: var(--azul); font-size: 1.8rem; font-weight: 800;
+      overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .nombre-principal { color: var(--azul); font-size: clamp(1.2rem, 3vw, 1.65rem); margin: 0 0 3px; }
+    .id-persona { color: var(--suave); font-size: .86rem; }
+    .datos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    .dato { background: #f0f4f6; border: 1px solid #e0e8ed; border-radius: 999px; padding: 5px 10px; font-size: .88rem; }
+    .grilla-relaciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-bottom: 22px; }
+    .grupo-relacion { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 20px; box-shadow: var(--sombra); min-width: 0; }
+    .lista-personas { display: grid; gap: 10px; }
+    .tarjeta-familiar {
+      width: 100%; text-align: left; border: 1px solid var(--borde); background: #fff; border-radius: 12px;
+      padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 11px; color: var(--texto);
+      transition: border-color .15s, transform .15s, background .15s;
+    }
+    .tarjeta-familiar:hover { border-color: var(--dorado); background: #fffdf8; transform: translateY(-1px); }
+    .mini-avatar { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: #e6eef3; color: var(--azul); font-weight: 800; }
+    .mini-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .nombre-familiar { display: block; font-weight: 700; }
+    .detalle-familiar { display: block; color: var(--suave); font-size: .83rem; margin-top: 2px; }
+    .vacio { color: var(--suave); border: 1px dashed #cbd7df; border-radius: 12px; padding: 14px; background: #fafcfd; font-size: .92rem; }
+    .nota { margin: 0 0 28px; color: var(--suave); font-size: .9rem; }
+    footer { text-align: center; padding: 20px 12px 28px; color: var(--suave); font-size: .86rem; }
+    @media (max-width: 700px) {
+      .contenedor { width: min(100% - 22px, 1120px); }
+      header { padding-top: 26px; }
+      .grilla-relaciones { grid-template-columns: 1fr; }
+      .fila-busqueda { flex-direction: column; }
+      .panel-persona, .grupo-relacion, .panel-busqueda { padding: 16px; }
+      .persona-principal { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="barra-superior" aria-label="Navegación principal">
+    <div class="contenedor"><a href="./index.html">← Volver al Portal Familia Cuenca</a></div>
+  </nav>
+
+  <main class="contenedor">
+    <header>
+      <span class="sello">Nuestra historia continúa</span>
+      <h1>Árbol genealógico</h1>
+      <p class="intro">Explora los vínculos familiares que están registrados en el archivo de la Familia Cuenca. Selecciona una persona para consultar sus padres y los hijos que la señalan como padre o madre.</p>
+    </header>
+
+    <section class="panel-busqueda" aria-labelledby="titulo-busqueda">
+      <h2 class="seccion-titulo" id="titulo-busqueda">Buscar familiar</h2>
+      <label for="busqueda">Escribe un nombre o apellido</label>
+      <div class="fila-busqueda">
+        <input id="busqueda" type="search" placeholder="Ej. Francisco Cuenca" autocomplete="off" aria-describedby="ayuda-busqueda">
+        <select id="selector-persona" aria-label="Seleccionar familiar" disabled>
+          <option value="">Cargando familiares…</option>
+        </select>
+      </div>
+      <p id="ayuda-busqueda" class="estado">La información se carga desde <code>./data/familia.json</code>.</p>
+    </section>
+
+    <section class="panel-persona" aria-labelledby="titulo-persona" aria-live="polite">
+      <h2 class="seccion-titulo" id="titulo-persona">Familiar seleccionado</h2>
+      <div id="detalle-persona"><p class="vacio">Cargando el registro familiar…</p></div>
+    </section>
+
+    <div class="grilla-relaciones">
+      <section class="grupo-relacion" aria-labelledby="titulo-padres">
+        <h2 class="seccion-titulo" id="titulo-padres">Padres registrados</h2>
+        <div id="lista-padres" class="lista-personas"><p class="vacio">Esperando los datos…</p></div>
+      </section>
+      <section class="grupo-relacion" aria-labelledby="titulo-hijos">
+        <h2 class="seccion-titulo" id="titulo-hijos">Hijos registrados</h2>
+        <div id="lista-hijos" class="lista-personas"><p class="vacio">Esperando los datos…</p></div>
+      </section>
+    </div>
+
+    <p class="nota">Importante: este árbol es de consulta. No modifica <code>familia.json</code> ni registra parentescos. Solo muestra las relaciones indicadas mediante <code>padre_id</code> y <code>madre_id</code>; si un vínculo no está registrado, no se deduce ni se completa automáticamente.</p>
+  </main>
+
+  <footer>Familia Cuenca · Registro genealógico familiar</footer>
+
+  <script>
+    (() => {
+      "use strict";
+      const RUTA_DATOS = "./data/familia.json";
+      const busqueda = document.getElementById("busqueda");
+      const selector = document.getElementById("selector-persona");
+      const estado = document.getElementById("ayuda-busqueda");
+      const detalle = document.getElementById("detalle-persona");
+      const listaPadres = document.getElementById("lista-padres");
+      const listaHijos = document.getElementById("lista-hijos");
+      let familia = [];
+      let personaActualId = "";
+
+      const texto = (valor, alternativo = "No registrado") => {
+        if (valor === null || valor === undefined || String(valor).trim() === "") return alternativo;
+        return String(valor).trim();
+      };
+      const normalizar = valor => String(valor ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("es-MX");
+      const buscarPorId = id => familia.find(p => String(p.id) === String(id));
+      const iniciales = nombre => texto(nombre, "?").split(/\s+/).filter(Boolean).slice(0, 2).map(p => p[0]).join("").toLocaleUpperCase("es-MX");
+
+      function crearAvatar(persona, clase = "mini-avatar") {
+        const avatar = document.createElement("span");
+        avatar.className = clase;
+        const foto = texto(persona.foto, "");
+        if (foto) {
+          const img = document.createElement("img");
+          img.src = foto;
+          img.alt = "";
+          img.loading = "lazy";
+          img.onerror = () => { avatar.textContent = iniciales(persona.nombre); };
+          avatar.appendChild(img);
+        } else {
+          avatar.textContent = iniciales(persona.nombre);
+        }
+        return avatar;
+      }
+
+      function crearTarjeta(persona, relacion) {
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.className = "tarjeta-familiar";
+        boton.setAttribute("aria-label", `Consultar a ${texto(persona.nombre)}`);
+        boton.appendChild(crearAvatar(persona));
+        const contenido = document.createElement("span");
+        const nombre = document.createElement("span");
+        nombre.className = "nombre-familiar";
+        nombre.textContent = texto(persona.nombre);
+        const detalle = document.createElement("span");
+        detalle.className = "detalle-familiar";
+        const ubicacion = [persona.ciudad, persona.estado, persona.pais].filter(v => texto(v, "") !== "").join(", ");
+        detalle.textContent = [relacion, ubicacion].filter(Boolean).join(" · ") || texto(persona.id);
+        contenido.append(nombre, detalle);
+        boton.appendChild(contenido);
+        boton.addEventListener("click", () => seleccionarPersona(persona.id));
+        return boton;
+      }
+
+      function mostrarVacio(contenedor, mensaje) {
+        const p = document.createElement("p");
+        p.className = "vacio";
+        p.textContent = mensaje;
+        contenedor.replaceChildren(p);
+      }
+
+      function agregarDato(contenedor, etiqueta, valor) {
+        const span = document.createElement("span");
+        span.className = "dato";
+        span.textContent = `${etiqueta}: ${valor}`;
+        contenedor.appendChild(span);
+      }
+
+      function renderizarPersona(persona) {
+        if (!persona) {
+          mostrarVacio(detalle, "No se encontró el familiar seleccionado.");
+          mostrarVacio(listaPadres, "No hay datos disponibles.");
+          mostrarVacio(listaHijos, "No hay datos disponibles.");
+          return;
+        }
+
+        const bloque = document.createElement("div");
+        const cabecera = document.createElement("div");
+        cabecera.className = "persona-principal";
+        cabecera.appendChild(crearAvatar(persona, "avatar"));
+        const nombres = document.createElement("div");
+        const nombre = document.createElement("h3");
+        nombre.className = "nombre-principal";
+        nombre.textContent = texto(persona.nombre);
+        const id = document.createElement("div");
+        id.className = "id-persona";
+        id.textContent = `Registro: ${texto(persona.id)}`;
+        nombres.append(nombre, id);
+        cabecera.appendChild(nombres);
+        bloque.appendChild(cabecera);
+
+        const datos = document.createElement("div");
+        datos.className = "datos";
+        agregarDato(datos, "Nacimiento", texto(persona.fecha));
+        agregarDato(datos, "Año", texto(persona.anio));
+        agregarDato(datos, "Género", texto(persona.genero));
+        agregarDato(datos, "Estatus", persona.estatus === "Finado" ? "Finado 🕊️" : texto(persona.estatus));
+        const ubicacion = [persona.ciudad, persona.estado, persona.pais].filter(v => texto(v, "") !== "").join(", ");
+        if (ubicacion) agregarDato(datos, "Residencia", ubicacion);
+        bloque.appendChild(datos);
+        detalle.replaceChildren(bloque);
+
+        const padres = [];
+        if (texto(persona.padre_id, "") !== "") {
+          const padre = buscarPorId(persona.padre_id);
+          if (padre) padres.push({ persona: padre, relacion: "Padre" });
+        }
+        if (texto(persona.madre_id, "") !== "") {
+          const madre = buscarPorId(persona.madre_id);
+          if (madre) padres.push({ persona: madre, relacion: "Madre" });
+        }
+        if (padres.length) listaPadres.replaceChildren(...padres.map(p => crearTarjeta(p.persona, p.relacion)));
+        else mostrarVacio(listaPadres, "No hay padre o madre registrado para esta persona.");
+
+        const hijos = familia.filter(hijo =>
+          (texto(hijo.padre_id, "") !== "" && String(hijo.padre_id) === String(persona.id)) ||
+          (texto(hijo.madre_id, "") !== "" && String(hijo.madre_id) === String(persona.id))
+        );
+        if (hijos.length) {
+          listaHijos.replaceChildren(...hijos.map(hijo => {
+            const roles = [];
+            if (String(hijo.padre_id ?? "") === String(persona.id)) roles.push("Padre registrado");
+            if (String(hijo.madre_id ?? "") === String(persona.id)) roles.push("Madre registrada");
+            return crearTarjeta(hijo, roles.join(" y "));
+          }));
+        } else {
+          mostrarVacio(listaHijos, "No hay hijos que tengan registrada a esta persona como padre o madre.");
+        }
+      }
+
+      function seleccionarPersona(id) {
+        const persona = buscarPorId(id);
+        if (!persona) return;
+        personaActualId = String(persona.id);
+        selector.value = personaActualId;
+        renderizarPersona(persona);
+      }
+
+      function actualizarOpciones(filtro = "") {
+        const anterior = personaActualId;
+        const consulta = normalizar(filtro.trim());
+        const coincidencias = familia.filter(persona => !consulta || normalizar(persona.nombre).includes(consulta) || normalizar(persona.id).includes(consulta));
+        selector.replaceChildren();
+        if (!coincidencias.length) {
+          const opcion = document.createElement("option");
+          opcion.value = "";
+          opcion.textContent = "No se encontraron coincidencias";
+          selector.appendChild(opcion);
+          selector.disabled = true;
+          return;
+        }
+        const instruccion = document.createElement("option");
+        instruccion.value = "";
+        instruccion.textContent = `Selecciona un familiar (${coincidencias.length})`;
+        selector.appendChild(instruccion);
+        coincidencias.sort((a, b) => texto(a.nombre).localeCompare(texto(b.nombre), "es-MX"));
+        coincidencias.forEach(persona => {
+          const opcion = document.createElement("option");
+          opcion.value = String(persona.id);
+          opcion.textContent = `${texto(persona.nombre)} · ${texto(persona.id)}`;
+          selector.appendChild(opcion);
+        });
+        selector.disabled = false;
+        if (coincidencias.some(p => String(p.id) === anterior)) selector.value = anterior;
+        else if (coincidencias.length === 1) seleccionarPersona(coincidencias[0].id);
+      }
+
+      async function iniciar() {
+        try {
+          const respuesta = await fetch(RUTA_DATOS, { cache: "no-store" });
+          if (!respuesta.ok) throw new Error(`No se pudo leer familia.json (HTTP ${respuesta.status}).`);
+          const datos = await respuesta.json();
+          if (!Array.isArray(datos)) throw new Error("El archivo familia.json debe contener una lista de personas.");
+          familia = datos.filter(persona => persona && persona.id !== undefined && persona.id !== null);
+          if (!familia.length) throw new Error("No se encontraron registros con identificador en familia.json.");
+          actualizarOpciones();
+          const primera = familia.find(p => String(p.id) === "CUEN-001") || [...familia].sort((a, b) => texto(a.nombre).localeCompare(texto(b.nombre), "es-MX"))[0];
+          estado.textContent = `${familia.length} registros cargados desde familia.json. Selecciona un nombre para consultar sus vínculos.`;
+          seleccionarPersona(primera.id);
+        } catch (error) {
+          console.error("Error al cargar el árbol genealógico:", error);
+          estado.textContent = "No fue posible cargar familia.json. Verifica que este HTML esté en la raíz del portal y que exista la carpeta data con familia.json.";
+          estado.classList.add("error");
+          selector.disabled = true;
+          mostrarVacio(detalle, "No se pudieron cargar los datos familiares.");
+          mostrarVacio(listaPadres, "No se pudieron cargar los datos familiares.");
+          mostrarVacio(listaHijos, "No se pudieron cargar los datos familiares.");
+        }
+      }
+
+      busqueda.addEventListener("input", () => actualizarOpciones(busqueda.value));
+      selector.addEventListener("change", () => {
+        if (selector.value) seleccionarPersona(selector.value);
+      });
+      iniciar();
+    })();
+  </script>
+</body>
+</html>
