@@ -1035,6 +1035,53 @@ function abrirPerfil(
 
     `;
 
+   // --------------------------------------------------------
+    // NAVEGACIÓN ENTRE PERFILES FAMILIARES
+    // --------------------------------------------------------
+
+
+contenido
+.querySelectorAll(".profile-related-link")
+.forEach(boton => {
+boton.addEventListener("click", () => {
+const idPersona = boton.dataset.personaId;
+
+const familiar = familia.find(
+persona => String(persona.id) === String(idPersona)
+);
+
+if (familiar) {
+historialPerfiles.push(persona.id);
+abrirPerfil(familiar);
+}
+});
+});
+
+// --------------------------------------------------------
+// BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
+// --------------------------------------------------------
+
+if (historialPerfiles.length > 0) {
+const botonRegresar = document.createElement("button");
+
+botonRegresar.type = "button";
+botonRegresar.className = "profile-back-button";
+botonRegresar.textContent = "← Regresar al perfil anterior";
+
+botonRegresar.addEventListener("click", () => {
+const idAnterior = historialPerfiles.pop();
+
+const familiarAnterior = familia.find(
+familiar => String(familiar.id) === String(idAnterior)
+);
+
+if (familiarAnterior) {
+abrirPerfil(familiarAnterior);
+}
+});
+
+contenido.prepend(botonRegresar);
+}
    
     // --------------------------------------------------------
     // NAVEGACIÓN AL PERFIL DEL PADRE O LA MADRE
