@@ -811,62 +811,74 @@ function obtenerIniciales(
 
 }
 
+// Perfil 
 
-// ============================================================
-// PERFIL EN POP-UP
-// ============================================================
+function abrirPerfil(persona, esNavegacion = false) {
 
-function abrirPerfil(
-    persona
-) {
+    const modal = document.getElementById("familyModal");
+    const contenido = document.getElementById("familyModalContent");
 
-    const modal =
-        document.getElementById(
-            "familyModal"
-        );
-
-
-    const contenido =
-        document.getElementById(
-            "familyModalContent"
-        );
-
-
-    if (!modal || !contenido) {
+    if (!modal || !contenido || !persona) {
         return;
     }
 
+    // --------------------------------------------------------
+    // INICIALIZAR HISTORIAL
+    // Si abrimos un perfil desde la búsqueda, iniciamos
+    // un recorrido nuevo. Si navegamos entre familiares,
+    // conservamos el historial.
+    // --------------------------------------------------------
 
-    const inicial =
-        obtenerIniciales(
-            persona.nombre
-        );
-
-
-    const ubicacion =
-        [
-            persona.ciudad,
-            persona.estado,
-            persona.pais
-        ]
-            .filter(Boolean)
-            .join(", ");
-
+    if (!esNavegacion) {
+        historialPerfiles = [];
+    }
 
     // --------------------------------------------------------
-    // PADRE Y MADRE
-    // Buscar los registros mediante padre_id y madre_id
+    // DATOS GENERALES
+    // --------------------------------------------------------
+
+    const inicial = obtenerIniciales(persona.nombre || "?");
+
+    const ubicacion = [
+        persona.ciudad,
+        persona.estado,
+        persona.pais
+    ]
+        .filter(Boolean)
+        .join(", ");
+
+    // --------------------------------------------------------
+    // IDENTIFICAR FAMILIARES FINADOS
+    // --------------------------------------------------------
+
+    const esFinado = familiar =>
+        Boolean(
+            familiar &&
+            String(familiar.estatus || "")
+                .trim()
+                .toLowerCase() === "finado"
+        );
+
+    const iconoPersona = esFinado(persona) ? " 🕊️" : "";
+
+    // --------------------------------------------------------
+    // BUSCAR PADRE Y MADRE
+    // Se comparan los identificadores como texto para evitar
+    // problemas si uno está guardado como número y otro
+    // como cadena en familia.json.
     // --------------------------------------------------------
 
     const padre = persona.padre_id
         ? familia.find(
-            familiar => familiar.id === persona.padre_id
+            familiar =>
+                String(familiar.id) === String(persona.padre_id)
         )
         : null;
 
     const madre = persona.madre_id
         ? familia.find(
-            familiar => familiar.id === persona.madre_id
+            familiar =>
+                String(familiar.id) === String(persona.madre_id)
         )
         : null;
 
@@ -878,127 +890,101 @@ function abrirPerfil(
         ? madre.nombre
         : "No registrada";
 
+    const iconoPadre = esFinado(padre) ? " 🕊️" : "";
+    const iconoMadre = esFinado(madre) ? " 🕊️" : "";
+
+    // --------------------------------------------------------
+    // CONSTRUIR EL PERFIL
+    // --------------------------------------------------------
+
     contenido.innerHTML = `
 
         <div class="modal-profile">
 
             <div class="modal-avatar">
-
                 ${inicial}
-
             </div>
 
-
-            <h2>
-
-                ${persona.nombre}
-
+            <h2 class="profile-person-name">
+                ${persona.nombre || "Nombre no registrado"}${iconoPersona}
             </h2>
 
-
             <p class="profile-location">
-
-                ${
-                    ubicacion ||
-                    "Ubicación no registrada"
-                }
-
+                ${ubicacion || "Ubicación no registrada"}
             </p>
-
 
             <div class="profile-data">
 
-   
-<div>
-    <span>Padre</span>
-    ${
-        padre
-            ? `<button type="button" class="profile-related-link" data-persona-id="${padre.id}">${nombrePadre}</button>`
-            : `<strong>${nombrePadre}</strong>`
-    }
-</div>
+                <div>
+                    <span>Padre</span>
 
-<div>
-    <span>Madre</span>
-    ${
-        madre
-            ? `<button type="button" class="profile-related-link" data-persona-id="${madre.id}">${nombreMadre}</button>`
-            : `<strong>${nombreMadre}</strong>`
-    }
-</div>
-
+                    ${
+                        padre
+                            ? `
+                                <button
+                                    type="button"
+                                    class="profile-related-link"
+                                    data-persona-id="${padre.id}"
+                                >${nombrePadre}${iconoPadre}</button>
+                            `
+                            : `<strong>${nombrePadre}</strong>`
+                    }
+                </div>
 
                 <div>
-                    <span>
-                        Cumpleaños
-                    </span>
+                    <span>Madre</span>
+
+                    ${
+                        madre
+                            ? `
+                                <button
+                                    type="button"
+                                    class="profile-related-link"
+                                    data-persona-id="${madre.id}"
+                                >${nombreMadre}${iconoMadre}</button>
+                            `
+                            : `<strong>${nombreMadre}</strong>`
+                    }
+                </div>
+
+                <div>
+                    <span>Cumpleaños</span>
 
                     <strong>
                         ${
                             persona.fecha
-                                ? formatearCumpleanos(
-                                    persona.fecha
-                                  )
+                                ? formatearCumpleanos(persona.fecha)
                                 : "No registrado"
                         }
                     </strong>
-
                 </div>
 
-
                 <div>
-
-                    <span>
-                        País
-                    </span>
+                    <span>País</span>
 
                     <strong>
-                        ${
-                            persona.pais ||
-                            "No registrado"
-                        }
+                        ${persona.pais || "No registrado"}
                     </strong>
-
                 </div>
 
-
                 <div>
-
-                    <span>
-                        Estado
-                    </span>
+                    <span>Estado</span>
 
                     <strong>
-                        ${
-                            persona.estado ||
-                            "No registrado"
-                        }
+                        ${persona.estado || "No registrado"}
                     </strong>
-
                 </div>
 
-
                 <div>
-
-                    <span>
-                        Ciudad
-                    </span>
+                    <span>Ciudad</span>
 
                     <strong>
-                        ${
-                            persona.ciudad ||
-                            "No registrada"
-                        }
+                        ${persona.ciudad || "No registrada"}
                     </strong>
-
                 </div>
 
-
                 <div>
-
-                    <span>
-                        Género
-                    </span>
+                    <span>Género</span>
 
                     <strong>
                         ${
@@ -1009,25 +995,15 @@ function abrirPerfil(
                                     : "No registrado"
                         }
                     </strong>
-
                 </div>
-
 
                 <div>
-
-                    <span>
-                        Estatus
-                    </span>
+                    <span>Estatus</span>
 
                     <strong>
-                        ${
-                            persona.estatus ||
-                            "No registrado"
-                        }
+                        ${persona.estatus || "No registrado"}${iconoPersona}
                     </strong>
-
                 </div>
-
 
             </div>
 
@@ -1035,87 +1011,73 @@ function abrirPerfil(
 
     `;
 
-   // --------------------------------------------------------
-    // NAVEGACIÓN ENTRE PERFILES FAMILIARES
     // --------------------------------------------------------
-
-
-contenido
-.querySelectorAll(".profile-related-link")
-.forEach(boton => {
-boton.addEventListener("click", () => {
-const idPersona = boton.dataset.personaId;
-
-const familiar = familia.find(
-persona => String(persona.id) === String(idPersona)
-);
-
-if (familiar) {
-historialPerfiles.push(persona.id);
-abrirPerfil(familiar);
-}
-});
-});
-
-// --------------------------------------------------------
-// BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
-// --------------------------------------------------------
-
-if (historialPerfiles.length > 0) {
-const botonRegresar = document.createElement("button");
-
-botonRegresar.type = "button";
-botonRegresar.className = "profile-back-button";
-botonRegresar.textContent = "← Regresar al perfil anterior";
-
-botonRegresar.addEventListener("click", () => {
-const idAnterior = historialPerfiles.pop();
-
-const familiarAnterior = familia.find(
-familiar => String(familiar.id) === String(idAnterior)
-);
-
-if (familiarAnterior) {
-abrirPerfil(familiarAnterior);
-}
-});
-
-contenido.prepend(botonRegresar);
-}
-   
-    // --------------------------------------------------------
-    // NAVEGACIÓN AL PERFIL DEL PADRE O LA MADRE
+    // NAVEGACIÓN ENTRE PERFILES
+    // Este bloque se registra una sola vez por perfil.
     // --------------------------------------------------------
 
     contenido
         .querySelectorAll(".profile-related-link")
         .forEach(boton => {
+
             boton.addEventListener("click", () => {
+
                 const idPersona = boton.dataset.personaId;
 
                 const familiar = familia.find(
-                    persona => persona.id === idPersona
+                    elemento =>
+                        String(elemento.id) === String(idPersona)
                 );
 
-               if (familiar) {
-    // Guardar el perfil actual antes de navegar
-    historialPerfiles.push(persona.id);
+                if (familiar) {
 
-    abrirPerfil(familiar);
-}
+                    // Guardar el perfil actual antes de navegar.
+                    historialPerfiles.push(persona.id);
+
+                    // Abrir el nuevo perfil sin borrar el historial.
+                    abrirPerfil(familiar, true);
+                }
+
             });
+
         });
 
+    // --------------------------------------------------------
+    // BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
+    // --------------------------------------------------------
 
-    modal.classList.add(
-        "active"
-    );
+    if (historialPerfiles.length > 0) {
 
+        const botonRegresar = document.createElement("button");
 
-    modal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
+        botonRegresar.type = "button";
+        botonRegresar.className = "profile-back-button";
+        botonRegresar.textContent = "← Regresar al perfil anterior";
+
+        botonRegresar.addEventListener("click", () => {
+
+            const idAnterior = historialPerfiles.pop();
+
+            const familiarAnterior = familia.find(
+                familiar =>
+                    String(familiar.id) === String(idAnterior)
+            );
+
+            if (familiarAnterior) {
+                abrirPerfil(familiarAnterior, true);
+            }
+
+        });
+
+        contenido.prepend(botonRegresar);
+    }
+
+    // --------------------------------------------------------
+    // MOSTRAR EL POP-UP
+    // --------------------------------------------------------
+
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
 
 }
 
