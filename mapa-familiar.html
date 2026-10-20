@@ -7,7 +7,7 @@
 
   <title>Mapa Familiar | Familia Cuenca</title>
 
-  <!-- Librería del mapa -->
+  <!-- Leaflet: librería para el mapa interactivo -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -25,16 +25,17 @@
       background: #f4f7fa;
     }
 
+    /* Encabezado */
     .encabezado {
-      padding: 20px;
+      padding: 22px 16px;
       text-align: center;
       background: #17365d;
-      color: white;
+      color: #ffffff;
     }
 
     .encabezado h1 {
       margin: 0 0 8px;
-      font-size: 26px;
+      font-size: 27px;
     }
 
     .encabezado p {
@@ -42,21 +43,24 @@
       font-size: 15px;
     }
 
+    /* Botones de navegación */
     .navegacion {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
-      padding: 12px;
-      background: white;
+      padding: 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #dce4ed;
     }
 
     .navegacion button,
     .navegacion a {
+      display: inline-block;
       padding: 10px 15px;
       border: 1px solid #17365d;
-      border-radius: 6px;
-      background: white;
+      border-radius: 7px;
+      background: #ffffff;
       color: #17365d;
       font-size: 14px;
       text-decoration: none;
@@ -66,29 +70,136 @@
     .navegacion button:hover,
     .navegacion a:hover {
       background: #17365d;
-      color: white;
+      color: #ffffff;
     }
 
+    /* Indicadores */
+    .indicadores {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .indicador {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      min-width: 0;
+      padding: 20px;
+      background: #ffffff;
+      border: 1px solid #dce4ed;
+      border-radius: 12px;
+      box-shadow: 0 2px 7px rgba(23, 54, 93, 0.07);
+    }
+
+    .indicador-icono {
+      font-size: 25px;
+    }
+
+    .indicador-titulo {
+      display: block;
+      color: #526273;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .indicador strong {
+      display: block;
+      margin-top: 5px;
+      color: #17365d;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    /* Mapa */
     #mapa {
-      width: 100%;
+      width: calc(100% - 32px);
       height: 68vh;
       min-height: 380px;
+      margin: 0 auto;
       background: #e5eaf0;
+      border: 1px solid #dce4ed;
+      border-radius: 10px;
+      z-index: 1;
+    }
+
+    /* Ventanas de información */
+    .popup-familiar {
+      min-width: 190px;
+      max-width: 280px;
+    }
+
+    .popup-familiar h3 {
+      margin: 0 0 8px;
+      color: #17365d;
+      font-size: 16px;
+    }
+
+    .popup-familiar p {
+      margin: 6px 0;
+    }
+
+    .popup-familiar ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .popup-familiar li {
+      margin-bottom: 5px;
+    }
+
+    .mensaje {
+      max-width: 1200px;
+      margin: 12px auto;
+      padding: 0 16px;
+      color: #526273;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .pie {
-      padding: 14px;
+      padding: 20px 12px;
       text-align: center;
-      font-size: 13px;
       color: #526273;
+      font-size: 13px;
     }
 
-    @media (max-width: 600px) {
+    /* Adaptación para teléfonos */
+    @media (max-width: 650px) {
       .encabezado h1 {
-        font-size: 22px;
+        font-size: 23px;
+      }
+
+      .indicadores {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .indicador {
+        padding: 16px;
+      }
+
+      .indicador strong {
+        font-size: 27px;
+      }
+
+      .navegacion {
+        gap: 8px;
+      }
+
+      .navegacion button,
+      .navegacion a {
+        padding: 9px 11px;
+        font-size: 13px;
       }
 
       #mapa {
+        width: calc(100% - 24px);
         height: 65vh;
         min-height: 350px;
       }
@@ -103,7 +214,8 @@
     <p>Mapa geográfico de nuestra familia</p>
   </header>
 
-  <nav class="navegacion">
+  <nav class="navegacion" aria-label="Controles del mapa">
+
     <button id="verMexico" type="button">
       🇲🇽 Ver México
     </button>
@@ -123,322 +235,439 @@
     <a href="./index.html">
       ← Volver al portal
     </a>
+
   </nav>
 
-  
-<main>
-  <section class="indicadores" aria-label="Resumen del mapa familiar">
-    <div class="indicador">
-      <span class="indicador-icono">👨‍👩‍👧‍👦</span>
-      <div>
-        <span class="indicador-titulo">Familiares registrados</span>
-        <strong id="totalFamiliares">0</strong>
-      </div>
-    </div>
+  <main>
 
-    <div class="indicador">
-      <span class="indicador-icono">📍</span>
-      <div>
-        <span class="indicador-titulo">Familiares ubicados</span>
-        <strong id="familiaresUbicados">0</strong>
-      </div>
-    </div>
+    <!-- Indicadores calculados desde familia.json -->
+    <section
+      class="indicadores"
+      aria-label="Resumen del mapa familiar"
+    >
 
-    <div class="indicador">
-      <span class="indicador-icono">🧭</span>
-      <div>
-        <span class="indicador-titulo">Pendientes de ubicación</span>
-        <strong id="familiaresPendientes">0</strong>
-      </div>
-    </div>
-  </section>
+      <article class="indicador">
+        <span class="indicador-icono">👨‍👩‍👧‍👦</span>
 
-  <div id="mapa" aria-label="Mapa interactivo de la familia"></div>
-</main>
+        <div>
+          <span class="indicador-titulo">
+            Familiares registrados
+          </span>
 
+          <strong id="totalFamiliares">0</strong>
+        </div>
+      </article>
 
-  <!-- Librería interactiva -->
+      <article class="indicador">
+        <span class="indicador-icono">📍</span>
+
+        <div>
+          <span class="indicador-titulo">
+            Familiares ubicados
+          </span>
+
+          <strong id="familiaresUbicados">0</strong>
+        </div>
+      </article>
+
+      <article class="indicador">
+        <span class="indicador-icono">🧭</span>
+
+        <div>
+          <span class="indicador-titulo">
+            Pendientes de ubicación
+          </span>
+
+          <strong id="familiaresPendientes">0</strong>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Mapa interactivo -->
+    <div
+      id="mapa"
+      role="application"
+      aria-label="Mapa interactivo de las residencias de la Familia Cuenca"
+    ></div>
+
+    <p class="mensaje" id="estadoMapa" role="status">
+      Cargando información familiar...
+    </p>
+
+  </main>
+
+  <footer class="pie">
+    Nuestra historia continúa · Familia Cuenca
+  </footer>
+
+  <!-- Librería Leaflet -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <script>
+    // =====================================================
+    // MAPA FAMILIAR CUENCA
+    // Fuente: ./data/familia.json
+    // Ubicación: residencia actual
+    // =====================================================
 
-<script>
-  // =====================================================
-  // MAPA FAMILIAR CUENCA
-  // Fuente: data/familia.json
-  // Ubicación: residencia actual
-  // =====================================================
+    // Vista inicial centrada en México.
+    const mapa = L.map("mapa").setView(
+      [23.6345, -102.5528],
+      5
+    );
 
-  const mapa = L.map("mapa").setView(
-    [23.6345, -102.5528],
-    5
-  );
+    // Mapa base de OpenStreetMap.
+    L.tileLayer(
+      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }
+    ).addTo(mapa);
 
-  L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }
-  ).addTo(mapa);
+    // Referencias a los elementos de la página.
+    const totalElemento =
+      document.getElementById("totalFamiliares");
 
-  // Normalizar textos para comparar ciudades y países.
-  function normalizar(valor) {
-    return String(valor || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .trim()
-      .toLowerCase();
-  }
+    const ubicadosElemento =
+      document.getElementById("familiaresUbicados");
 
-  // Coordenadas aproximadas de ubicaciones conocidas.
-  // No se asignan coordenadas a ubicaciones desconocidas.
-  const ubicaciones = [
-    {
-      ciudad: "cdmx",
-      estado: "cdmx",
-      pais: "mexico",
-      lat: 19.4326,
-      lng: -99.1332,
-      etiqueta: "Ciudad de México"
-    },
-    {
-      ciudad: "satelite",
-      estado: "estado de mexico",
-      pais: "mexico",
-      lat: 19.5100,
-      lng: -99.2350,
-      etiqueta: "Ciudad Satélite, Estado de México"
-    },
-    {
-      ciudad: "toluca",
-      estado: "estado de mexico",
-      pais: "mexico",
-      lat: 19.2826,
-      lng: -99.6557,
-      etiqueta: "Toluca, Estado de México"
-    },
-    {
-      ciudad: "merida",
-      estado: "yucatan",
-      pais: "mexico",
-      lat: 20.9674,
-      lng: -89.5926,
-      etiqueta: "Mérida, Yucatán"
-    },
-    {
-      ciudad: "playa del carmen",
-      estado: "quintana roo",
-      pais: "mexico",
-      lat: 20.6296,
-      lng: -87.0739,
-      etiqueta: "Playa del Carmen, Quintana Roo"
-    },
-    {
-      ciudad: "cancun",
-      estado: "quintana roo",
-      pais: "mexico",
-      lat: 21.1619,
-      lng: -86.8515,
-      etiqueta: "Cancún, Quintana Roo"
-    },
-    {
-      ciudad: "los mochis",
-      estado: "sinaloa",
-      pais: "mexico",
-      lat: 25.7905,
-      lng: -108.9859,
-      etiqueta: "Los Mochis, Sinaloa"
-    },
-    {
-      ciudad: "oakland",
-      estado: "california",
-      pais: "usa",
-      lat: 37.8044,
-      lng: -122.2712,
-      etiqueta: "Oakland, California, USA"
-    },
-    {
-      ciudad: "el paso",
-      estado: "texas",
-      pais: "usa",
-      lat: 31.7619,
-      lng: -106.4850,
-      etiqueta: "El Paso, Texas, USA"
-    },
-    {
-      ciudad: "atenas",
-      estado: "atenas",
-      pais: "grecia",
-      lat: 37.9838,
-      lng: 23.7275,
-      etiqueta: "Atenas, Grecia"
-    }
-  ];
+    const pendientesElemento =
+      document.getElementById("familiaresPendientes");
 
-  // Ubicaciones conocidas cuando solo hay estado o región.
-  const regiones = [
-    {
-      estado: "lima",
-      pais: "peru",
-      lat: -12.0464,
-      lng: -77.0428,
-      etiqueta: "Lima, Perú"
-    }
-  ];
+    const estadoElemento =
+      document.getElementById("estadoMapa");
 
-  function obtenerUbicacion(persona) {
-    const ciudad = normalizar(persona.ciudad);
-    const estado = normalizar(persona.estado);
-    const pais = normalizar(persona.pais);
-
-    if (ciudad) {
-      const encontrada = ubicaciones.find(function (u) {
-        return normalizar(u.ciudad) === ciudad &&
-          normalizar(u.estado) === estado &&
-          normalizar(u.pais) === pais;
-      });
-
-      if (encontrada) return encontrada;
+    // Normalizar textos para comparar sin distinguir
+    // mayúsculas, minúsculas ni acentos.
+    function normalizar(valor) {
+      return String(valor || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
     }
 
-    // Si no hay ciudad, usar solo una región conocida.
-    if (!ciudad && estado && pais) {
-      const region = regiones.find(function (u) {
-        return normalizar(u.estado) === estado &&
-          normalizar(u.pais) === pais;
-      });
+    // =====================================================
+    // CATÁLOGO DE COORDENADAS
+    // Coordenadas aproximadas de ciudades conocidas.
+    // Las nuevas ubicaciones deberán incorporarse aquí.
+    // =====================================================
 
-      if (region) return region;
-    }
+    const ubicaciones = [
+      {
+        ciudad: "cdmx",
+        estado: "cdmx",
+        pais: "mexico",
+        lat: 19.4326,
+        lng: -99.1332,
+        etiqueta: "Ciudad de México"
+      },
+      {
+        ciudad: "satelite",
+        estado: "estado de mexico",
+        pais: "mexico",
+        lat: 19.5100,
+        lng: -99.2350,
+        etiqueta: "Ciudad Satélite, Estado de México"
+      },
+      {
+        ciudad: "playa del carmen",
+        estado: "quintana roo",
+        pais: "mexico",
+        lat: 20.6296,
+        lng: -87.0739,
+        etiqueta: "Playa del Carmen, Quintana Roo"
+      },
+      {
+        ciudad: "cancun",
+        estado: "quintana roo",
+        pais: "mexico",
+        lat: 21.1619,
+        lng: -86.8515,
+        etiqueta: "Cancún, Quintana Roo"
+      },
+      {
+        ciudad: "merida",
+        estado: "yucatan",
+        pais: "mexico",
+        lat: 20.9674,
+        lng: -89.5926,
+        etiqueta: "Mérida, Yucatán"
+      },
+      {
+        ciudad: "toluca",
+        estado: "estado de mexico",
+        pais: "mexico",
+        lat: 19.2826,
+        lng: -99.6557,
+        etiqueta: "Toluca, Estado de México"
+      },
+      {
+        ciudad: "los mochis",
+        estado: "sinaloa",
+        pais: "mexico",
+        lat: 25.7905,
+        lng: -108.9859,
+        etiqueta: "Los Mochis, Sinaloa"
+      },
+      {
+        ciudad: "oakland",
+        estado: "california",
+        pais: "usa",
+        lat: 37.8044,
+        lng: -122.2712,
+        etiqueta: "Oakland, California, USA"
+      },
+      {
+        ciudad: "el paso",
+        estado: "texas",
+        pais: "usa",
+        lat: 31.7619,
+        lng: -106.4850,
+        etiqueta: "El Paso, Texas, USA"
+      },
+      {
+        ciudad: "atenas",
+        estado: "atenas",
+        pais: "grecia",
+        lat: 37.9838,
+        lng: 23.7275,
+        etiqueta: "Atenas, Grecia"
+      }
+    ];
 
-    return null;
-  }
+    // Catálogo opcional para registros que solo tienen
+    // una región conocida, sin ciudad.
+    const regiones = [
+      {
+        estado: "lima",
+        pais: "peru",
+        lat: -12.0464,
+        lng: -77.0428,
+        etiqueta: "Lima, Perú"
+      }
+    ];
 
-  // Agrupar familiares que comparten la misma ubicación.
-  function claveUbicacion(u) {
-    return [
-      normalizar(u.etiqueta),
-      u.lat,
-      u.lng
-    ].join("|");
-  }
+    // Buscar una ubicación reconocida.
+    function obtenerUbicacion(persona) {
+      const ciudad = normalizar(persona.ciudad);
+      const estado = normalizar(persona.estado);
+      const pais = normalizar(persona.pais);
 
-  async function cargarFamiliares() {
-    try {
-      const respuesta = await fetch("./data/familia.json", {
-        cache: "no-store"
-      });
+      // Si hay ciudad, buscar coincidencia exacta
+      // de ciudad, estado y país.
+      if (ciudad) {
+        const encontrada = ubicaciones.find(function (u) {
+          return normalizar(u.ciudad) === ciudad &&
+            normalizar(u.estado) === estado &&
+            normalizar(u.pais) === pais;
+        });
 
-      if (!respuesta.ok) {
-        throw new Error("No se pudo leer familia.json");
+        if (encontrada) {
+          return encontrada;
+        }
       }
 
-      const familiares = await respuesta.json();
+      // Si no hay ciudad, permitir una región
+      // únicamente cuando exista una coincidencia conocida.
+      if (!ciudad && estado && pais) {
+        const region = regiones.find(function (u) {
+          return normalizar(u.estado) === estado &&
+            normalizar(u.pais) === pais;
+        });
 
-      const grupos = new Map();
+        if (region) {
+          return region;
+        }
+      }
 
-      familiares.forEach(function (persona) {
-        const ubicacion = obtenerUbicacion(persona);
+      // No inventar coordenadas.
+      return null;
+    }
 
-        // Sin ubicación conocida, no inventar un marcador.
-        if (!ubicacion) return;
+    // Crear una clave para agrupar familiares
+    // que comparten la misma ubicación.
+    function claveUbicacion(u) {
+      return [
+        normalizar(u.etiqueta),
+        u.lat,
+        u.lng
+      ].join("|");
+    }
 
-        const clave = claveUbicacion(ubicacion);
+    // =====================================================
+    // CARGA DE FAMILIA.JSON
+    // =====================================================
 
-        if (!grupos.has(clave)) {
-          grupos.set(clave, {
-            ubicacion: ubicacion,
-            personas: []
-          });
+    async function cargarFamiliares() {
+      try {
+        estadoElemento.textContent =
+          "Cargando información familiar...";
+
+        const respuesta = await fetch(
+          "./data/familia.json",
+          { cache: "no-store" }
+        );
+
+        if (!respuesta.ok) {
+          throw new Error(
+            "No se pudo leer data/familia.json. Código: " +
+            respuesta.status
+          );
         }
 
-        grupos.get(clave).personas.push(persona);
-      });
+        const familiares = await respuesta.json();
 
-      grupos.forEach(function (grupo) {
-        const u = grupo.ubicacion;
-        const personas = grupo.personas;
+        if (!Array.isArray(familiares)) {
+          throw new Error(
+            "El contenido de familia.json no es un arreglo."
+          );
+        }
 
-        const marcador = L.marker([u.lat, u.lng])
-          .addTo(mapa);
+        // Crear grupos de personas por ubicación.
+        const grupos = new Map();
 
-        const nombres = personas.map(function (persona) {
-          return String(persona.nombre || "Nombre no disponible");
+        familiares.forEach(function (persona) {
+          const ubicacion = obtenerUbicacion(persona);
+
+          if (!ubicacion) {
+            return;
+          }
+
+          const clave = claveUbicacion(ubicacion);
+
+          if (!grupos.has(clave)) {
+            grupos.set(clave, {
+              ubicacion: ubicacion,
+              personas: []
+            });
+          }
+
+          grupos.get(clave).personas.push(persona);
         });
 
-        const contenido = document.createElement("div");
+        // Calcular familiares ubicados.
+        let totalUbicados = 0;
 
-        const titulo = document.createElement("strong");
-        titulo.textContent = u.etiqueta;
-        contenido.appendChild(titulo);
-
-        const total = document.createElement("p");
-        total.textContent =
-          personas.length + " familiar(es) registrado(s)";
-        contenido.appendChild(total);
-
-        const lista = document.createElement("ul");
-
-        nombres.forEach(function (nombre) {
-          const elemento = document.createElement("li");
-          elemento.textContent = nombre;
-          lista.appendChild(elemento);
+        grupos.forEach(function (grupo) {
+          totalUbicados += grupo.personas.length;
         });
 
-        contenido.appendChild(lista);
+        // Actualizar los tres indicadores.
+        totalElemento.textContent = familiares.length;
 
-        marcador.bindPopup(contenido);
+        ubicadosElemento.textContent = totalUbicados;
+
+        pendientesElemento.textContent =
+          familiares.length - totalUbicados;
+
+        // =================================================
+        // DIBUJAR MARCADORES Y VENTANAS INFORMATIVAS
+        // =================================================
+
+        grupos.forEach(function (grupo) {
+          const u = grupo.ubicacion;
+          const personas = grupo.personas;
+
+          const marcador = L.marker([u.lat, u.lng])
+            .addTo(mapa);
+
+          // Construir el contenido como elementos de texto
+          // para evitar interpretar nombres como código HTML.
+          const contenido = document.createElement("div");
+          contenido.className = "popup-familiar";
+
+          const titulo = document.createElement("h3");
+          titulo.textContent = u.etiqueta;
+          contenido.appendChild(titulo);
+
+          const total = document.createElement("p");
+          total.textContent =
+            personas.length +
+            (
+              personas.length === 1
+                ? " familiar registrado"
+                : " familiares registrados"
+            );
+
+          contenido.appendChild(total);
+
+          const lista = document.createElement("ul");
+
+          personas.forEach(function (persona) {
+            const elemento = document.createElement("li");
+
+            elemento.textContent =
+              String(persona.nombre || "Nombre no disponible");
+
+            lista.appendChild(elemento);
+          });
+
+          contenido.appendChild(lista);
+
+          marcador.bindPopup(contenido);
+        });
+
+        estadoElemento.textContent =
+          "Información cargada. Se muestran " +
+          totalUbicados +
+          " familiares en " +
+          grupos.size +
+          " ubicaciones reconocidas.";
+
+        console.log(
+          "Familiares registrados:",
+          familiares.length,
+          "| Familiares ubicados:",
+          totalUbicados,
+          "| Pendientes:",
+          familiares.length - totalUbicados,
+          "| Ubicaciones:",
+          grupos.size
+        );
+
+      } catch (error) {
+        console.error(
+          "Error al cargar la información familiar:",
+          error
+        );
+
+        estadoElemento.textContent =
+          "No fue posible cargar la información familiar. " +
+          "Verifica la ruta de familia.json y vuelve a intentarlo.";
+      }
+    }
+
+    // =====================================================
+    // CONTROLES DE NAVEGACIÓN
+    // =====================================================
+
+    document.getElementById("verMexico")
+      .addEventListener("click", function () {
+        mapa.setView([23.6345, -102.5528], 5);
       });
 
-      console.log(
-        "Familiares leídos:",
-        familiares.length,
-        "| Ubicaciones en el mapa:",
-        grupos.size
-      );
+    document.getElementById("verMundo")
+      .addEventListener("click", function () {
+        mapa.setView([20, 0], 2);
+      });
 
-    } catch (error) {
-      console.error("Error al cargar familiares:", error);
-      alert(
-        "No fue posible cargar familia.json. " +
-        "Verifica la ruta del archivo y vuelve a intentarlo."
-      );
-    }
-  }
+    document.getElementById("acercar")
+      .addEventListener("click", function () {
+        mapa.zoomIn();
+      });
 
-  // Controles del mapa.
-  document.getElementById("verMexico").addEventListener(
-    "click",
-    function () {
-      mapa.setView([23.6345, -102.5528], 5);
-    }
-  );
+    document.getElementById("alejar")
+      .addEventListener("click", function () {
+        mapa.zoomOut();
+      });
 
-  document.getElementById("verMundo").addEventListener(
-    "click",
-    function () {
-      mapa.setView([20, 0], 2);
-    }
-  );
-
-  document.getElementById("acercar").addEventListener(
-    "click",
-    function () {
-      mapa.zoomIn();
-    }
-  );
-
-  document.getElementById("alejar").addEventListener(
-    "click",
-    function () {
-      mapa.zoomOut();
-    }
-  );
-
-  cargarFamiliares();
-</script>
-
+    // Iniciar la carga de datos.
+    cargarFamiliares();
+  </script>
 
 </body>
 </html>
