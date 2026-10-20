@@ -868,19 +868,23 @@ function abrirPerfil(persona, esNavegacion = false) {
     // como cadena en familia.json.
     // --------------------------------------------------------
 
-    const padre = persona.padre_id
-        ? familia.find(
-            familiar =>
-                String(familiar.id) === String(persona.padre_id)
-        )
-        : null;
+    const padre = persona.padre_id !== undefined &&
+              persona.padre_id !== null &&
+              persona.padre_id !== ""
+    ? familia.find(
+        familiar =>
+            String(familiar.id) === String(persona.padre_id)
+      )
+    : null;
 
-    const madre = persona.madre_id
-        ? familia.find(
-            familiar =>
-                String(familiar.id) === String(persona.madre_id)
-        )
-        : null;
+const madre = persona.madre_id !== undefined &&
+              persona.madre_id !== null &&
+              persona.madre_id !== ""
+    ? familia.find(
+        familiar =>
+            String(familiar.id) === String(persona.madre_id)
+      )
+    : null;
 
     const nombrePadre = padre
         ? padre.nombre
@@ -918,33 +922,21 @@ function abrirPerfil(persona, esNavegacion = false) {
                 <div>
                     <span>Padre</span>
 
-                    ${
-                        padre
-                            ? `
-                                <button
-                                    type="button"
-                                    class="profile-related-link"
-                                    data-persona-id="${padre.id}"
-                                >${nombrePadre}${iconoPadre}</button>
-                            `
-                            : `<strong>${nombrePadre}</strong>`
-                    }
+                   ${
+    padre
+        ? `<button type="button" class="profile-related-link" data-persona-id="${padre.id}">${nombrePadre}${iconoPadre}</button>`
+        : `<strong>${nombrePadre}</strong>`
+}
                 </div>
 
                 <div>
                     <span>Madre</span>
 
                     ${
-                        madre
-                            ? `
-                                <button
-                                    type="button"
-                                    class="profile-related-link"
-                                    data-persona-id="${madre.id}"
-                                >${nombreMadre}${iconoMadre}</button>
-                            `
-                            : `<strong>${nombreMadre}</strong>`
-                    }
+    madre
+        ? `<button type="button" class="profile-related-link" data-persona-id="${madre.id}">${nombreMadre}${iconoMadre}</button>`
+        : `<strong>${nombreMadre}</strong>`
+}
                 </div>
 
                 <div>
@@ -1043,35 +1035,34 @@ function abrirPerfil(persona, esNavegacion = false) {
         });
 
     // --------------------------------------------------------
-    // BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
-    // --------------------------------------------------------
+// BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
+// --------------------------------------------------------
 
-    if (historialPerfiles.length > 0) {
+if (historialPerfiles.length > 0) {
 
-        const botonRegresar = document.createElement("button");
+    const botonRegresar = document.createElement("button");
 
-        botonRegresar.type = "button";
-        botonRegresar.className = "profile-back-button";
-        botonRegresar.textContent = "← Regresar al perfil anterior";
+    botonRegresar.type = "button";
+    botonRegresar.className = "profile-back-button";
+    botonRegresar.textContent = "← Regresar al perfil anterior";
 
-        botonRegresar.addEventListener("click", () => {
+    botonRegresar.addEventListener("click", () => {
 
-            const idAnterior = historialPerfiles.pop();
+        const idAnterior = historialPerfiles.pop();
 
-            const familiarAnterior = familia.find(
-                familiar =>
-                    String(familiar.id) === String(idAnterior)
-            );
+        const familiarAnterior = familia.find(
+            familiar =>
+                String(familiar.id) === String(idAnterior)
+        );
 
-            if (familiarAnterior) {
-                abrirPerfil(familiarAnterior, true);
-            }
+        if (familiarAnterior) {
+            abrirPerfil(familiarAnterior, true);
+        }
 
-        });
+    });
 
-        contenido.prepend(botonRegresar);
-    }
-
+    contenido.prepend(botonRegresar);
+}
     // --------------------------------------------------------
     // MOSTRAR EL POP-UP
     // --------------------------------------------------------
