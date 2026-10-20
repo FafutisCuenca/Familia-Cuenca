@@ -125,13 +125,37 @@
     </a>
   </nav>
 
-  <main>
-    <div id="mapa" aria-label="Mapa interactivo de la familia"></div>
-
-    <div class="pie">
-      Nuestra historia continúa · Familia Cuenca
+  
+<main>
+  <section class="indicadores" aria-label="Resumen del mapa familiar">
+    <div class="indicador">
+      <span class="indicador-icono">👨‍👩‍👧‍👦</span>
+      <div>
+        <span class="indicador-titulo">Familiares registrados</span>
+        <strong id="totalFamiliares">0</strong>
+      </div>
     </div>
-  </main>
+
+    <div class="indicador">
+      <span class="indicador-icono">📍</span>
+      <div>
+        <span class="indicador-titulo">Familiares ubicados</span>
+        <strong id="familiaresUbicados">0</strong>
+      </div>
+    </div>
+
+    <div class="indicador">
+      <span class="indicador-icono">🧭</span>
+      <div>
+        <span class="indicador-titulo">Pendientes de ubicación</span>
+        <strong id="familiaresPendientes">0</strong>
+      </div>
+    </div>
+  </section>
+
+  <div id="mapa" aria-label="Mapa interactivo de la familia"></div>
+</main>
+
 
   <!-- Librería interactiva -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
