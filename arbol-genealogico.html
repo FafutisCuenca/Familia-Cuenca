@@ -188,7 +188,7 @@
       <div class="lienzo-arbol" id="lienzo-arbol" tabindex="0" aria-label="Gráfico del árbol genealógico desplazable">
         <svg id="grafico-arbol" role="img" aria-label="Árbol genealógico de la persona seleccionada" xmlns="http://www.w3.org/2000/svg"></svg>
       </div>
-      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>Colores de rama según otro progenitor registrado; se propagan a descendientes (no implica matrimonio)</span><span>🕊️ Persona finada</span></div>
+      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>Colores de rama según el otro padre o madre registrado</span><span>🕊️ Persona finada</span></div>
     </section>
 
     <section class="panel-persona" aria-labelledby="titulo-persona" aria-live="polite">
@@ -202,7 +202,7 @@
         <div id="lista-padres" class="lista-personas"><p class="vacio">Esperando los datos…</p></div>
       </section>
       <section class="grupo-relacion" aria-labelledby="titulo-ramas">
-        <h2 class="seccion-titulo" id="titulo-ramas">Otros progenitores y sus hijos</h2>
+        <h2 class="seccion-titulo" id="titulo-ramas">Cónyuges y sus hijos</h2>
         <div id="lista-ramas" class="lista-personas"><p class="vacio">Busca y selecciona un familiar para consultar sus ramas.</p></div>
       </section>
       <section class="grupo-relacion" aria-labelledby="titulo-hijos">
@@ -211,7 +211,7 @@
       </section>
     </div>
 
-    <p class="nota">Importante: este árbol es de consulta. No modifica <code>familia.json</code> ni registra parentescos. Solo muestra las relaciones indicadas mediante <code>padre_id</code> y <code>madre_id</code>; si un vínculo no está registrado, no se deduce ni se completa automáticamente.</p>
+    <p class="nota">Nota sobre los cónyuges: cuando se muestra un nombre como “Cónyuge registrado”, se identifica a partir del otro padre o madre registrado de los hijos en común; familia.json no contiene un campo independiente que confirme matrimonio. “Cónyuge no registrado” indica que no se encontró ese otro padre o madre en los datos. Importante: este árbol es de consulta. No modifica <code>familia.json</code> ni registra parentescos. Solo muestra las relaciones indicadas mediante <code>padre_id</code> y <code>madre_id</code>; si un vínculo no está registrado, no se deduce ni se completa automáticamente.</p>
   </main>
 
   <footer>Familia Cuenca · Registro genealógico familiar</footer>
@@ -370,11 +370,11 @@
           listaRamas.replaceChildren();
           grupos.forEach(grupo => {
             const caja = document.createElement("div");
-            caja.className = "grupo-rama-progenitor";
+            caja.className = "grupo-rama-conyuge";
             caja.style.cssText = "border:1px solid #d7e1e8;border-left:4px solid #5685a2;border-radius:10px;padding:12px;margin:0 0 12px;background:#f8fbfd";
             const titulo = document.createElement("h3");
             titulo.style.cssText = "font-size:1rem;margin:0 0 8px;color:#173b57";
-            titulo.textContent = grupo.otro ? `Otro progenitor registrado: ${texto(grupo.otro.nombre)}` : "Otro progenitor no registrado";
+            titulo.textContent = grupo.otro ? `Cónyuge registrado: ${texto(grupo.otro.nombre)}` : "Cónyuge no registrado";
             caja.appendChild(titulo);
             const lista = document.createElement("div");
             lista.className = "lista-personas";
@@ -460,7 +460,7 @@
           actual = siguientes;
           if (!actual.length) break;
         }
-        // Mostrar junto a la persona seleccionada a los otros progenitores
+        // Mostrar junto a la persona seleccionada a los cónyuges
         // que estén explícitamente registrados para sus hijos. Esto permite
         // distinguir ramas de hijos por co-progenitor sin asumir matrimonio.
         const coProgenitores = [];
