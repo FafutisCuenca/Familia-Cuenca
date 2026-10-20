@@ -36,20 +36,24 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-037",
+    "madre_id": "CUEN-028"
   },
-    {
+  {
     "id": "CUEN-004",
     "nombre": "Alexandra Rios Gonzalez Cuenca",
     "fecha": "10-01",
     "mes": "Enero",
-    "anio": "1996",
+    "anio": 1996,
     "genero": "F",
     "estatus": "Vivo",
     "pais": "Perú",
     "estado": "Lima",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": "CUEN-009"
   },
   {
     "id": "CUEN-005",
@@ -90,7 +94,6 @@
     "ciudad": "",
     "foto": ""
   },
-
   {
     "id": "CUEN-008",
     "nombre": "Yayana Cuenca Gómez",
@@ -117,7 +120,7 @@
     "ciudad": "",
     "foto": ""
   },
-    {
+  {
     "id": "CUEN-010",
     "nombre": "Diana Cuenca Pallas",
     "fecha": "06-02",
@@ -141,9 +144,11 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": "CUEN-014"
   },
-    {
+  {
     "id": "CUEN-012",
     "nombre": "Yedrik Baruk Cuenca",
     "fecha": "19-02",
@@ -180,7 +185,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-040",
+    "madre_id": "CUEN-022"
   },
   {
     "id": "CUEN-015",
@@ -195,7 +202,6 @@
     "ciudad": "Mérida",
     "foto": ""
   },
-
   {
     "id": "CUEN-016",
     "nombre": "Adriana Peón",
@@ -235,7 +241,6 @@
     "ciudad": "",
     "foto": ""
   },
-   
   {
     "id": "CUEN-019",
     "nombre": "Martha Liaño Cuenca",
@@ -262,7 +267,7 @@
     "ciudad": "Los Mochis",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-021",
     "nombre": "Ricardo Alexis Cuenca",
     "fecha": "06-04",
@@ -275,7 +280,7 @@
     "ciudad": "CDMX",
     "foto": ""
   },
-   {
+  {
     "id": "CUEN-022",
     "nombre": "Alicia Fafutis Mendoza",
     "fecha": "06-05",
@@ -301,7 +306,7 @@
     "ciudad": "Oakland",
     "foto": ""
   },
-    {
+  {
     "id": "CUEN-024",
     "nombre": "Juan Ricardo Cuenca Vargas",
     "fecha": "22-05",
@@ -314,7 +319,7 @@
     "ciudad": "CDMX",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-025",
     "nombre": "Renata Zoe Cuenca",
     "fecha": "18-06",
@@ -353,7 +358,6 @@
     "ciudad": "",
     "foto": ""
   },
-  
   {
     "id": "CUEN-028",
     "nombre": "Teresita A. Castillo Salazar",
@@ -380,7 +384,7 @@
     "ciudad": "",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-030",
     "nombre": "Carlos Cuenca Pallas",
     "fecha": "22-07",
@@ -406,7 +410,6 @@
     "ciudad": "",
     "foto": ""
   },
-
   {
     "id": "CUEN-032",
     "nombre": "Claudia Bermpudez del Carmen de Martínez",
@@ -420,7 +423,7 @@
     "ciudad": "",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-033",
     "nombre": "Xari Ariadne Kokkinidis Liaño",
     "fecha": "24-08",
@@ -433,7 +436,6 @@
     "ciudad": "CDMX",
     "foto": ""
   },
-
   {
     "id": "CUEN-034",
     "nombre": "Alan Saavedra Cuenca",
@@ -510,7 +512,9 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": "CUEN-014"
   },
   {
     "id": "CUEN-040",
@@ -551,7 +555,7 @@
     "ciudad": "",
     "foto": ""
   },
-    {
+  {
     "id": "CUEN-043",
     "nombre": "Gabriel Rodríguez Cuenca",
     "fecha": "01-09",
@@ -590,7 +594,6 @@
     "ciudad": "",
     "foto": ""
   },
-
   {
     "id": "CUEN-046",
     "nombre": "Ernesto Cuenca Aznar",
@@ -615,7 +618,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-037",
+    "madre_id": "CUEN-028"
   },
   {
     "id": "CUEN-048",
@@ -682,8 +687,7 @@
     "ciudad": "Mérida",
     "foto": ""
   },
-
-    {
+  {
     "id": "CUEN-053",
     "nombre": "Juan Pablo Rodríguez Cuenca",
     "fecha": "01-11",
@@ -696,7 +700,7 @@
     "ciudad": "",
     "foto": ""
   },
-    {
+  {
     "id": "CUEN-054",
     "nombre": "Silvia Vargas Padilla",
     "fecha": "04-11",
@@ -709,7 +713,6 @@
     "ciudad": "CDMX",
     "foto": ""
   },
-
   {
     "id": "CUEN-055",
     "nombre": "Epsin Cuenca Gómez",
@@ -786,7 +789,9 @@
     "pais": "México",
     "estado": "CDMX",
     "ciudad": "CDMX",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": "CUEN-014"
   },
   {
     "id": "CUEN-061",
@@ -799,9 +804,10 @@
     "pais": "México",
     "estado": "Estado de México",
     "ciudad": "Toluca",
-    "foto": ""
+    "foto": "",
+    "padre_id": null,
+    "madre_id": "CUEN-014"
   },
-
   {
     "id": "CUEN-062",
     "nombre": "Francesca Nuñez Gonzalez Cuenca",
@@ -841,7 +847,7 @@
     "ciudad": "",
     "foto": ""
   },
-    {
+  {
     "id": "CUEN-065",
     "nombre": "Linda Chacón Cuenca",
     "fecha": "17-03",
@@ -854,7 +860,7 @@
     "ciudad": "Monterrey",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-066",
     "nombre": "Jorge Padilla",
     "fecha": "22-02",
@@ -867,7 +873,7 @@
     "ciudad": "Monterrey",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-067",
     "nombre": "Christian Erick Reveles",
     "fecha": "28-07",
@@ -880,7 +886,7 @@
     "ciudad": "Toluca",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-068",
     "nombre": "Alejandro Liaño Cuenca",
     "fecha": "13-05",
@@ -893,7 +899,7 @@
     "ciudad": "Cuajimalpa",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-069",
     "nombre": "Patricia Castro",
     "fecha": "12-03",
@@ -906,7 +912,7 @@
     "ciudad": "Cuajimalpa",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-070",
     "nombre": "Miguel Angel Cuenca",
     "fecha": "21-06",
@@ -919,7 +925,7 @@
     "ciudad": "Mérida",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-071",
     "nombre": "Luis Antonio Cuenca López",
     "fecha": "19-05",
@@ -932,7 +938,7 @@
     "ciudad": "Mérida",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-072",
     "nombre": "Pamela Cuenca López",
     "fecha": "14-10",
@@ -945,7 +951,7 @@
     "ciudad": "Mérida",
     "foto": ""
   },
-{
+  {
     "id": "CUEN-073",
     "nombre": "Héctor Cabrera Ojeda",
     "fecha": "19-09",
@@ -973,5 +979,4 @@
     "padre_id": "CUEN-040",
     "madre_id": "CUEN-022"
   }
-  
 ]
