@@ -3223,8 +3223,7 @@ select {
     color: #163c61;
 }
 
-   <CodeBlock language="css" editable>
-.profile-back-button {
+ .profile-back-button {
     display: inline-block;
     margin-bottom: 16px;
     padding: 8px 12px;
@@ -3241,6 +3240,5 @@ select {
 background: #245b8f;
 color: white;
 }
-</CodeBlock>
    
 }
