@@ -99,12 +99,19 @@
     .nota { margin: 0 0 28px; color: var(--suave); font-size: .9rem; }
 
     .panel-arbol { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 18px; box-shadow: var(--sombra); margin: 0 0 22px; }
+    .panel-arbol[hidden] { display: none !important; }
+    .contenedor-boton-arbol { display: flex; justify-content: center; margin: 0 0 22px; }
+    .boton-arbol-grafico { border: 0; border-radius: 10px; padding: 12px 22px; background: var(--azul-2); color: #fff; cursor: pointer; font-weight: 750; box-shadow: var(--sombra); }
+    .boton-arbol-grafico:hover { background: var(--azul); }
     .encabezado-arbol { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
     .acciones-arbol { display: flex; flex-wrap: wrap; gap: 8px; }
     .boton-secundario { border: 1px solid #c8d5dd; border-radius: 9px; padding: 8px 12px; background: #fff; color: var(--azul); cursor: pointer; font-weight: 650; }
     .boton-secundario:hover { background: #f0f5f8; border-color: var(--azul-2); }
     .lienzo-arbol { width: 100%; overflow: auto; border: 1px solid #e3ebef; border-radius: 12px; background: linear-gradient(#fff, #fbfdfe); min-height: 250px; }
-    #grafico-arbol { display: block; min-width: 100%; height: auto; }
+    #grafico-arbol { display: block; width: auto; height: auto; max-width: none; }
+    .controles-zoom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
+    .nivel-zoom { min-width: 64px; text-align: center; color: var(--azul); font-weight: 750; font-variant-numeric: tabular-nums; }
+    .ayuda-zoom { color: var(--suave); font-size: .85rem; margin-left: auto; }
     .conexion-arbol { fill: none; stroke: #aabcc8; stroke-width: 2; }
     .nodo-arbol { cursor: pointer; }
     .nodo-arbol rect { fill: #fff; stroke: #bfd0da; stroke-width: 1.5; }
@@ -155,7 +162,11 @@
     </section>
 
 
-    <section class="panel-arbol" aria-labelledby="titulo-grafico">
+    <div class="contenedor-boton-arbol">
+      <button type="button" class="boton-arbol-grafico" id="alternar-arbol" aria-expanded="false" aria-controls="panel-arbol">Árbol gráfico</button>
+    </div>
+
+    <section class="panel-arbol" id="panel-arbol" aria-labelledby="titulo-grafico" hidden>
       <div class="encabezado-arbol">
         <div>
           <h2 class="seccion-titulo" id="titulo-grafico">Árbol familiar gráfico</h2>
@@ -166,10 +177,17 @@
           <button type="button" class="boton-secundario" id="ver-arbol-completo">Mostrar más generaciones</button>
         </div>
       </div>
+      <div class="controles-zoom" aria-label="Controles de zoom del árbol">
+        <button type="button" class="boton-secundario" id="zoom-menos" aria-label="Alejar el árbol">− Alejar</button>
+        <span class="nivel-zoom" id="nivel-zoom">100%</span>
+        <button type="button" class="boton-secundario" id="zoom-mas" aria-label="Acercar el árbol">+ Acercar</button>
+        <button type="button" class="boton-secundario" id="zoom-restablecer">Restablecer zoom</button>
+        <span class="ayuda-zoom">Las fichas mantienen el mismo tamaño; desplázate para recorrer el árbol.</span>
+      </div>
       <div class="lienzo-arbol" id="lienzo-arbol" tabindex="0" aria-label="Gráfico del árbol genealógico desplazable">
         <svg id="grafico-arbol" role="img" aria-label="Árbol genealógico de la persona seleccionada" xmlns="http://www.w3.org/2000/svg"></svg>
       </div>
-      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>🕊️ Persona finada</span></div>
+      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>Otros progenitores de hijos: solo si están registrados (no implica matrimonio)</span><span>🕊️ Persona finada</span></div>
     </section>
 
     <section class="panel-persona" aria-labelledby="titulo-persona" aria-live="polite">
@@ -205,8 +223,15 @@
       const listaHijos = document.getElementById("lista-hijos");
       const graficoArbol = document.getElementById("grafico-arbol");
       const lienzoArbol = document.getElementById("lienzo-arbol");
+      const panelArbol = document.getElementById("panel-arbol");
+      const botonAlternarArbol = document.getElementById("alternar-arbol");
       const botonCentrar = document.getElementById("centrar-arbol");
       const botonGeneraciones = document.getElementById("ver-arbol-completo");
+      const botonZoomMenos = document.getElementById("zoom-menos");
+      const botonZoomMas = document.getElementById("zoom-mas");
+      const botonZoomRestablecer = document.getElementById("zoom-restablecer");
+      const etiquetaZoom = document.getElementById("nivel-zoom");
+      let zoomArbol = 1;
       let generacionesExtra = false;
       let familia = [];
       let personaActualId = "";
@@ -404,6 +429,22 @@
           actual = siguientes;
           if (!actual.length) break;
         }
+        // Mostrar junto a la persona seleccionada a los otros progenitores
+        // que estén explícitamente registrados para sus hijos. Esto permite
+        // distinguir ramas de hijos por co-progenitor sin asumir matrimonio.
+        const coProgenitores = [];
+        const idsCoProgenitores = new Set([String(persona.id)]);
+        hijosDe(persona).forEach(hijo => {
+          [hijo.padre_id, hijo.madre_id].filter(id => texto(id, "") !== "").forEach(id => {
+            const coProgenitor = buscarPorId(id);
+            if (coProgenitor && String(coProgenitor.id) !== String(persona.id) && !idsCoProgenitores.has(String(coProgenitor.id))) {
+              idsCoProgenitores.add(String(coProgenitor.id));
+              coProgenitores.push(coProgenitor);
+            }
+          });
+        });
+        if (coProgenitores.length) niveles.set(0, [persona, ...coProgenitores]);
+
         const visitadosAbajo = new Set([String(persona.id)]);
         actual = [persona];
         const profundidadAbajo = generacionesExtra ? 3 : 2;
@@ -435,8 +476,11 @@
         const ancho = Math.max(700, maxNodos * (anchoNodo + separacionX) + margen * 2);
         const alto = Math.max(210, nivelesOrdenados.length * separacionY + 55);
         graficoArbol.setAttribute("viewBox", `0 0 ${ancho} ${alto}`);
-        graficoArbol.setAttribute("width", ancho);
-        graficoArbol.setAttribute("height", alto);
+        graficoArbol.setAttribute("width", Math.round(ancho * zoomArbol));
+        graficoArbol.setAttribute("height", Math.round(alto * zoomArbol));
+        etiquetaZoom.textContent = `${Math.round(zoomArbol * 100)}%`;
+        botonZoomMenos.disabled = zoomArbol <= 0.5;
+        botonZoomMas.disabled = zoomArbol >= 1.8;
         graficoArbol.replaceChildren();
 
         nivelesOrdenados.forEach((nivel, indiceNivel) => {
@@ -532,7 +576,28 @@
       selector.addEventListener("change", () => {
         if (selector.value) seleccionarPersona(selector.value);
       });
+      botonAlternarArbol.addEventListener("click", () => {
+        const mostrar = panelArbol.hidden;
+        panelArbol.hidden = !mostrar;
+        botonAlternarArbol.setAttribute("aria-expanded", String(mostrar));
+        botonAlternarArbol.textContent = mostrar ? "Ocultar árbol gráfico" : "Árbol gráfico";
+        if (mostrar) requestAnimationFrame(centrarSeleccion);
+      });
       botonCentrar.addEventListener("click", centrarSeleccion);
+      function cambiarZoom(delta) {
+        zoomArbol = Math.max(0.5, Math.min(1.8, Math.round((zoomArbol + delta) * 10) / 10));
+        const persona = buscarPorId(personaActualId);
+        if (persona) renderizarArbol(persona);
+        requestAnimationFrame(centrarSeleccion);
+      }
+      botonZoomMenos.addEventListener("click", () => cambiarZoom(-0.1));
+      botonZoomMas.addEventListener("click", () => cambiarZoom(0.1));
+      botonZoomRestablecer.addEventListener("click", () => {
+        zoomArbol = 1;
+        const persona = buscarPorId(personaActualId);
+        if (persona) renderizarArbol(persona);
+        requestAnimationFrame(centrarSeleccion);
+      });
       botonGeneraciones.addEventListener("click", () => {
         generacionesExtra = !generacionesExtra;
         botonGeneraciones.textContent = generacionesExtra ? "Mostrar menos generaciones" : "Mostrar más generaciones";
