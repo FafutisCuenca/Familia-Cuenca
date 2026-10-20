@@ -905,15 +905,25 @@ function abrirPerfil(
 
             <div class="profile-data">
 
-    <div>
-        <span>Padre</span>
-        <strong>${nombrePadre}</strong>
-    </div>
+   
+<div>
+    <span>Padre</span>
+    ${
+        padre
+            ? `<button type="button" class="profile-related-link" data-persona-id="${padre.id}">${nombrePadre}</button>`
+            : `<strong>${nombrePadre}</strong>`
+    }
+</div>
 
-    <div>
-        <span>Madre</span>
-        <strong>${nombreMadre}</strong>
-    </div>
+<div>
+    <span>Madre</span>
+    ${
+        madre
+            ? `<button type="button" class="profile-related-link" data-persona-id="${madre.id}">${nombreMadre}</button>`
+            : `<strong>${nombreMadre}</strong>`
+    }
+</div>
+
 
                 <div>
                     <span>
