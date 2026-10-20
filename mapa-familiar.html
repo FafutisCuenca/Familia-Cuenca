@@ -14,6 +14,49 @@
   >
 
   <style>
+
+    
+/* Navegación estándar del portal */
+.barra-portal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: #17365d;
+  color: #ffffff;
+}
+
+.barra-portal a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.barra-portal a:hover {
+  text-decoration: underline;
+}
+
+.barra-portal .portal-regreso {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.65);
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  .barra-portal {
+    padding: 10px 12px;
+  }
+
+  .barra-portal a {
+    font-size: 12px;
+  }
+}
+
+    
     * {
       box-sizing: border-box;
     }
@@ -25,6 +68,21 @@
       background: #f4f7fa;
     }
 
+    
+<nav class="barra-portal" aria-label="Navegación del portal">
+  <a href="https://fafutiscuenca.github.io/Familia-Cuenca/">
+    FAMILIA CUENCA
+  </a>
+
+  <a
+    class="portal-regreso"
+    href="https://fafutiscuenca.github.io/Familia-Cuenca/"
+  >
+    ← Volver al Portal Familia Cuenca
+  </a>
+</nav>
+
+    
     /* Encabezado */
     .encabezado {
       padding: 22px 16px;
