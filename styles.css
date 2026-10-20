@@ -3206,4 +3206,21 @@ select {
     font-size: 18px;
 }
 
+.profile-related-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #245b8f;
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.profile-related-link:hover {
+    color: #163c61;
+}
+
 }
