@@ -97,6 +97,28 @@
     .detalle-familiar { display: block; color: var(--suave); font-size: .83rem; margin-top: 2px; }
     .vacio { color: var(--suave); border: 1px dashed #cbd7df; border-radius: 12px; padding: 14px; background: #fafcfd; font-size: .92rem; }
     .nota { margin: 0 0 28px; color: var(--suave); font-size: .9rem; }
+
+    .panel-arbol { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 18px; box-shadow: var(--sombra); margin: 0 0 22px; }
+    .encabezado-arbol { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .acciones-arbol { display: flex; flex-wrap: wrap; gap: 8px; }
+    .boton-secundario { border: 1px solid #c8d5dd; border-radius: 9px; padding: 8px 12px; background: #fff; color: var(--azul); cursor: pointer; font-weight: 650; }
+    .boton-secundario:hover { background: #f0f5f8; border-color: var(--azul-2); }
+    .lienzo-arbol { width: 100%; overflow: auto; border: 1px solid #e3ebef; border-radius: 12px; background: linear-gradient(#fff, #fbfdfe); min-height: 250px; }
+    #grafico-arbol { display: block; min-width: 100%; height: auto; }
+    .conexion-arbol { fill: none; stroke: #aabcc8; stroke-width: 2; }
+    .nodo-arbol { cursor: pointer; }
+    .nodo-arbol rect { fill: #fff; stroke: #bfd0da; stroke-width: 1.5; }
+    .nodo-arbol text { pointer-events: none; fill: var(--texto); font-family: "Segoe UI", Arial, sans-serif; }
+    .nodo-arbol .nodo-nombre { font-size: 13px; font-weight: 700; }
+    .nodo-arbol .nodo-meta { font-size: 11px; fill: var(--suave); }
+    .nodo-arbol.seleccionado rect { fill: #eaf4f8; stroke: var(--azul-2); stroke-width: 3; }
+    .nodo-arbol.finado rect { stroke-dasharray: 5 3; }
+    .nodo-arbol:hover rect { fill: #fff9eb; stroke: var(--dorado); }
+    .leyenda-arbol { display: flex; flex-wrap: wrap; gap: 12px; color: var(--suave); font-size: .85rem; margin-top: 10px; }
+    .leyenda-arbol span { display: inline-flex; align-items: center; gap: 6px; }
+    .punto-leyenda { width: 11px; height: 11px; border-radius: 50%; display: inline-block; background: #eaf4f8; border: 2px solid var(--azul-2); }
+    @media (max-width: 700px) { .panel-arbol { padding: 12px; } .encabezado-arbol { align-items: flex-start; } }
+
     footer { text-align: center; padding: 20px 12px 28px; color: var(--suave); font-size: .86rem; }
     @media (max-width: 700px) {
       .contenedor { width: min(100% - 22px, 1120px); }
@@ -132,6 +154,24 @@
       <p id="ayuda-busqueda" class="estado">La información se carga desde <code>./data/familia.json</code>.</p>
     </section>
 
+
+    <section class="panel-arbol" aria-labelledby="titulo-grafico">
+      <div class="encabezado-arbol">
+        <div>
+          <h2 class="seccion-titulo" id="titulo-grafico">Árbol familiar gráfico</h2>
+          <p class="estado">Selecciona cualquier tarjeta para explorar a esa persona. Desplázate horizontalmente si el árbol es amplio.</p>
+        </div>
+        <div class="acciones-arbol">
+          <button type="button" class="boton-secundario" id="centrar-arbol">Centrar selección</button>
+          <button type="button" class="boton-secundario" id="ver-arbol-completo">Mostrar más generaciones</button>
+        </div>
+      </div>
+      <div class="lienzo-arbol" id="lienzo-arbol" tabindex="0" aria-label="Gráfico del árbol genealógico desplazable">
+        <svg id="grafico-arbol" role="img" aria-label="Árbol genealógico de la persona seleccionada" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>🕊️ Persona finada</span></div>
+    </section>
+
     <section class="panel-persona" aria-labelledby="titulo-persona" aria-live="polite">
       <h2 class="seccion-titulo" id="titulo-persona">Familiar seleccionado</h2>
       <div id="detalle-persona"><p class="vacio">Cargando el registro familiar…</p></div>
@@ -163,6 +203,11 @@
       const detalle = document.getElementById("detalle-persona");
       const listaPadres = document.getElementById("lista-padres");
       const listaHijos = document.getElementById("lista-hijos");
+      const graficoArbol = document.getElementById("grafico-arbol");
+      const lienzoArbol = document.getElementById("lienzo-arbol");
+      const botonCentrar = document.getElementById("centrar-arbol");
+      const botonGeneraciones = document.getElementById("ver-arbol-completo");
+      let generacionesExtra = false;
       let familia = [];
       let personaActualId = "";
 
@@ -293,6 +338,7 @@
         personaActualId = String(persona.id);
         selector.value = personaActualId;
         renderizarPersona(persona);
+        renderizarArbol(persona);
       }
 
       function actualizarOpciones(filtro = "") {
@@ -324,6 +370,141 @@
         else if (coincidencias.length === 1) seleccionarPersona(coincidencias[0].id);
       }
 
+      function svgElemento(nombre, atributos = {}) {
+        const elemento = document.createElementNS("http://www.w3.org/2000/svg", nombre);
+        Object.entries(atributos).forEach(([clave, valor]) => elemento.setAttribute(clave, String(valor)));
+        return elemento;
+      }
+
+      function padresDe(persona) {
+        return [persona.padre_id, persona.madre_id]
+          .filter(id => texto(id, "") !== "")
+          .map(buscarPorId).filter(Boolean);
+      }
+
+      function hijosDe(persona) {
+        return familia.filter(hijo =>
+          String(hijo.padre_id ?? "") === String(persona.id) ||
+          String(hijo.madre_id ?? "") === String(persona.id)
+        );
+      }
+
+      function armarGeneraciones(persona) {
+        const niveles = new Map();
+        const visitadosArriba = new Set([String(persona.id)]);
+        let actual = [persona];
+        const profundidad = generacionesExtra ? 4 : 2;
+        for (let nivel = 0; nivel <= profundidad; nivel++) {
+          niveles.set(-nivel, actual);
+          const siguientes = [];
+          actual.forEach(p => padresDe(p).forEach(padre => {
+            const id = String(padre.id);
+            if (!visitadosArriba.has(id)) { visitadosArriba.add(id); siguientes.push(padre); }
+          }));
+          actual = siguientes;
+          if (!actual.length) break;
+        }
+        const visitadosAbajo = new Set([String(persona.id)]);
+        actual = [persona];
+        const profundidadAbajo = generacionesExtra ? 3 : 2;
+        for (let nivel = 1; nivel <= profundidadAbajo; nivel++) {
+          const siguientes = [];
+          actual.forEach(p => hijosDe(p).forEach(hijo => {
+            const id = String(hijo.id);
+            if (!visitadosAbajo.has(id)) { visitadosAbajo.add(id); siguientes.push(hijo); }
+          }));
+          if (!siguientes.length) break;
+          niveles.set(nivel, siguientes);
+          actual = siguientes;
+        }
+        return niveles;
+      }
+
+      function renderizarArbol(persona) {
+        if (!persona) return;
+        const niveles = armarGeneraciones(persona);
+        const nivelesOrdenados = [...niveles.keys()].sort((a, b) => a - b);
+        const nodos = [];
+        const posiciones = new Map();
+        const anchoNodo = 184;
+        const altoNodo = 66;
+        const separacionX = 24;
+        const separacionY = 88;
+        const margen = 28;
+        const maxNodos = Math.max(1, ...nivelesOrdenados.map(n => (niveles.get(n) || []).length));
+        const ancho = Math.max(700, maxNodos * (anchoNodo + separacionX) + margen * 2);
+        const alto = Math.max(210, nivelesOrdenados.length * separacionY + 55);
+        graficoArbol.setAttribute("viewBox", `0 0 ${ancho} ${alto}`);
+        graficoArbol.setAttribute("width", ancho);
+        graficoArbol.setAttribute("height", alto);
+        graficoArbol.replaceChildren();
+
+        nivelesOrdenados.forEach((nivel, indiceNivel) => {
+          const personas = niveles.get(nivel) || [];
+          const espacio = anchoNodo + separacionX;
+          const anchoFila = personas.length * espacio - separacionX;
+          const inicioX = Math.max(margen, (ancho - anchoFila) / 2);
+          personas.forEach((p, indice) => {
+            const x = inicioX + indice * espacio;
+            const y = 24 + indiceNivel * separacionY;
+            const nodo = { persona: p, nivel, x, y, ancho: anchoNodo, alto: altoNodo };
+            nodos.push(nodo);
+            posiciones.set(`${nivel}:${String(p.id)}`, nodo);
+          });
+        });
+
+        const capaLineas = svgElemento("g", { "aria-hidden": "true" });
+        nodos.forEach(nodo => {
+          const p = nodo.persona;
+          let padres = [];
+          if (texto(p.padre_id, "") !== "") padres.push(buscarPorId(p.padre_id));
+          if (texto(p.madre_id, "") !== "") padres.push(buscarPorId(p.madre_id));
+          padres.filter(Boolean).forEach(padre => {
+            const origen = posiciones.get(`${nodo.nivel - 1}:${String(padre.id)}`);
+            if (!origen) return;
+            const x1 = origen.x + origen.ancho / 2;
+            const y1 = origen.y + origen.alto;
+            const x2 = nodo.x + nodo.ancho / 2;
+            const y2 = nodo.y;
+            const medio = (y1 + y2) / 2;
+            capaLineas.appendChild(svgElemento("path", { d: `M ${x1} ${y1} V ${medio} H ${x2} V ${y2}`, class: "conexion-arbol" }));
+          });
+        });
+        graficoArbol.appendChild(capaLineas);
+
+        nodos.forEach(nodo => {
+          const p = nodo.persona;
+          const grupo = svgElemento("g", {
+            class: `nodo-arbol${String(p.id) === String(persona.id) ? " seleccionado" : ""}${p.estatus === "Finado" ? " finado" : ""}`,
+            transform: `translate(${nodo.x}, ${nodo.y})`,
+            tabindex: "0", role: "button", "aria-label": `Seleccionar ${texto(p.nombre)}${p.estatus === "Finado" ? ", finado" : ""}`
+          });
+          grupo.appendChild(svgElemento("rect", { x: 0, y: 0, width: nodo.ancho, height: nodo.alto, rx: 11, ry: 11 }));
+          const nombre = texto(p.nombre);
+          const maxChars = 24;
+          const nombreVisible = nombre.length > maxChars ? nombre.slice(0, maxChars - 1) + "…" : nombre;
+          const titulo = svgElemento("text", { x: 12, y: 25, class: "nodo-nombre" });
+          titulo.textContent = nombreVisible;
+          grupo.appendChild(titulo);
+          const meta = svgElemento("text", { x: 12, y: 44, class: "nodo-meta" });
+          const datosMeta = [texto(p.id), p.estatus === "Finado" ? "Finado 🕊️" : texto(p.fecha, "Nacimiento no registrado")].join(" · ");
+          meta.textContent = datosMeta.length > 29 ? datosMeta.slice(0, 28) + "…" : datosMeta;
+          grupo.appendChild(meta);
+          const activar = () => seleccionarPersona(p.id);
+          grupo.addEventListener("click", activar);
+          grupo.addEventListener("keydown", evento => { if (evento.key === "Enter" || evento.key === " ") { evento.preventDefault(); activar(); } });
+          graficoArbol.appendChild(grupo);
+        });
+      }
+
+      function centrarSeleccion() {
+        const nodo = graficoArbol.querySelector(".nodo-arbol.seleccionado");
+        if (!nodo) return;
+        const lienzoRect = lienzoArbol.getBoundingClientRect();
+        const nodoRect = nodo.getBoundingClientRect();
+        lienzoArbol.scrollLeft += (nodoRect.left + nodoRect.width / 2) - (lienzoRect.left + lienzoRect.width / 2);
+      }
+
       async function iniciar() {
         try {
           const respuesta = await fetch(RUTA_DATOS, { cache: "no-store" });
@@ -350,6 +531,14 @@
       busqueda.addEventListener("input", () => actualizarOpciones(busqueda.value));
       selector.addEventListener("change", () => {
         if (selector.value) seleccionarPersona(selector.value);
+      });
+      botonCentrar.addEventListener("click", centrarSeleccion);
+      botonGeneraciones.addEventListener("click", () => {
+        generacionesExtra = !generacionesExtra;
+        botonGeneraciones.textContent = generacionesExtra ? "Mostrar menos generaciones" : "Mostrar más generaciones";
+        const persona = buscarPorId(personaActualId);
+        if (persona) renderizarArbol(persona);
+        centrarSeleccion();
       });
       iniciar();
     })();
