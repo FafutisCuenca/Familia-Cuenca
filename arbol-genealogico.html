@@ -112,7 +112,8 @@
     .controles-zoom { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; }
     .nivel-zoom { min-width: 64px; text-align: center; color: var(--azul); font-weight: 750; font-variant-numeric: tabular-nums; }
     .ayuda-zoom { color: var(--suave); font-size: .85rem; margin-left: auto; }
-    .conexion-arbol { fill: none; stroke: #aabcc8; stroke-width: 2; }
+    .conexion-arbol { fill: none; stroke: #aabcc8; stroke-width: 2.5; }
+    .etiqueta-rama { font-size: 11px; font-weight: 700; fill: #526879; }
     .nodo-arbol { cursor: pointer; }
     .nodo-arbol rect { fill: #fff; stroke: #bfd0da; stroke-width: 1.5; }
     .nodo-arbol text { pointer-events: none; fill: var(--texto); font-family: "Segoe UI", Arial, sans-serif; }
@@ -187,7 +188,7 @@
       <div class="lienzo-arbol" id="lienzo-arbol" tabindex="0" aria-label="Gráfico del árbol genealógico desplazable">
         <svg id="grafico-arbol" role="img" aria-label="Árbol genealógico de la persona seleccionada" xmlns="http://www.w3.org/2000/svg"></svg>
       </div>
-      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>Otros progenitores de hijos: solo si están registrados (no implica matrimonio)</span><span>🕊️ Persona finada</span></div>
+      <div class="leyenda-arbol"><span><i class="punto-leyenda"></i> Persona seleccionada</span><span>Las líneas representan exclusivamente parentescos registrados</span><span>Colores de rama según otro progenitor registrado; se propagan a descendientes (no implica matrimonio)</span><span>🕊️ Persona finada</span></div>
     </section>
 
     <section class="panel-persona" aria-labelledby="titulo-persona" aria-live="polite">
@@ -497,6 +498,49 @@
           });
         });
 
+        // Cada hijo directo de la persona seleccionada inicia una rama.
+        // El color se define por el otro progenitor registrado y se propaga
+        // a sus descendientes para que las líneas no se confundan al cruzarse.
+        // Esto representa parentescos registrados; no presupone matrimonios.
+        const paletaRamas = ["#2878b5", "#b45f8c", "#39856a", "#b17a2c", "#7656a6", "#168b91", "#bd5b4a", "#64748b"];
+        const colorPorCoProgenitor = new Map();
+        let indiceColor = 0;
+        const coProgenitorDeHijo = hijo => {
+          const candidatos = [hijo.padre_id, hijo.madre_id]
+            .filter(id => texto(id, "") !== "" && String(id) !== String(persona.id));
+          return candidatos.length ? buscarPorId(candidatos[0]) : null;
+        };
+        const colorRamaPorPersona = new Map();
+        hijosDe(persona).forEach(hijo => {
+          const otro = coProgenitorDeHijo(hijo);
+          // Solo se asigna una rama diferenciada cuando el otro progenitor
+          // está realmente registrado; de lo contrario la línea queda neutra.
+          if (otro) {
+            if (!colorPorCoProgenitor.has(String(otro.id))) {
+              colorPorCoProgenitor.set(String(otro.id), paletaRamas[indiceColor++ % paletaRamas.length]);
+            }
+            colorRamaPorPersona.set(String(hijo.id), colorPorCoProgenitor.get(String(otro.id)));
+          }
+        });
+        // Propagar el color de cada rama a las siguientes generaciones usando
+        // los vínculos padre/madre explícitos. Se recorren los niveles de arriba
+        // hacia abajo para que cada descendiente herede el color de su línea.
+        nivelesOrdenados.filter(nivel => nivel > 1).forEach(nivel => {
+          (niveles.get(nivel) || []).forEach(descendiente => {
+            const idsPadres = [descendiente.padre_id, descendiente.madre_id]
+              .filter(id => texto(id, "") !== "");
+            const coloresPadres = idsPadres
+              .map(id => colorRamaPorPersona.get(String(id)))
+              .filter(Boolean);
+            if (coloresPadres.length) {
+              // Si los padres pertenecen a ramas distintas, no se fuerza una
+              // asociación arbitraria: se toma el color solo si coincide.
+              const unicos = [...new Set(coloresPadres)];
+              if (unicos.length === 1) colorRamaPorPersona.set(String(descendiente.id), unicos[0]);
+            }
+          });
+        });
+
         const capaLineas = svgElemento("g", { "aria-hidden": "true" });
         nodos.forEach(nodo => {
           const p = nodo.persona;
@@ -511,7 +555,15 @@
             const x2 = nodo.x + nodo.ancho / 2;
             const y2 = nodo.y;
             const medio = (y1 + y2) / 2;
-            capaLineas.appendChild(svgElemento("path", { d: `M ${x1} ${y1} V ${medio} H ${x2} V ${y2}`, class: "conexion-arbol" }));
+            const colorRama = colorRamaPorPersona.get(String(p.id)) || colorRamaPorPersona.get(String(padre.id)) || null;
+            capaLineas.appendChild(svgElemento("path", {
+              d: `M ${x1} ${y1} V ${medio} H ${x2} V ${y2}`,
+              class: "conexion-arbol",
+              stroke: colorRama || "#aabcc8",
+              "stroke-width": colorRama ? 3.2 : 2.5,
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round"
+            }));
           });
         });
         graficoArbol.appendChild(capaLineas);
@@ -523,7 +575,12 @@
             transform: `translate(${nodo.x}, ${nodo.y})`,
             tabindex: "0", role: "button", "aria-label": `Seleccionar ${texto(p.nombre)}${p.estatus === "Finado" ? ", finado" : ""}`
           });
-          grupo.appendChild(svgElemento("rect", { x: 0, y: 0, width: nodo.ancho, height: nodo.alto, rx: 11, ry: 11 }));
+          const colorRama = colorRamaPorPersona.get(String(p.id)) || null;
+          grupo.appendChild(svgElemento("rect", {
+            x: 0, y: 0, width: nodo.ancho, height: nodo.alto, rx: 11, ry: 11,
+            stroke: colorRama || "#bfd0da",
+            "stroke-width": colorRama ? 2.5 : 1.5
+          }));
           const nombre = texto(p.nombre);
           const maxChars = 24;
           const nombreVisible = nombre.length > maxChars ? nombre.slice(0, maxChars - 1) + "…" : nombre;
