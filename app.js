@@ -16,6 +16,9 @@
 
 let familia = [];
 
+// Historial para recorrer los perfiles familiares
+let historialPerfiles = [];
+
 const searchInput =
     document.getElementById("familySearch");
 
@@ -924,7 +927,34 @@ function abrirPerfil(
     }
 </div>
 
+<CodeBlock language="javascript" editable>
+    // --------------------------------------------------------
+    // BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
+    // --------------------------------------------------------
 
+
+if (historialPerfiles.length > 0) {
+const botonRegresar = document.createElement("button");
+
+botonRegresar.type = "button";
+botonRegresar.className = "profile-back-button";
+botonRegresar.textContent = "← Regresar al perfil anterior";
+
+botonRegresar.addEventListener("click", () => {
+const idAnterior = historialPerfiles.pop();
+
+const familiarAnterior = familia.find(
+familiar => familiar.id === idAnterior
+);
+
+if (familiarAnterior) {
+abrirPerfil(familiarAnterior);
+}
+});
+
+contenido.prepend(botonRegresar);
+}
+</CodeBlock>
                 <div>
                     <span>
                         Cumpleaños
@@ -1047,9 +1077,12 @@ function abrirPerfil(
                     persona => persona.id === idPersona
                 );
 
-                if (familiar) {
-                    abrirPerfil(familiar);
-                }
+               if (familiar) {
+    // Guardar el perfil actual antes de navegar
+    historialPerfiles.push(persona.id);
+
+    abrirPerfil(familiar);
+}
             });
         });
 
