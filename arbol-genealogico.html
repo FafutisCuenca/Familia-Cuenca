@@ -201,8 +201,12 @@
         <h2 class="seccion-titulo" id="titulo-padres">Padres registrados</h2>
         <div id="lista-padres" class="lista-personas"><p class="vacio">Esperando los datos…</p></div>
       </section>
+      <section class="grupo-relacion" aria-labelledby="titulo-ramas">
+        <h2 class="seccion-titulo" id="titulo-ramas">Otros progenitores y sus hijos</h2>
+        <div id="lista-ramas" class="lista-personas"><p class="vacio">Busca y selecciona un familiar para consultar sus ramas.</p></div>
+      </section>
       <section class="grupo-relacion" aria-labelledby="titulo-hijos">
-        <h2 class="seccion-titulo" id="titulo-hijos">Hijos registrados</h2>
+        <h2 class="seccion-titulo" id="titulo-hijos">Todos los hijos registrados</h2>
         <div id="lista-hijos" class="lista-personas"><p class="vacio">Esperando los datos…</p></div>
       </section>
     </div>
@@ -222,6 +226,7 @@
       const detalle = document.getElementById("detalle-persona");
       const listaPadres = document.getElementById("lista-padres");
       const listaHijos = document.getElementById("lista-hijos");
+      const listaRamas = document.getElementById("lista-ramas");
       const graficoArbol = document.getElementById("grafico-arbol");
       const lienzoArbol = document.getElementById("lienzo-arbol");
       const panelArbol = document.getElementById("panel-arbol");
@@ -301,6 +306,7 @@
           mostrarVacio(detalle, "No se encontró el familiar seleccionado.");
           mostrarVacio(listaPadres, "No hay datos disponibles.");
           mostrarVacio(listaHijos, "No hay datos disponibles.");
+          mostrarVacio(listaRamas, "No hay datos disponibles.");
           return;
         }
 
@@ -353,8 +359,32 @@
             if (String(hijo.madre_id ?? "") === String(persona.id)) roles.push("Madre registrada");
             return crearTarjeta(hijo, roles.join(" y "));
           }));
+          const grupos = new Map();
+          hijos.forEach(hijo => {
+            const otroId = [hijo.padre_id, hijo.madre_id]
+              .find(id => texto(id, "") !== "" && String(id) !== String(persona.id));
+            const clave = otroId ? String(otroId) : "sin-otro-progenitor";
+            if (!grupos.has(clave)) grupos.set(clave, { otro: otroId ? buscarPorId(otroId) : null, hijos: [] });
+            grupos.get(clave).hijos.push(hijo);
+          });
+          listaRamas.replaceChildren();
+          grupos.forEach(grupo => {
+            const caja = document.createElement("div");
+            caja.className = "grupo-rama-progenitor";
+            caja.style.cssText = "border:1px solid #d7e1e8;border-left:4px solid #5685a2;border-radius:10px;padding:12px;margin:0 0 12px;background:#f8fbfd";
+            const titulo = document.createElement("h3");
+            titulo.style.cssText = "font-size:1rem;margin:0 0 8px;color:#173b57";
+            titulo.textContent = grupo.otro ? `Otro progenitor registrado: ${texto(grupo.otro.nombre)}` : "Otro progenitor no registrado";
+            caja.appendChild(titulo);
+            const lista = document.createElement("div");
+            lista.className = "lista-personas";
+            grupo.hijos.forEach(hijo => lista.appendChild(crearTarjeta(hijo, "Hijo/a de esta rama")));
+            caja.appendChild(lista);
+            listaRamas.appendChild(caja);
+          });
         } else {
           mostrarVacio(listaHijos, "No hay hijos que tengan registrada a esta persona como padre o madre.");
+          mostrarVacio(listaRamas, "No hay ramas de descendencia registradas para esta persona.");
         }
       }
 
@@ -615,9 +645,11 @@
           familia = datos.filter(persona => persona && persona.id !== undefined && persona.id !== null);
           if (!familia.length) throw new Error("No se encontraron registros con identificador en familia.json.");
           actualizarOpciones();
-          const primera = familia.find(p => String(p.id) === "CUEN-001") || [...familia].sort((a, b) => texto(a.nombre).localeCompare(texto(b.nombre), "es-MX"))[0];
-          estado.textContent = `${familia.length} registros cargados desde familia.json. Selecciona un nombre para consultar sus vínculos.`;
-          seleccionarPersona(primera.id);
+          estado.textContent = `${familia.length} registros cargados desde familia.json. Busca un nombre y selecciónalo para consultar sus vínculos.`;
+          mostrarVacio(detalle, "Busca y selecciona un familiar para ver sus datos.");
+          mostrarVacio(listaPadres, "Los padres aparecerán cuando selecciones un familiar.");
+          mostrarVacio(listaHijos, "Los hijos aparecerán cuando selecciones un familiar.");
+          mostrarVacio(listaRamas, "Las ramas aparecerán cuando selecciones un familiar.");
         } catch (error) {
           console.error("Error al cargar el árbol genealógico:", error);
           estado.textContent = "No fue posible cargar familia.json. Verifica que este HTML esté en la raíz del portal y que exista la carpeta data con familia.json.";
@@ -626,6 +658,7 @@
           mostrarVacio(detalle, "No se pudieron cargar los datos familiares.");
           mostrarVacio(listaPadres, "No se pudieron cargar los datos familiares.");
           mostrarVacio(listaHijos, "No se pudieron cargar los datos familiares.");
+          mostrarVacio(listaRamas, "No se pudieron cargar los datos familiares.");
         }
       }
 
