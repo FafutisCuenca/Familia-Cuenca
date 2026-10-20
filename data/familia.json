@@ -10,7 +10,9 @@
     "pais": "USA",
     "estado": "",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-040",
+    "madre_id": null
   },
   {
     "id": "CUEN-002",
@@ -112,13 +114,15 @@
     "nombre": "Katiuska Gonzalez Cuenca",
     "fecha": "04-02",
     "mes": "Febrero",
-    "anio": "1960",
+    "anio": 1960,
     "genero": "F",
     "estatus": "Vivo",
     "pais": "Perú",
     "estado": "Lima",
     "ciudad": "",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-040",
+    "madre_id": null
   },
   {
     "id": "CUEN-010",
@@ -499,7 +503,9 @@
     "pais": "Grecia",
     "estado": "Atenas",
     "ciudad": "Atenas",
-    "foto": ""
+    "foto": "",
+    "padre_id": "CUEN-040",
+    "madre_id": "CUEN-022"
   },
   {
     "id": "CUEN-039",
