@@ -927,32 +927,6 @@ function abrirPerfil(
     }
 </div>
 
-    // --------------------------------------------------------
-    // BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
-    // --------------------------------------------------------
-
-
-if (historialPerfiles.length > 0) {
-const botonRegresar = document.createElement("button");
-
-botonRegresar.type = "button";
-botonRegresar.className = "profile-back-button";
-botonRegresar.textContent = "← Regresar al perfil anterior";
-
-botonRegresar.addEventListener("click", () => {
-const idAnterior = historialPerfiles.pop();
-
-const familiarAnterior = familia.find(
-familiar => familiar.id === idAnterior
-);
-
-if (familiarAnterior) {
-abrirPerfil(familiarAnterior);
-}
-});
-
-contenido.prepend(botonRegresar);
-}
 
                 <div>
                     <span>
