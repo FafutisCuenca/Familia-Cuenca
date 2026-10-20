@@ -253,7 +253,40 @@ footer { text-align: center; padding: 20px; color: #68788b; }
                     </select>
                 </div>
             </div>
+<div class="field full">
+    <label for="conyuge">Cónyuge</label>
+    <select id="conyuge">
+        <option value="">Sin registrar</option>
+    </select>
+    <p class="help">
+        Selecciona a un familiar existente o registra un cónyuge nuevo.
+    </p>
+</div>
 
+<div class="field full">
+    <label>
+        <input
+            id="nuevoConyuge"
+            type="checkbox"
+            style="width:auto; min-height:auto;"
+        >
+        El cónyuge todavía no está registrado
+    </label>
+</div>
+
+<div class="field full" id="nuevoConyugeCampos" hidden>
+    <label for="nombreConyugeNuevo">Nombre completo del nuevo cónyuge *</label>
+    <input
+        id="nombreConyugeNuevo"
+        maxlength="160"
+        placeholder="Nombre completo"
+    >
+    <p class="help">
+        Se creará un registro independiente con el siguiente ID disponible.
+        Después podrás completar sus demás datos.
+    </p>
+</div>
+            
             <p class="help">
                 Selecciona padre y madre únicamente cuando el parentesco
                 esté confirmado. El sistema guarda sus IDs, no solo sus nombres.
