@@ -957,7 +957,21 @@
     "estado": "Yucatán",
     "ciudad": "Mérida",
     "foto": ""
+  },
+  {
+    "id": "CUEN-074",
+    "nombre": "Prueba",
+    "fecha": "31-12",
+    "mes": "Diciembre",
+    "anio": 1900,
+    "genero": "M",
+    "estatus": "Vivo",
+    "pais": "México",
+    "estado": "CDMX",
+    "ciudad": "CDMX",
+    "foto": "",
+    "padre_id": "CUEN-040",
+    "madre_id": "CUEN-022"
   }
-  
   
 ]
