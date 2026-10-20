@@ -1032,6 +1032,27 @@ function abrirPerfil(
 
     `;
 
+   
+    // --------------------------------------------------------
+    // NAVEGACIÓN AL PERFIL DEL PADRE O LA MADRE
+    // --------------------------------------------------------
+
+    contenido
+        .querySelectorAll(".profile-related-link")
+        .forEach(boton => {
+            boton.addEventListener("click", () => {
+                const idPersona = boton.dataset.personaId;
+
+                const familiar = familia.find(
+                    persona => persona.id === idPersona
+                );
+
+                if (familiar) {
+                    abrirPerfil(familiar);
+                }
+            });
+        });
+
 
     modal.classList.add(
         "active"
