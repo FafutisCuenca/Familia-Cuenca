@@ -671,14 +671,30 @@
           const lista = document.createElement("ul");
 
           personas.forEach(function (persona) {
-            const elemento = document.createElement("li");
+  const elemento = document.createElement("li");
 
-            elemento.textContent =
-              String(persona.nombre || "Nombre no disponible");
+  // Nombre del familiar.
+  const nombre = document.createElement("span");
+  nombre.textContent =
+    String(persona.nombre || "Nombre no disponible");
 
-            lista.appendChild(elemento);
-          });
+  elemento.appendChild(nombre);
 
+  // Identificar a los familiares finados.
+  if (normalizar(persona.estatus) === "finado") {
+    const indicador = document.createElement("span");
+
+    indicador.textContent = " Finado 🕊️";
+    indicador.style.marginLeft = "6px";
+    indicador.style.fontSize = "12px";
+    indicador.style.color = "#526273";
+    indicador.style.whiteSpace = "nowrap";
+
+    elemento.appendChild(indicador);
+  }
+
+  lista.appendChild(elemento);
+});
           contenido.appendChild(lista);
 
           marcador.bindPopup(contenido);
