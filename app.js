@@ -927,7 +927,6 @@ function abrirPerfil(
     }
 </div>
 
-<CodeBlock language="javascript" editable>
     // --------------------------------------------------------
     // BOTÓN PARA REGRESAR AL PERFIL ANTERIOR
     // --------------------------------------------------------
@@ -954,7 +953,7 @@ abrirPerfil(familiarAnterior);
 
 contenido.prepend(botonRegresar);
 }
-</CodeBlock>
+
                 <div>
                     <span>
                         Cumpleaños
