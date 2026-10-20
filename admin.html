@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administración | Familia Cuenca</title>
+
+<style>
+:root {
+    font-family: Arial, sans-serif;
+    color: #243247;
+    background: #f4f6f9;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+header {
+    background: #203650;
+    color: white;
+    padding: 24px;
+}
+header h1 { margin: 0 0 8px; }
+header p { margin: 0; color: #e0e8f0; }
+main {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 16px 40px;
+}
+.panel {
+    background: white;
+    border: 1px solid #dce2e9;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+h2 { margin-top: 0; }
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+button, .file-button {
+    border: 0;
+    border-radius: 7px;
+    padding: 11px 15px;
+    background: #244d73;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+button:hover, .file-button:hover { opacity: .88; }
+button.secondary { background: #536477; }
+button.danger { background: #a52d37; }
+button.light { background: #e9eef4; color: #243247; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+input, select {
+    width: 100%;
+    min-height: 40px;
+    padding: 9px 10px;
+    border: 1px solid #cbd4df;
+    border-radius: 6px;
+    font: inherit;
+    background: white;
+}
+input[type="file"] { max-width: 100%; }
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+.field { min-width: 0; }
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+.full { grid-column: 1 / -1; }
+.help { color: #5e6c7d; font-size: 13px; line-height: 1.5; }
+.notice {
+    padding: 12px 14px;
+    border-radius: 7px;
+    margin: 14px 0;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+.notice.info { background: #eaf2fb; color: #23476b; }
+.notice.success { background: #e7f5eb; color: #205c35; }
+.notice.error { background: #fff0f0; color: #8a2020; }
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 16px;
+}
+.stat {
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-width: 120px;
+}
+.stat strong { display: block; font-size: 22px; }
+.stat span { font-size: 12px; color: #536477; }
+.directory-tools { margin: 18px 0; }
+.people-list { display: grid; gap: 10px; }
+.person {
+    border: 1px solid #dce2e9;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+.person-info { min-width: 0; }
+.person-info strong { display: block; overflow-wrap: anywhere; }
+.person-info small { color: #5e6c7d; display: block; margin-top: 5px; }
+.person-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+.person-actions button { padding: 8px 10px; }
+.status { font-size: 13px; margin-top: 5px; }
+footer { text-align: center; padding: 20px; color: #68788b; }
+@media (max-width: 700px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .full { grid-column: auto; }
+    .person { align-items: flex-start; flex-direction: column; }
+    .person-actions { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+<header>
+    <h1>Familia Cuenca</h1>
+    <p>Administración del directorio familiar</p>
+</header>
+
+<main>
+    <section class="panel">
+        <h2>1. Cargar los datos familiares</h2>
+        <p class="help">
+            Selecciona el archivo familia.json que utilizas actualmente.
+            Los cambios se mantienen en esta sesión hasta que exportes el
+            archivo actualizado. Esta página no modifica GitHub directamente.
+        </p>
+
+        <div class="actions">
+            <input id="jsonFile" type="file" accept=".json,application/json">
+            <button type="button" id="loadButton">Cargar JSON</button>
+            <button type="button" id="exportButton" disabled>
+                Validar y descargar JSON
+            </button>
+        </div>
+
+        <div id="message" class="notice info" role="status" aria-live="polite">
+            Primero carga tu archivo familia.json.
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <strong id="total">0</strong>
+                <span>Integrantes</span>
+            </div>
+            <div class="stat">
+                <strong id="alive">0</strong>
+                <span>Vivos</span>
+            </div>
+            <div class="stat">
+                <strong id="deceased">0</strong>
+                <span>Finados</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2 id="formTitle">2. Registrar familiar</h2>
+        <p class="help">
+            Los IDs existentes se conservan. En nuevos registros se asigna
+            automáticamente el siguiente identificador disponible.
+            El cumpleaños debe escribirse como DD-MM.
+        </p>
+
+        <form id="personForm">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="id">Identificador</label>
+                    <input id="id" readonly placeholder="Se asigna automáticamente">
+                </div>
+
+                <div class="field">
+                    <label for="nombre">Nombre completo *</label>
+                    <input id="nombre" required maxlength="160">
+                </div>
+
+                <div class="field">
+                    <label for="fecha">Cumpleaños (DD-MM)</label>
+                    <input id="fecha" placeholder="Ej. 04-01" pattern="[0-3][0-9]-[0-1][0-9]">
+                </div>
+
+                <div class="field">
+                    <label for="anio">Año de nacimiento</label>
+                    <input id="anio" inputmode="numeric" placeholder="Opcional">
+                </div>
+
+                <div class="field">
+                    <label for="genero">Género</label>
+                    <select id="genero">
+                        <option value="">No registrado</option>
+                        <option value="F">Femenino</option>
+                        <option value="M">Masculino</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="estatus">Estatus *</label>
+                    <select id="estatus" required>
+                        <option value="Vivo">Vivo</option>
+                        <option value="Finado">Finado</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="pais">País</label>
+                    <input id="pais" maxlength="100">
+                </div>
+
+                <div class="field">
+                    <label for="estado">Estado / provincia</label>
+                    <input id="estado" maxlength="100">
+                </div>
+
+                <div class="field">
+                    <label for="ciudad">Ciudad</label>
+                    <input id="ciudad" maxlength="100">
+                </div>
+
+                <div class="field full">
+                    <label for="foto">URL o ruta de fotografía</label>
+                    <input id="foto" maxlength="500" placeholder="Opcional">
+                </div>
+
+                <div class="field">
+                    <label for="padre">Padre</label>
+                    <select id="padre">
+                        <option value="">Sin registrar</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="madre">Madre</label>
+                    <select id="madre">
+                        <option value="">Sin registrar</option>
+                    </select>
+                </div>
+            </div>
+
+            <p class="help">
+                Selecciona padre y madre únicamente cuando el parentesco
+                esté confirmado. El sistema guarda sus IDs, no solo sus nombres.
+            </p>
+
+            <div class="actions">
+                <button type="submit" id="saveButton" disabled>
+                    Guardar familiar
+                </button>
+                <button type="button" class="secondary" id="newButton" disabled>
+                    Nuevo / limpiar
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>3. Directorio de familiares</h2>
+        <p class="help">
+            Puedes buscar por nombre, ID, ciudad o país. Antes de eliminar
+            un familiar, el sistema comprobará si otros registros lo tienen
+            asociado como padre o madre.
+        </p>
+
+        <div class="directory-tools">
+            <label for="search">Buscar familiar</label>
+            <input id="search" placeholder="Nombre, CUEN-001, ciudad o país">
+        </div>
+
+        <div id="peopleList" class="people-list">
+            <p class="help">Carga primero familia.json.</p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>4. Publicar los cambios</h2>
+        <p class="help">
+            Cuando termines, selecciona “Validar y descargar JSON”.
+            El archivo exportado será una nueva copia de trabajo.
+            Para publicar los cambios, tendrás que subirlo a GitHub en la
+            ruta data/familia.json. No reemplaces el archivo original hasta
+            haber revisado la exportación.
+        </p>
+    </section>
+</main>
+
+<footer>Familia Cuenca · Herramienta local de administración</footer>
+
+<script>
+"use strict";
+
+let personas = [];
+let editandoId = null;
+let cargado = false;
+
+const $ = id => document.getElementById(id);
+
+const meses = [
+    "Enero", "Febrero", "Marzo", "Abril",
+    "Mayo", "Junio", "Julio", "Agosto",
+    "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
+
+function informar(texto, tipo = "info") {
+    const caja = $("message");
+    caja.textContent = texto;
+    caja.className = "notice " + tipo;
+}
+
+function normalizar(texto) {
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
+function escapar(texto) {
+    return String(texto ?? "").replace(/[&<>"']/g, caracter => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[caracter]);
+}
+
+function obtenerMes(fecha) {
+    if (!fecha) return "";
+    const partes = fecha.split("-");
+    if (partes.length !== 2) return "";
+    const dia = Number(partes[0]);
+    const mes = Number(partes[1]);
+    return esFechaValida(fecha) ? meses[mes - 1] : "";
+}
+
+function esFechaValida(fecha) {
+    if (!fecha) return true;
+    if (!/^\d{2}-\d{2}$/.test(fecha)) return false;
+
+    const [dia, mes] = fecha.split("-").map(Number);
+    if (mes < 1 || mes > 12) return false;
+
+    const diasMes = [
+        31, 29, 31, 30, 31, 30,
+        31, 31, 30, 31, 30, 31
+    ];
+
+    return dia >= 1 && dia <= diasMes[mes - 1];
+}
+
+function siguienteId() {
+    const mayor = personas.reduce((maximo, persona) => {
+        const coincidencia = /^CUEN-(\d+)$/i.exec(persona.id || "");
+        return coincidencia
+            ? Math.max(maximo, Number(coincidencia[1]))
+            : maximo;
+    }, 0);
+
+    let numero = mayor + 1;
+    let id = "";
+
+    do {
+        id = "CUEN-" + String(numero).padStart(3, "0");
+        numero++;
+    } while (personas.some(p => p.id === id));
+
+    return id;
+}
+
+function habilitarControles() {
+    $("saveButton").disabled = !cargado;
+    $("newButton").disabled = !cargado;
+    $("exportButton").disabled = !cargado;
+}
+
+function actualizarEstadisticas() {
+    $("total").textContent = personas.length;
+    $("alive").textContent =
+        personas.filter(p => p.estatus === "Vivo").length;
+    $("deceased").textContent =
+        personas.filter(p => p.estatus === "Finado").length;
+}
+
+function cargarArchivo() {
+    const archivo = $("jsonFile").files[0];
+
+    if (!archivo) {
+        informar("Selecciona primero el archivo familia.json.", "error");
+        return;
+    }
+
+    const lector = new FileReader();
+
+    lector.onload = () => {
+        try {
+            const datos = JSON.parse(lector.result);
+
+            if (!Array.isArray(datos)) {
+                throw new Error("El contenido debe ser un arreglo JSON.");
+            }
+
+            const ids = new Set();
+
+            for (const persona of datos) {
+                if (
+                    !persona ||
+                    typeof persona !== "object" ||
+                    typeof persona.id !== "string" ||
+                    !persona.id.trim() ||
+                    typeof persona.nombre !== "string" ||
+                    !persona.nombre.trim()
+                ) {
+                    throw new Error(
+                        "Cada registro debe tener un ID y un nombre válido."
+                    );
+                }
+
+                if (ids.has(persona.id)) {
+                    throw new Error("ID duplicado: " + persona.id);
+                }
+
+                ids.add(persona.id);
+            }
+
+            // Se conserva una copia de trabajo independiente.
+            personas = datos.map(p => ({ ...p }));
+            cargado = true;
+            editandoId = null;
+
+            habilitarControles();
+            actualizarEstadisticas();
+            actualizarSelects();
+            limpiarFormulario();
+            dibujarDirectorio();
+
+            informar(
+                "Archivo cargado correctamente: " +
+                personas.length + " registros. No se ha modificado el original.",
+                "success"
+            );
+        } catch (error) {
+            informar("No se pudo cargar el JSON: " + error.message, "error");
+        }
+    };
+
+    lector.onerror = () => {
+        informar("No se pudo leer el archivo seleccionado.", "error");
+    };
+
+    lector.readAsText(archivo, "UTF-8");
+}
+
+function actualizarSelects() {
+    const actual = $("id").value;
+
+    for (const campo of ["padre", "madre"]) {
+        const select = $(campo);
+        const valorAnterior = select.value;
+
+        select.innerHTML =
+            '<option value="">Sin registrar</option>';
+
+        [...personas]
+            .filter(p => p.id !== actual)
+            .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"))
+            .forEach(p => {
+                const opcion = document.createElement("option");
+                opcion.value = p.id;
+                opcion.textContent = p.nombre + " (" + p.id + ")";
+                select.appendChild(opcion);
+            });
+
+        if ([...select.options].some(o => o.value === valorAnterior)) {
+            select.value = valorAnterior;
+        }
+    }
+}
+
+function limpiarFormulario() {
+    $("personForm").reset();
+    editandoId = null;
+    $("formTitle").textContent = "2. Registrar familiar";
+    $("id").value = cargado ? siguienteId() : "";
+    $("saveButton").textContent = "Guardar familiar";
+    actualizarSelects();
+}
+
+function cargarEnFormulario(id) {
+    const p = personas.find(persona => persona.id === id);
+    if (!p) return;
+
+    editandoId = id;
+
+    $("id").value = p.id;
+    $("nombre").value = p.nombre || "";
+    $("fecha").value = p.fecha || "";
+    $("anio").value = p.anio ?? "";
+    $("genero").value = p.genero || "";
+    $("estatus").value = p.estatus || "Vivo";
+    $("pais").value = p.pais || "";
+    $("estado").value = p.estado || "";
+    $("ciudad").value = p.ciudad || "";
+    $("foto").value = p.foto || "";
+
+    actualizarSelects();
+    $("padre").value = p.padre_id || "";
+    $("madre").value = p.madre_id || "";
+
+    $("formTitle").textContent = "Editar familiar: " + p.nombre;
+    $("saveButton").textContent = "Guardar cambios";
+
+    $("personForm").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function validarPersona(p) {
+    const errores = [];
+    const id = p.id;
+
+    if (!p.nombre.trim()) {
+        errores.push("El nombre completo es obligatorio.");
+    }
+
+    if (p.fecha && !esFechaValida(p.fecha)) {
+        errores.push("El cumpleaños debe ser una fecha válida DD-MM.");
+    }
+
+    if (p.anio !== "" && p.anio !== null && p.anio !== undefined) {
+        if (!/^\d{4}$/.test(String(p.anio))) {
+            errores.push("El año debe tener cuatro dígitos o quedar vacío.");
+        } else {
+            const anio = Number(p.anio);
+            if (anio < 1 || anio > new Date().getFullYear()) {
+                errores.push("El año de nacimiento no es válido.");
+            }
+        }
+    }
+
+    if (!["Vivo", "Finado"].includes(p.estatus)) {
+        errores.push("Selecciona un estatus válido.");
+    }
+
+    if (p.genero && !["F", "M"].includes(p.genero)) {
+        errores.push("El género debe ser F, M o quedar vacío.");
+    }
+
+    if (p.padre_id && p.padre_id === p.madre_id) {
+        errores.push("Padre y madre no pueden ser el mismo registro.");
+    }
+
+    for (const campo of ["padre_id", "madre_id"]) {
+        const parentId = p[campo];
+
+        if (parentId && !personas.some(x => x.id === parentId)) {
+            errores.push("La relación " + campo + " apunta a un ID inexistente.");
+        }
+
+        if (parentId && parentId === id) {
+            errores.push("Una persona no puede ser su propio progenitor.");
+        }
+
+        if (parentId && creariaCiclo(id, parentId)) {
+            errores.push("La relación " + campo + " crearía un ciclo familiar.");
+        }
+    }
+
+    return errores;
+}
+
+// Recorre la ascendencia del progenitor elegido para evitar ciclos.
+function creariaCiclo(idHijo, idProgenitor) {
+    const pendientes = [idProgenitor];
+    const visitados = new Set();
+
+    while (pendientes.length) {
+        const actual = pendientes.pop();
+
+        if (actual === idHijo) return true;
+        if (visitados.has(actual)) continue;
+        visitados.add(actual);
+
+        const persona = personas.find(p => p.id === actual);
+        if (!persona) continue;
+
+        if (persona.padre_id) pendientes.push(persona.padre_id);
+        if (persona.madre_id) pendientes.push(persona.madre_id);
+    }
+
+    return false;
+}
+
+function guardarPersona(evento) {
+    evento.preventDefault();
+
+    if (!cargado) {
+        informar("Carga primero familia.json.", "error");
+        return;
+    }
+
+    const id = editandoId || siguienteId();
+    const existente = personas.find(p => p.id === id);
+
+    const fecha = $("fecha").value.trim();
+    const anioTexto = $("anio").value.trim();
+
+    const nuevosDatos = {
+        ...(existente || {}),
+        id,
+        nombre: $("nombre").value.trim(),
+        fecha,
+        mes: obtenerMes(fecha),
+        anio: anioTexto === "" ? "" : Number(anioTexto),
+        genero: $("genero").value,
+        estatus: $("estatus").value,
+        pais: $("pais").value.trim(),
+        estado: $("estado").value.trim(),
+        ciudad: $("ciudad").value.trim(),
+        foto: $("foto").value.trim(),
+        padre_id: $("padre").value || null,
+        madre_id: $("madre").value || null
+    };
+
+    const errores = validarPersona(nuevosDatos);
+
+    if (errores.length) {
+        informar(errores.join(" "), "error");
+        return;
+    }
+
+    if (existente) {
+        const indice = personas.findIndex(p => p.id === id);
+        personas[indice] = nuevosDatos;
+    } else {
+        personas.push(nuevosDatos);
+    }
+
+    actualizarEstadisticas();
+    actualizarSelects();
+    dibujarDirectorio();
+    limpiarFormulario();
+
+    informar(
+        existente
+            ? "Cambios guardados en la copia de trabajo. Exporta el JSON para conservarlos."
+            : "Familiar agregado a la copia de trabajo con ID " + id +
+              ". Exporta el JSON para conservarlo.",
+        "success"
+    );
+}
+
+function eliminarPersona(id) {
+    const persona = personas.find(p => p.id === id);
+    if (!persona) return;
+
+    const dependientes = personas.filter(
+        p => p.padre_id === id || p.madre_id === id
+    );
+
+    if (dependientes.length) {
+        informar(
+            "No se puede eliminar a " + persona.nombre +
+            " porque está registrado como padre o madre de otros familiares. " +
+            "Actualiza primero esas relaciones.",
+            "error"
+        );
+        return;
+    }
+
+    if (!confirm(
+        "¿Eliminar a " + persona.nombre + " (" + id + ")?\n\n" +
+        "La eliminación solo afectará la copia de trabajo. " +
+        "No se puede deshacer dentro de esta sesión."
+    )) return;
+
+    personas = personas.filter(p => p.id !== id);
+
+    if (editandoId === id) limpiarFormulario();
+
+    actualizarEstadisticas();
+    actualizarSelects();
+    dibujarDirectorio();
+
+    informar(
+        "Registro eliminado de la copia de trabajo. Exporta el JSON para conservar los cambios.",
+        "success"
+    );
+}
+
+function dibujarDirectorio() {
+    const consulta = normalizar($("search").value);
+    const contenedor = $("peopleList");
+
+    const filtrados = personas
+        .filter(p => {
+            const texto = normalizar([
+                p.id, p.nombre, p.pais, p.estado, p.ciudad
+            ].join(" "));
+            return texto.includes(consulta);
+        })
+        .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+
+    if (!filtrados.length) {
+        contenedor.innerHTML = "<p class='help'>No hay coincidencias.</p>";
+        return;
+    }
+
+    contenedor.innerHTML = filtrados.map(p => `
+        <article class="person">
+            <div class="person-info">
+                <strong>${escapar(p.nombre)}</strong>
+                <small>${escapar(p.id)} · ${escapar(
+                    [p.ciudad, p.estado, p.pais].filter(Boolean).join(", ") ||
+                    "Ubicación no registrada"
+                )}</small>
+                <div class="status">${escapar(p.estatus || "Estatus no registrado")}</div>
+            </div>
+            <div class="person-actions">
+                <button type="button" class="light" data-edit="${escapar(p.id)}">
+                    Editar
+                </button>
+                <button type="button" class="danger" data-delete="${escapar(p.id)}">
+                    Eliminar
+                </button>
+            </div>
+        </article>
+    `).join("");
+
+    contenedor.querySelectorAll("[data-edit]").forEach(b => {
+        b.addEventListener("click", () => cargarEnFormulario(b.dataset.edit));
+    });
+
+    contenedor.querySelectorAll("[data-delete]").forEach(b => {
+        b.addEventListener("click", () => eliminarPersona(b.dataset.delete));
+    });
+}
+
+function validarTodo() {
+    const errores = [];
+    const ids = new Set();
+
+    for (const p of personas) {
+        if (!p.id || !p.nombre || !p.nombre.trim()) {
+            errores.push("Hay un registro sin ID o nombre.");
+        }
+
+        if (ids.has(p.id)) {
+            errores.push("ID duplicado: " + p.id);
+        }
+        ids.add(p.id);
+
+        if (p.fecha && !esFechaValida(p.fecha)) {
+            errores.push("Fecha inválida en " + p.nombre + ": " + p.fecha);
+        }
+
+        for (const campo of ["padre_id", "madre_id"]) {
+            if (p[campo] && !idsTiene(p[campo])) {
+                errores.push(
+                    p.nombre + ": " + campo + " apunta a un ID inexistente (" +
+                    p[campo] + ")."
+                );
+            }
+
+            if (p[campo] && p[campo] === p.id) {
+                errores.push(p.nombre + " está relacionado consigo mismo.");
+            }
+
+            if (p[campo] && creariaCiclo(p.id, p[campo])) {
+                errores.push("Posible ciclo familiar en el registro " + p.id + ".");
+            }
+        }
+    }
+
+    return [...new Set(errores)];
+}
+
+function idsTiene(id) {
+    return personas.some(p => p.id === id);
+}
+
+function exportarJSON() {
+    if (!cargado) return;
+
+    const errores = validarTodo();
+
+    if (errores.length) {
+        informar(
+            "No se puede exportar todavía:\n" + errores.join("\n"),
+            "error"
+        );
+        return;
+    }
+
+    const contenido = JSON.stringify(personas, null, 2);
+    const blob = new Blob([contenido], {
+        type: "application/json;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement("a");
+
+    enlace.href = url;
+    enlace.download = "familia.json";
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+    URL.revokeObjectURL(url);
+
+    informar(
+        "Validación correcta. Se descargó familia.json. Revisa el archivo antes de subirlo a GitHub.",
+        "success"
+    );
+}
+
+$("loadButton").addEventListener("click", cargarArchivo);
+$("exportButton").addEventListener("click", exportarJSON);
+$("personForm").addEventListener("submit", guardarPersona);
+$("newButton").addEventListener("click", () => {
+    limpiarFormulario();
+    informar("Formulario limpio. Puedes registrar un nuevo familiar.", "info");
+});
+$("search").addEventListener("input", dibujarDirectorio);
+
+habilitarControles();
+</script>
+</body>
+</html>
